@@ -68,3 +68,7 @@ button{
 	color: inherit;
 	border: 0;
 }
+
+input[type="search"]::-webkit-search-cancel-button {
+  display: none;
+}

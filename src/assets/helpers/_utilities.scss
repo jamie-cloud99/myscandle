@@ -6,3 +6,36 @@
     display: none;
   }
 }
+
+.lh-normal{
+  line-height: 1.5;
+}
+
+.rounded-sm{
+  border-radius: 1rem !important;
+}
+
+.rounded-md{
+  border-radius: 1.5rem !important;
+}
+
+
+// font-size
+
+.fs-md{
+  font-size: 20px;
+}
+
+.fs-sm{
+  font-size: 14px;
+}
+
+// width
+
+.w-60{
+  width: 60%;
+}
+
+.w-40{
+  width: 40%;
+}

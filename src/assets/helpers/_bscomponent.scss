@@ -1,0 +1,9 @@
+.form-control{
+  outline: 0;
+  border: 0;
+}
+
+.page-item:first-child .page-link,
+.page-item:last-child .page-link{
+  border-radius: 0;
+}

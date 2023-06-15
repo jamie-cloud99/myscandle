@@ -7,6 +7,8 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import 'bootstrap'
+import 'bootstrap-icons/font/bootstrap-icons.css'
+
 
 const app = createApp(App)
 
