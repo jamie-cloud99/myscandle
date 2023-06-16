@@ -1,5 +1,5 @@
 <template>
-  <img class="shop-bn-img object-fit-cover" src="src/assets/images/shop/shop-bn.png" alt="" />
+  <img class="shop-bn-img object-fit-cover" src="src/assets/images/shop/shop-bn.webp" alt="" />
   <div class="container mt-5">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
