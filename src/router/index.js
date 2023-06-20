@@ -15,12 +15,12 @@ const router = createRouter({
           component: () => import('@/views/user/HomeView.vue')
         },
         {
-          path: '/shop',
+          path: 'shop',
           name: 'Shop',
           component: () => import('@/views/user/ProductList.vue')
         },
         {
-          path: '/cart',
+          path: 'cart',
           name: 'Cart',
           component: () => import('@/views/user/CartView.vue')
         }
@@ -31,7 +31,21 @@ const router = createRouter({
       name: 'AdminLayout',
       component: () => import('@/views/admin/AdminDashboard.vue'),
       children: [
-
+        {
+          path: 'product',
+          name: 'Product',
+          component: () => import('@/views/admin/ProductList.vue')
+        },
+        {
+          path: 'order',
+          name: 'Order',
+          component: () => import('@/views/admin/OrderList.vue')
+        },
+        {
+          path: 'coupon',
+          name: 'Coupon',
+          component: () => import('@/views/admin/CouponList.vue')
+        }
       ]
     },
     {
