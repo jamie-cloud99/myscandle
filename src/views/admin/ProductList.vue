@@ -40,21 +40,28 @@
     </table>
   </div>
 
-  <ProductModal
-    ref="productModal"
-    :product="tempProduct"
-    :is-new="isNew"
+  <div class=" mt-4 mb-5">
+    <PaginationComponent 
+        :pages="pagination" @change-page="fetchPageProducts"></PaginationComponent>
+  </div>
+
+  <ProductModal ref="productModal" :product="tempProduct" :is-new="isNew"
     @update-product="updateProduct"
   ></ProductModal>
+  <DelModal ref="deleteModal" :product="tempProduct" @confirm-deletion="confirmDeletion"></DelModal>
 </template>
 
 <script>
 const { VITE_API, VITE_PATH } = import.meta.env
 import ProductModal from '../../components/admin/products/ProductModal.vue'
+import DelModal from '../../components/admin/products/DelModal.vue'
+import PaginationComponent from '../../components/admin/PaginationComponent.vue'
 
 export default {
   components: {
-    ProductModal
+    ProductModal,
+    DelModal,
+    PaginationComponent
   },
   data() {
     return {
@@ -65,7 +72,7 @@ export default {
     }
   },
   methods: {
-    async fetchPageProduct(page = 1) {
+    async fetchPageProducts(page = 1) {
       const api = `${VITE_API}api/${VITE_PATH}/admin/products?page=${page}`
       const res = await this.axios.get(api)
       if (res.data.success) {
@@ -82,31 +89,47 @@ export default {
       }
       try {
         await this.axios[methods](api, { data: item })
-        this.fetchPageProduct()
+        const { current_page } = this.pagination
+        this.fetchPageProducts(current_page)
         this.$refs.productModal.hideModal()
       } catch (error) {
         console.log(error)
       }
     },
-
+    async confirmDeletion(item) {
+      const api = `${VITE_API}api/${VITE_PATH}/admin/product/${item.id}`
+      try {
+        const res = await this.axios.delete(api)
+        if(res.data.success) { console.log('刪除商品成功') } 
+        const { current_page } = this.pagination
+        this.fetchPageProducts(current_page)
+        this.$refs.deleteModal.hideModal()
+      } catch (error) {
+        console.log(error)
+      }
+    },
     openModal(isNew, item) {
       this.isNew = isNew
       if (isNew) {
         this.tempProduct = {
           unit: '個',
-          is_enabled: 1
+          is_enabled: 1,
+          imageUrls: []
         }
       } else {
-        this.tempProduct = item
+        this.tempProduct = {...item}
       }
       this.$refs.productModal.showModal()
     },
-    openDeleteModal() {}
+    openDeleteModal(item) {
+      this.tempProduct = item
+      this.$refs.deleteModal.showModal()
+    },
   },
   created() {
-    this.fetchPageProduct()
+    this.fetchPageProducts()
   }
 }
 </script>
 
-<style lang="scss"></style>
+

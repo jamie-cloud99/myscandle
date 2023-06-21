@@ -42,7 +42,8 @@ body{
 .page-link{
 
   &:hover{
-    background: $light;
+    color: white;
+    background: $primary;
   }
 }
 
