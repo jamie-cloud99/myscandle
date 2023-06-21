@@ -40,7 +40,12 @@
     </table>
   </div>
 
-  <ProductModal ref="productModal" :product="tempProduct" :is-new="isNew"></ProductModal>
+  <ProductModal
+    ref="productModal"
+    :product="tempProduct"
+    :is-new="isNew"
+    @update-product="updateProduct"
+  ></ProductModal>
 </template>
 
 <script>
@@ -68,23 +73,20 @@ export default {
         this.pagination = res.data.pagination
       }
     },
-    async updateProduct(isNew, item){
+    async updateProduct(item) {
       let api = `${VITE_API}api/${VITE_PATH}/admin/product`
-        let methods = 'post'
-      if(!isNew) {
+      let methods = 'post'
+      if (!this.isNew) {
         api = `${VITE_API}api/${VITE_PATH}/admin/product/${item.id}`
         methods = 'put'
       }
       try {
-        await this.axios[methods](api, `{data: ${item}}`)
+        await this.axios[methods](api, { data: item })
         this.fetchPageProduct()
-
+        this.$refs.productModal.hideModal()
       } catch (error) {
         console.log(error)
       }
-      
-
-
     },
 
     openModal(isNew, item) {

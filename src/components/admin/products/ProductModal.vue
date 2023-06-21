@@ -2,19 +2,19 @@
   <div class="modal" tabindex="-1" ref="modal">
     <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content border-0">
-        <div class="modal-header bg-dark text-white">
+        <div class="modal-header bg-light">
           <h5 class="modal-title" id="exampleModalLabel">
             <span>新增產品</span>
           </h5>
           <button
             type="button"
-            class="btn-close"
+            class="btn-close border-0"
             data-bs-dismiss="modal"
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body">
-          <VForm v-slot="{ errors }">
+        <VForm v-slot="{ errors }" @submit="comfirmSubmit(tempProduct)">
+          <div class="modal-body">
             <div class="row">
               <div class="col-sm-4">
                 <div class="mb-3">
@@ -112,20 +112,20 @@
                 <div class="row gx-2">
                   <div class="mb-3 col-md-6">
                     <label for="origin_price" class="form-label"
-                      >原價<span class="text-danger">*</span></label
+                      >定價<span class="text-danger">*</span></label
                     >
                     <VField
-                      name="原價"
+                      name="定價"
                       v-model.number="tempProduct.origin_price"
                       type="number"
                       class="form-control border"
                       id="origin_price"
-                      placeholder="請輸入原價"
-                      rules="required"
-                      :class="{ 'is-invalid': errors['原價'] }"
+                      placeholder="請輸入定價"
+                      :rules="isPrice"
+                      :class="{ 'is-invalid': errors['定價'] }"
                     >
                     </VField>
-                    <ErrorMessage name="原價" class="invalid-feedback"></ErrorMessage>
+                    <ErrorMessage name="定價" class="invalid-feedback"></ErrorMessage>
                   </div>
                   <div class="mb-3 col-md-6">
                     <label for="price" class="form-label"
@@ -138,7 +138,7 @@
                       class="form-control border"
                       id="price"
                       placeholder="請輸入售價"
-                      rules="required"
+                      :rules="isCheaperPrice"
                       :class="{ 'is-invalid': errors['售價'] }"
                     >
                     </VField>
@@ -175,27 +175,27 @@
                       :true-value="1"
                       :false-value="0"
                       id="is_enabled"
-                      :checked="Boolean(is_enabled)"
+                      :checked="Boolean(tempProduct.is_enabled)"
                     />
                     <label class="form-check-label" for="is_enabled"> 啟用商品 </label>
                   </div>
                 </div>
               </div>
             </div>
-          </VForm>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-            取消
-          </button>
-          <button
-            type="button"
-            class="btn btn-primary"
-            @click="$emit('update-product', tempProduct)"
-          >
-            確認
-          </button>
-        </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary"
+            data-bs-dismiss="modal">
+              取消
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+            >
+              確認
+            </button>
+          </div>
+        </VForm>
       </div>
     </div>
   </div>
@@ -216,6 +216,7 @@ export default {
       type: Boolean
     }
   },
+  emits: ['update-product'],
   data() {
     return {
       modal: {},
@@ -233,7 +234,24 @@ export default {
     },
     hideModal() {
       this.modal.hide()
-    }
+    },
+    isPrice(num) {
+      const priceRegex = /^[0-9]+$/
+      return !priceRegex.test(num) ? '售價請輸入正整數' : true
+    },
+    isCheaperPrice(num) {
+      const priceRegex = /^[0-9]+$/
+      if (!priceRegex.test(num)) return '售價請輸入正整數'
+      if (this.tempProduct.price > this.tempProduct.origin_price) return '售價不得高於定價'
+      return true
+    },
+    comfirmSubmit(values) {
+      this.$emit('update-product', values)
+    },
+    clearForm({ resetForm }) {
+      resetForm()
+    },
+    
   },
   mounted() {
     this.modal = new Modal(this.$refs.modal)
