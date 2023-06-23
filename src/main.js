@@ -10,7 +10,7 @@ import VueAxios from 'vue-axios'
 import 'bootstrap'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
-import { currency } from './methods/format'
+import { currency, date } from './methods/format'
 
 import CKEditor from "@ckeditor/ckeditor5-vue";
 
@@ -35,7 +35,7 @@ setLocale("zh_TW");
 const app = createApp(App)
 
 app.config.globalProperties.$format = {
-  currency
+  currency, date
 }
 
 

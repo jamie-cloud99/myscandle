@@ -5,7 +5,7 @@
   <div class="d-flex justify-content-center table-responsive">
     <table class="table mt-4">
       <thead>
-        <tr>
+        <tr class="align-middle">
           <th width="120">類別</th>
           <th width="300">產品名稱</th>
           <th class="text-end px-md-4" width="120">售價</th>
@@ -48,13 +48,13 @@
   <ProductModal ref="productModal" :product="tempProduct" :is-new="isNew"
     @update-product="updateProduct"
   ></ProductModal>
-  <DelModal ref="deleteModal" :product="tempProduct" @confirm-deletion="confirmDeletion"></DelModal>
+  <DelModal ref="deleteModal" :item="tempProduct" @confirm-deletion="confirmDeletion"></DelModal>
 </template>
 
 <script>
 const { VITE_API, VITE_PATH } = import.meta.env
-import ProductModal from '../../components/admin/products/ProductModal.vue'
-import DelModal from '../../components/admin/products/DelModal.vue'
+import ProductModal from '../../components/admin/modal/ProductModal.vue'
+import DelModal from '../../components/admin/modal/DelModal.vue'
 import PaginationComponent from '../../components/admin/PaginationComponent.vue'
 
 export default {
@@ -67,7 +67,7 @@ export default {
     return {
       tempProduct: {},
       products: [],
-      pagination: [],
+      pagination: {},
       isNew: true
     }
   },

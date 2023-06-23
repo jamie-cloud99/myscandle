@@ -11,7 +11,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="exampleModalLabel">
-            確認刪除 <strong>{{ product.title }}</strong
+            確認刪除 <strong>{{ item.title }}</strong
             >？
           </h1>
           <button
@@ -22,14 +22,14 @@
           ></button>
         </div>
         <div class="modal-body">
-          請注意： 商品 [ <strong>{{ product.title }}</strong> ] 的資料將永久刪除
+          請注意： 【 <strong>{{ item.title }}</strong> 】 的資料將永久刪除
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">取消</button>
           <button
             type="button"
             class="btn btn-primary"
-            @click="$emit('confirm-deletion', product)"
+            @click="$emit('confirm-deletion', item)"
           >
             確認刪除
           </button>
@@ -43,7 +43,7 @@
 import modalMixin from '../../../mixins/modalMixin'
 
 export default {
-  props: ['product'],
+  props: ['item'],
   emits: ['confirm-deletion'],
 
   mixins: [modalMixin]
