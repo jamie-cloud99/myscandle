@@ -12,12 +12,14 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 
 import { currency, date } from './methods/format'
 
-import CKEditor from "@ckeditor/ckeditor5-vue";
+import LoadingComponent from './components/LoadingComponent.vue'
 
-import { Field, Form, ErrorMessage, defineRule, configure } from "vee-validate";
-import { localize, setLocale } from "@vee-validate/i18n";
-import zhTW from "@vee-validate/i18n/dist/locale/zh_TW.json";
-import AllRules from "@vee-validate/rules";
+import CKEditor from "@ckeditor/ckeditor5-vue"
+
+import { Field, Form, ErrorMessage, defineRule, configure } from "vee-validate"
+import { localize, setLocale } from "@vee-validate/i18n"
+import zhTW from "@vee-validate/i18n/dist/locale/zh_TW.json"
+import AllRules from "@vee-validate/rules"
 
 //載入驗證規則
 Object.keys(AllRules).forEach((rule) => {
@@ -31,6 +33,27 @@ configure({
 });
 setLocale("zh_TW");
 
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
+
+const options = {
+  transition: 'Vue-Toastification__bounce',
+  maxToasts: 5,
+  newestOnTop: true,
+  position: 'top-right',
+  timeout: 5000,
+  closeOnClick: true,
+  pauseOnFocusLoss: true,
+  pauseOnHover: true,
+  draggable: true,
+  draggablePercent: 0.7,
+  showCloseButtonOnHover: false,
+  hideProgressBar: false,
+  closeButton: 'button',
+  icon: true,
+  rtl: false
+};
+
 
 const app = createApp(App)
 
@@ -43,10 +66,13 @@ app.config.globalProperties.$format = {
 app.use(createPinia())
 app.use(router)
 app.use(VueAxios, axios)
-app.use(CKEditor);
+app.use(CKEditor)
+app.use(Toast, options)
 
-app.component("VField", Field);
-app.component("VForm", Form);
-app.component("ErrorMessage", ErrorMessage);
+app.component('LoadingComponent' ,LoadingComponent)
+
+app.component("VField", Field)
+app.component("VForm", Form)
+app.component("ErrorMessage", ErrorMessage)
 
 app.mount('#app')

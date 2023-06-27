@@ -49,6 +49,7 @@
     @update-product="updateProduct"
   ></ProductModal>
   <DelModal ref="deleteModal" :item="tempProduct" @confirm-deletion="confirmDeletion"></DelModal>
+  <LoadingComponent v-show="isLoading"></LoadingComponent>
 </template>
 
 <script>
@@ -56,6 +57,7 @@ const { VITE_API, VITE_PATH } = import.meta.env
 import ProductModal from '../../components/admin/modal/ProductModal.vue'
 import DelModal from '../../components/admin/modal/DelModal.vue'
 import PaginationComponent from '../../components/admin/PaginationComponent.vue'
+import toastMixin from '../../mixins/toastMixin'
 
 export default {
   components: {
@@ -63,24 +65,32 @@ export default {
     DelModal,
     PaginationComponent
   },
+  mixins: [toastMixin],
   data() {
     return {
       tempProduct: {},
       products: [],
       pagination: {},
-      isNew: true
+      isNew: true,
+      isLoading: true
     }
   },
   methods: {
     async fetchPageProducts(page = 1) {
       const api = `${VITE_API}api/${VITE_PATH}/admin/products?page=${page}`
-      const res = await this.axios.get(api)
-      if (res.data.success) {
-        this.products = res.data.products
-        this.pagination = res.data.pagination
+      try {
+        const res = await this.axios.get(api)
+        if (res.data.success) {
+          this.products = res.data.products
+          this.pagination = res.data.pagination
+          this.isLoading = false
+        }
+      } catch (error) {
+        this.handleError()
       }
     },
     async updateProduct(item) {
+      this.isLoading = true
       let api = `${VITE_API}api/${VITE_PATH}/admin/product`
       let methods = 'post'
       if (!this.isNew) {
@@ -88,24 +98,30 @@ export default {
         methods = 'put'
       }
       try {
-        await this.axios[methods](api, { data: item })
-        const { current_page } = this.pagination
-        this.fetchPageProducts(current_page)
-        this.$refs.productModal.hideModal()
+        const res = await this.axios[methods](api, { data: item })
+        if (res.data.success) {
+          await this.fetchPageProducts(this.pagination.current_page)
+          this.$refs.productModal.hideModal()
+          this.showSuccessToast(res.data.message)
+        }
       } catch (error) {
-        console.log(error)
+        this.handleError()
       }
     },
     async confirmDeletion(item) {
+      this.isLoading = true
       const api = `${VITE_API}api/${VITE_PATH}/admin/product/${item.id}`
       try {
         const res = await this.axios.delete(api)
-        if(res.data.success) { console.log('刪除商品成功') } 
-        const { current_page } = this.pagination
-        this.fetchPageProducts(current_page)
-        this.$refs.deleteModal.hideModal()
+        if(res.data.success) { 
+          await this.fetchPageProducts(this.pagination.current_page)
+          this.$refs.deleteModal.hideModal()
+          this.showSuccessToast(res.data.message)
+        } else {
+          this.showFailToast(res.data.message)
+        }
       } catch (error) {
-        console.log(error)
+        this.handleError()
       }
     },
     openModal(isNew, item) {

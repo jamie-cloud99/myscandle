@@ -20,7 +20,7 @@
             aria-label="Close"
           ></button>
         </div>
-        <VForm v-slot="{ errors }" @submit="comfirmSubmit(tempCoupon)">
+        <VForm v-slot="{ errors }" @submit="$emit('confirm-edit', tempCoupon)">
           <div class="modal-body">
             <div class="row gx-2">
               <div class="col-md-6 mb-3">
@@ -129,7 +129,9 @@ import modalMixin from '../../../mixins/modalMixin'
 
 export default {
   mixins: [modalMixin],
-  props: ['coupon'],
+  props: {
+    coupon: {}
+  },
   emits: ['confirm-edit'],
   data() {
     return {
@@ -148,9 +150,6 @@ export default {
     }
   },
   methods: {
-    comfirmSubmit(values) {
-      this.$emit('confirm-edit', values)
-    },
     isPercent(num) {
       const tensDigit = /^[0-9]{1,2}$|^100$/
       return !tensDigit.test(num) ? '請輸入1-100的整數' : true

@@ -1,6 +1,7 @@
 <template>
   <NavbarComponent></NavbarComponent>
   <div class="container">
+    <ToastMessages></ToastMessages>
     <router-view></router-view>
   </div>
   
@@ -8,10 +9,13 @@
 
 <script>
 import NavbarComponent from '../../components/admin/NavbarComponent.vue'
+import emitter from '../../methods/emitter'
+import ToastMessages from '../../components/ToastMessages.vue'
 
 export default {
   components: {
-    NavbarComponent
+    NavbarComponent,
+    ToastMessages
   },
   methods: {
     async checkLogin() {
@@ -27,7 +31,11 @@ export default {
       }
     }
   },
-
+  provide() {
+    return {
+      emitter
+    }
+  },
   created() {
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)mysToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
     this.axios.defaults.headers.common.Authorization = token

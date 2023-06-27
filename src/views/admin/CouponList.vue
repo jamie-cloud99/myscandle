@@ -30,7 +30,10 @@
               >
                 編輯
               </button>
-              <button class="d-block btn btn-outline-danger btn-sm" @click="openDeleteModal(coupon)">
+              <button
+                class="d-block btn btn-outline-danger btn-sm"
+                @click="openDeleteModal(coupon)"
+              >
                 刪除
               </button>
             </div>
@@ -46,6 +49,8 @@
 
   <CouponModal ref="couponModal" :coupon="tempCoupon" @confirm-edit="updateCoupon"></CouponModal>
   <DelModal ref="deleteModal" :item="tempCoupon" @confirm-deletion="confirmDeletion"></DelModal>
+
+  <LoadingComponent v-show="isLoading"></LoadingComponent>
 </template>
 
 <script>
@@ -53,6 +58,7 @@ const { VITE_API, VITE_PATH } = import.meta.env
 import PaginationComponent from '../../components/admin/PaginationComponent.vue'
 import CouponModal from '../../components/admin/modal/CouponModal.vue'
 import DelModal from '../../components/admin/modal/DelModal.vue'
+import toastMixin from '../../mixins/toastMixin'
 
 export default {
   components: {
@@ -60,12 +66,14 @@ export default {
     CouponModal,
     DelModal
   },
+  mixins: [toastMixin],
   data() {
     return {
       coupons: [],
       pagination: {},
       isNew: true,
-      tempCoupon: {}
+      tempCoupon: {},
+      isLoading: true
     }
   },
   methods: {
@@ -76,12 +84,14 @@ export default {
         if (res.data.success) {
           this.coupons = res.data.coupons
           this.pagination = res.data.pagination
+          this.isLoading = false
         }
       } catch (error) {
-        console.log(error)
+        this.handleError()
       }
     },
     async updateCoupon(item) {
+      this.isLoading = true
       let api = `${VITE_API}api/${VITE_PATH}/admin/coupon`
       let methods = 'post'
       if (!this.isNew) {
@@ -91,36 +101,44 @@ export default {
       try {
         const res = await this.axios[methods](api, { data: item })
         if (res.data.success) {
-          this.tempCoupon = res.data.coupons
-          this.fetchCoupons(this.pagination.current_page)
+          await this.fetchCoupons(this.pagination.current_page)
           this.$refs.couponModal.hideModal()
+          this.showSuccessToast(res.data.message)
+        } else {
+          this.showFailToast(res.data.message.join('、'))
         }
       } catch (error) {
-        console.log(error)
+        this.handleError()
       }
     },
     async confirmDeletion(item) {
+      this.isLoading = true
       const api = `${VITE_API}api/${VITE_PATH}/admin/coupon/${item.id}`
       try {
         const res = await this.axios.delete(api)
-        if(res.data.success) { console.log('刪除優惠券成功') } 
-        const { current_page } = this.pagination
-        this.fetchCoupons(current_page)
-        this.$refs.deleteModal.hideModal()
+        if (res.data.success) {
+          await this.fetchCoupons(this.pagination.current_page)
+          this.$refs.deleteModal.hideModal()
+          this.showSuccessToast(res.data.message)
+        } else {
+          this.showFailToast(res.data.message)
+        }
       } catch (error) {
-        console.log(error)
+        this.handleError()
       }
     },
     openModal(isNew, item) {
       this.isNew = isNew
-      const today = Math.floor(Date.now() / 1000)
-      isNew ? (this.tempCoupon = { is_enabled: 1, due_date: today}) : (this.tempCoupon = item)
+      const today = new Date().getTime() / 1000
+      isNew
+        ? (this.tempCoupon = { is_enabled: 1, due_date: today })
+        : (this.tempCoupon = { ...item })
       this.$refs.couponModal.showModal()
     },
     openDeleteModal(item) {
-      this.tempCoupon = item
+      this.tempCoupon = { ...item }
       this.$refs.deleteModal.showModal()
-    }
+    },
   },
   created() {
     this.fetchCoupons()

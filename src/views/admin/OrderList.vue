@@ -56,7 +56,8 @@ export default {
       orders: [],
       pagination: {},
       tempOrder: {},
-      messages: []
+      messages: [],
+      isLoading: true
     }
   },
   methods: {
@@ -68,6 +69,7 @@ export default {
           this.orders = res.data.orders
           this.pagination = res.data.pagination
           this.messages = res.data.messages
+          this.isLoading = false
         }
       } catch (error) {
         console.log(error)
