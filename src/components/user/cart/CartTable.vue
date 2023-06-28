@@ -54,24 +54,7 @@
           </td>
           <td class="" style="width: 25%">杜松薰衣草香薰蠟燭</td>
           <td class="" style="width: 15%">
-            <div class="d-flex justify-content-center align-items-center">
-          <button
-            class="btn quantity-btn btn-outline-primary rounded-circle flex-shrink-0"
-            type="button"
-          >
-            <i class="bi bi-dash"></i></button
-          ><input
-            class="form-control quantity text-center border border-primary bg-transparent mx-2"
-            type="number"
-            min="1"
-          />
-          <button
-            class="btn quantity-btn btn-outline-primary rounded-circle flex-shrink-0"
-            type="button"
-          >
-            <i class="bi bi-plus"></i>
-          </button>
-        </div>
+            <QuantityBtn></QuantityBtn>
           </td>
           <td class="" style="width: 15%">$ 1,599</td>
           <td class="" style="width: 15%">$ 1,599</td>
@@ -94,6 +77,17 @@
   </div>
 </template>
 
+<script>
+import QuantityBtn from '../../components/user/shop/QuantityBtn.vue'
+
+export default {
+  components: {
+    QuantityBtn
+  }
+
+}
+</script>
+
 <style lang="scss">
 .cart-img {
   height: 5rem;
@@ -105,19 +99,5 @@
   }
 }
 
-.quantity-btn {
-  width: 1.5rem;
-  height: 1.5rem;
-  padding: 0;
-}
 
-.quantity {
-  height: 2rem;
-  width: 4rem;
-}
-
-.bi::before {
-  line-height: 1.5;
-  vertical-align: 0.1em;
-}
 </style>

@@ -221,7 +221,7 @@ export default {
   data() {
     return {
       tempProduct: {},
-      categoryList: ['香薰蠟燭', '擴香瓶', '香氛噴霧', '融蠟燈']
+      categoryList: ['香薰蠟燭', '擴香瓶', '香氛噴霧', '精緻禮盒']
     }
   },
   watch: {
