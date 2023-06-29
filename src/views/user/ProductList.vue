@@ -113,6 +113,7 @@ export default {
 
       this.pagination = { ...page }
       this.products = [...itemPaginated]
+      this.isLoading = false
     }
   },
   computed: {

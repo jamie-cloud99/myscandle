@@ -41,6 +41,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.bi::before {
+  line-height: 1;
+  vertical-align: middle;
+}
 .page-item:first-of-type .page-link {
   border-radius: 0.35rem 0 0 0.35rem;
 }

@@ -52,3 +52,8 @@ body{
 }
 
 
+.btn-light:hover, :not(.btn-check) + .btn:active{
+  background: $primary;
+  color: $light;
+}
+

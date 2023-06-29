@@ -4,7 +4,9 @@
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><RouterLink to="/shop">商品一覽</RouterLink></li>
         <li class="breadcrumb-item" aria-current="page">
-          <RouterLink to="/shop?query=所有商品" class="text-nowrap">{{ product.category }}</RouterLink>
+          <RouterLink to="/shop?query=所有商品" class="text-nowrap">{{
+            product.category
+          }}</RouterLink>
         </li>
         <li class="breadcrumb-item active" aria-current="page">{{ product.title }}</li>
       </ol>
@@ -34,22 +36,37 @@
           </ul>
         </div>
         <div class="col-md-5 mb-5">
-          <img
-            class="d-block"
-            :src="product.imageUrl"
-            :alt="product.title"
-          />
+          <img class="d-block" :src="product.imageUrl" :alt="product.title" />
         </div>
         <div class="col-md-5 mb-5">
           <h2 class="h4 mb-3">{{ product.title }}</h2>
           <h3 class="fs-6 text-highlight mb-4">薰苔調</h3>
-          <p class="h4 mb-5">NT$ {{ $format.currency(product.price) }} <s class="fs-6 text-secondary ms-3">NT$ {{ $format.currency(product.origin_price) }}</s></p>
+          <p class="h4 mb-5">
+            NT$ {{ $format.currency(product.price) }}
+            <s class="fs-6 text-secondary ms-3">NT$ {{ $format.currency(product.origin_price) }}</s>
+          </p>
           <div class="row">
             <div class="col-md-4">
-              <QuantityBtn :quantity="quantity" @add="getQuantity" @minus="getQuantity"></QuantityBtn>
+              <QuantityBtn :quantity="quantity" @update="getQuantity"></QuantityBtn>
             </div>
             <div class="col-md-8">
-              <button type="button" class="btn btn-primary w-100 rounded-sm px-3">加入購物車</button>
+              <button
+                type="button"
+                class="btn btn-primary w-100 rounded-sm px-3"
+                @click.prevent="addToCart(product.id, quantity)"
+                :disabled="cartLoadingItem === product.id"
+              >
+                加入購物車
+                <span
+                  v-if="cartLoadingItem === product.id"
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                <span v-if="cartLoadingItem === product.id" class="visually-hidden"
+                  >Loading...</span
+                >
+              </button>
             </div>
           </div>
 
@@ -64,7 +81,7 @@
       </div>
     </div>
 
-    <hr class="my-5">
+    <hr class="my-5" />
     <h4 class="text-center py-3 mb-5">相關商品</h4>
     <div class="overflow-hidden">
       <div class="row">
@@ -83,6 +100,9 @@ import toastMixin from '../../mixins/toastMixin'
 import QuantityBtn from '../../components/user/shop/QuantityBtn.vue'
 import ProductCard from '../../components/user/shop/ProductCard.vue'
 
+import { mapState, mapActions } from 'pinia'
+import cartStore from '../../stores/cartStore'
+import statusStore from '../../stores/statusStore'
 
 export default {
   props: ['productId'],
@@ -99,31 +119,39 @@ export default {
       productsAll: []
     }
   },
+  computed: {
+    ...mapState(cartStore, ['cartList']),
+    ...mapState(statusStore, ['isLoading', 'cartLoadingItem'])
+  },
   methods: {
     async fetchProduct(id) {
       const productApi = `${VITE_API}api/${VITE_PATH}/product/${id}`
       const productsAllApi = `${VITE_API}api/${VITE_PATH}/products/all`
       try {
-        const [productRes, productsAllRes] = await Promise.all([this.axios.get(productApi), this.axios.get(productsAllApi)])
+        const [productRes, productsAllRes] = await Promise.all([
+          this.axios.get(productApi),
+          this.axios.get(productsAllApi)
+        ])
         if (productRes.data.success) {
           this.product = productRes.data.product
           this.productsAll = productsAllRes.data.products
-          this.getCategoryProducts(this.product.category);
+          this.getCategoryProducts(this.product.category)
         }
       } catch (error) {
         this.handleError()
       }
     },
-    async getCategoryProducts(category) {
+    getCategoryProducts(category) {
       this.relatedProducts = this.productsAll.filter((item) => item.category === category)
+      this.isLoading = false
     },
     getQuantity(num) {
       this.quantity = num
-    }
+    },
+    ...mapActions(cartStore, ['addToCart'])
   },
   created() {
     this.fetchProduct(this.productId)
   }
-
 }
 </script>

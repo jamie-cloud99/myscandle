@@ -11,7 +11,6 @@
         </div>
         <button type="button" class="btn btn-outline-primary rounded-sm py-1">加購</button>
       </div>
-     
     </div>
     </router-link>
     

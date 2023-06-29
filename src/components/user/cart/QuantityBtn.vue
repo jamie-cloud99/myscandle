@@ -4,7 +4,7 @@
       class="btn quantity-btn btn-outline-primary rounded-circle flex-shrink-0"
       type="button"
       @click.prevent="updateNum('minus')"
-      :disabled="tempQuantity <= 1"
+      :disabled="tempQuantity <= 1 || cart.id===cartLoadingItem"
     >
       <i class="bi bi-dash"></i></button
     ><input
@@ -13,14 +13,18 @@
       min="1"
       v-model.number="tempQuantity"
     />
-    <button
+    <div v-if="cart.id===cartLoadingItem" class="spinner-border text-primary spinner-border-sm" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <button v-else
       class="btn quantity-btn btn-outline-primary rounded-circle flex-shrink-0"
       type="button"
       @click.prevent="updateNum('add')"
-      :disabled="tempQuantity >= 10"
+      :disabled="tempQuantity >= 10 || cart.id===cartLoadingItem"
     >
       <i class="bi bi-plus"></i>
     </button>
+    
   </div>
 </template>
 
@@ -31,37 +35,31 @@ import cartStore from '../../../stores/cartStore'
 
 export default {
   props: {
-    quantity: {
-      type: Number,
-      default: 1
-    }
+    cart: {
+      type: Object
+    },
   },
-  emits: ['update'],
   data() {
     return {
       tempQuantity: 1
     }
   },
-  watch: {
-    quantity() {
-      this.tempQuantity = this.quantity
-    }
-  },
+ 
   computed: {
-    ...mapState(statusStore, ['isLoading']),
+    ...mapState(statusStore, ['isLoading', 'cartLoadingItem']),
     ...mapState(cartStore, ['cartList'])
   },
   methods: {
+    ...mapActions(cartStore, ['updateCart']),
     updateNum(action) {
-      action === 'add'
-        ? this.$emit('update', ++this.tempQuantity)
-        : this.$emit('update', --this.tempQuantity)
+      action === 'add' ? ++this.tempQuantity : --this.tempQuantity
+      this.updateCart(this.cart, this.tempQuantity)
+      
     },
-    ...mapActions(cartStore, ['addToCart'])
-
+    
   },
   created() {
-    this.tempQuantity = this.quantity
+    this.tempQuantity = this.cart.qty
   }
 }
 </script>
