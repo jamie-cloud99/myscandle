@@ -57,3 +57,22 @@ body{
   color: $light;
 }
 
+.step-item {
+  color: $primary-text-emphasis;
+  border: 1px solid  $primary-text-emphasis;
+}
+
+.step-title{
+  color: $primary-text-emphasis;
+}
+
+.active {
+  .step-item{
+    background: $primary;
+    color: $light;
+  }
+  .step-title{
+    color: $primary;
+  }
+}
+

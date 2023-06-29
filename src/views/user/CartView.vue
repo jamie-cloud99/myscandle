@@ -1,14 +1,4 @@
 <template>
-  <ul class="d-flex justify-content-center align-items-start my-5">
-    <li
-      class="d-flex flex-column justify-content-center align-items-center mx-3"
-      v-for="item in progress"
-      :key="'step' + item.step"
-    >
-      <p class="step-item border border-primary rounded-circle text-center mb-3">{{ item.step }}</p>
-      <p>{{ item.title }}</p>
-    </li>
-  </ul>
   <div class="container">
     <div class="row my-5">
       <div class="col-lg-8 pt-3 mb-5 mb-md-0">
@@ -21,37 +11,41 @@
               type="text"
               placeholder="輸入優惠碼"
               class="form-control coupon-input bg-transparent border border-primary mb-3 mb-lg-0"
+              v-model.lazy="coupon"
             />
-            <button type="button" class="btn btn-light border-primary ms-lg-3">套用</button>
+            <button type="button" class="btn btn-light border-primary ms-lg-3" @click.prevent="useCoupon(coupon)" :disabled="couponLoading"><span v-if="couponLoading" class="spinner-border text-primary spinner-border-sm" role="status" aria-hidden="true"></span>
+              <span v-else>套用</span>
+            </button>
           </div>
           <!-- v-if -->
-          <p class="coupon-message text-primary my-auto ps-2">新會員首購，折抵 $ 100</p>
-          <table class="table text-end  mx-2 mt-4">
+          <p v-if="couponMessage" class="coupon-message text-primary my-auto ps-2">{{ couponMessage }}</p>
+          <table class="table text-end mx-2 mt-4">
             <tbody>
               <tr class="">
                 <td class="text-start ">商品總計</td>
-                <td class="">$ 1,599</td>
+                <td class="">NT$ {{ $format.currency(cartsTotal.total) }}</td>
               </tr>
               <tr>
                 <td class="text-start ">運費</td>
-                <td class="">$ 100</td>
+                <td class="">NT$ 0</td>
               </tr>
               <tr>
                 <td class="text-start ">優惠折抵</td>
-                <td class="text-primary">-$ 150</td>
+                <td class="text-primary">- NT$ {{ $format.currency(cartsTotal.total - cartsTotal.final_total) }}</td>
               </tr>
             </tbody>
             <tfoot>
               <tr class="border-top border-primary">
                 <td class="text-start ">結帳總金額</td>
-                <td class="fs-md">$ 1,549</td>
+                <td class="fs-md">NT$ {{ $format.currency(cartsTotal.final_total) }}</td>
               </tr>
             </tfoot>
           </table>
 
           <div class="d-flex justify-content-between align-items-center mt-4 mt-lg-5">
             <RouterLink to="/shop"  class="d-flex align-items-center text-primary-emphasis py-2"><i class="bi bi-chevron-left me-2"></i>繼續購物</RouterLink>
-            <button type="button" class="btn btn-primary btn-lg rounded-md">前往結帳</button>
+            <button type="button" class="btn btn-primary btn-lg rounded-md"
+            @click="openOrderPage">前往結帳</button>
           </div>
 
         </div>
@@ -107,7 +101,9 @@
 <script>
 import AdditionalPurchase from '../../components/user/cart/AdditonalPurchase.vue'
 import CartTable from '../../components/user/cart/CartTable.vue'
-
+import { mapState, mapActions } from 'pinia'
+import cartStore from '../../stores/cartStore'
+import statusStore from '../../stores/statusStore'
 
 export default {
   components: {
@@ -129,9 +125,22 @@ export default {
           step: 3,
           title: '結帳'
         }
-      ]
+      ],
+      coupon: 'new95'
     }
   },
-  
+  computed: {
+    ...mapState(cartStore, ['cartList', 'couponMessage', 'cartsTotal']),
+    ...mapState(statusStore, ['isLoading', 'couponLoading'])
+  },
+  methods: {
+    ...mapActions(cartStore, ['useCoupon', 'openCart']),
+    openOrderPage() {
+      this.$router.push('/cart/order')
+    }
+  },
+  created() {
+    this.openCart()
+  }
 }
 </script>

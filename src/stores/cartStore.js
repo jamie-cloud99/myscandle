@@ -12,7 +12,8 @@ export default defineStore('cartStore', {
     cartsTotal: {
       total: 0,
       final_total: 0
-    }
+    },
+    couponMessage: '',
   }),
   actions: {
     async fetchCart() {
@@ -78,7 +79,6 @@ export default defineStore('cartStore', {
         console.log(error)
       }
     },
-
     async clearCarts() {
       const api = `${VITE_API}api/${VITE_PATH}/carts`
       try {
@@ -92,7 +92,32 @@ export default defineStore('cartStore', {
       } catch (error) {
         console.log(error)
       }
+    },
+    async useCoupon(code) {
+      status.couponLoading = true
+      const api = `${VITE_API}api/${VITE_PATH}/coupon`
+      try {
+        const res = await axios.post(api, {data: {code}})
+        if(res.data.success) {
+          console.log(res.data)
+          this.couponMessage = res.data.message
+          this.fetchCart()
+          status.couponLoading = false
+        } else {
+          console.log(res.data)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    openCart() {
+      status.paymentStep = 1
+    },
+    openOrder() {
+      status.paymentStep = 2
+    },
+    async submitOrder() {
+      status.paymentStep = 3
     }
-    
   }
 })
