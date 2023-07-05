@@ -21,7 +21,6 @@ const router = createRouter({
         },
         {
           path: 'product/:productId',
-          props: true,
           component: () => import('@/views/user/ProductDetail.vue')
         },
         {
@@ -82,7 +81,17 @@ const router = createRouter({
       component: () => import('@/views/user/Error404View.vue')
     }
   ],
-  linkActiveClass: 'active'
+  linkActiveClass: 'active',
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { 
+        top: 0, 
+        behavior: 'smooth',
+      }
+    }
+  }
 })
 
 export default router

@@ -105,7 +105,6 @@ import cartStore from '../../stores/cartStore'
 import statusStore from '../../stores/statusStore'
 
 export default {
-  props: ['productId'],
   components: {
     QuantityBtn,
     ProductCard
@@ -116,12 +115,22 @@ export default {
       product: {},
       quantity: 1,
       relatedProducts: [],
-      productsAll: []
+      productsAll: [],
     }
   },
   computed: {
     ...mapState(cartStore, ['cartList']),
-    ...mapState(statusStore, ['isLoading', 'cartLoadingItem'])
+    ...mapState(statusStore, ['isLoading', 'cartLoadingItem']),
+    id() {
+      return this.$route.params.productId
+    }
+  },
+  watch: {
+    id(newId, oldId) {
+      if(newId !== oldId) {
+        this.fetchProduct(newId)
+      }
+    }
   },
   methods: {
     async fetchProduct(id) {
@@ -143,7 +152,7 @@ export default {
     },
     getCategoryProducts(category) {
       this.relatedProducts = this.productsAll.filter((item) => item.category === category)
-      this.isLoading = false
+      
     },
     getQuantity(num) {
       this.quantity = num
@@ -151,7 +160,8 @@ export default {
     ...mapActions(cartStore, ['addToCart'])
   },
   created() {
-    this.fetchProduct(this.productId)
-  }
+    this.fetchProduct(this.id)
+  },
+  
 }
 </script>

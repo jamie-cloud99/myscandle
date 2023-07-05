@@ -131,10 +131,13 @@ export default {
         this.tempProduct = {
           unit: '個',
           is_enabled: 1,
-          imageUrls: []
+          imagesUrl: []
         }
       } else {
         this.tempProduct = {...item}
+        if(!this.tempProduct.imagesUrl) {
+          this.tempProduct.imagesUrl = []
+        }
       }
       this.$refs.productModal.showModal()
     },
