@@ -6,7 +6,7 @@
           class="page-link rounded-sm"
           href="#"
           aria-label="Previous"
-          @click.prevent="$emit('change-page', pages.current_page - 1)"
+          @click.prevent="$emit('change-page',items , pages.current_page - 1)"
         >
           <span aria-hidden="true">&laquo;</span>
         </a>
@@ -17,7 +17,7 @@
         :key="page"
         :class="{ active: page === pages.current_page }"
       >
-        <a class="page-link rounded-sm" href="#" @click.prevent="$emit('change-page', page)">{{
+        <a class="page-link rounded-sm" href="#" @click.prevent="$emit('change-page',items , page)">{{
           page
         }}</a>
       </li>
@@ -27,7 +27,7 @@
           class="page-link rounded-sm"
           href="#"
           aria-label="Next"
-          @click.prevent="$emit('change-page', pages.current_page + 1)"
+          @click.prevent="$emit('change-page',items , pages.current_page + 1)"
         >
           <span aria-hidden="true">&raquo;</span>
         </a>
@@ -38,7 +38,7 @@
 
 <script>
 export default {
-  props: ['pages'],
+  props: ['pages', 'items'],
   emits: ['change-page']
 }
 </script>

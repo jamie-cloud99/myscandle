@@ -2,6 +2,7 @@
 
 body{
   font-family: 'Noto Sans TC', sans-serif;
+  color: $primary-text-emphasis;
 }
 
 .font-serif{
@@ -58,13 +59,11 @@ body{
 }
 
 .step-item {
-  color: $primary-text-emphasis;
+
   border: 1px solid  $primary-text-emphasis;
 }
 
-.step-title{
-  color: $primary-text-emphasis;
-}
+
 
 .active {
   .step-item{

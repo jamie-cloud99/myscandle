@@ -28,8 +28,8 @@
               <div class="col-md-6 col-lg-4" v-for="product in products" :key="product.id">
                 <ProductCard :product="product"></ProductCard>
               </div>
-              <div class="d-flex justify-content-center">
-                <PageComponent :pages="pagination"></PageComponent>
+              <div class="d-flex justify-content-center py-2">
+                <PageComponent :pages="pagination" :items="categoryProducts" @change-page="paginate"></PageComponent>
               </div>
             </div>
           </div>

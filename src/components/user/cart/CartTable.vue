@@ -21,7 +21,7 @@
       </div>
       <div class="d-flex justify-content-between align-items-center mt-2">
         <QuantityBtn :cart="cart"></QuantityBtn>
-        <p class="px-2">NT$ {{ $format.currency(cart.total) }}</p>
+        <p class="px-2 pe-0">NT$ {{ $format.currency(cart.total) }}</p>
       </div>
     </li>
   </ul>
@@ -82,14 +82,3 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.cart-img {
-  height: 5rem;
-  width: 5rem;
-  object-fit: cover;
-  @include pad {
-    height: 7rem;
-    width: 7rem;
-  }
-}
-</style>

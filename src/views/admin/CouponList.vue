@@ -49,7 +49,6 @@
 
   <CouponModal ref="couponModal" :coupon="tempCoupon" @confirm-edit="updateCoupon"></CouponModal>
   <DelModal ref="deleteModal" :item="tempCoupon" @confirm-deletion="confirmDeletion"></DelModal>
-
   <LoadingComponent v-show="isLoading"></LoadingComponent>
 </template>
 

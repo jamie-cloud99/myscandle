@@ -49,6 +49,7 @@
     @update-product="updateProduct"
   ></ProductModal>
   <DelModal ref="deleteModal" :item="tempProduct" @confirm-deletion="confirmDeletion"></DelModal>
+
   <LoadingComponent v-show="isLoading"></LoadingComponent>
 </template>
 

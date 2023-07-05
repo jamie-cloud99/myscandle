@@ -5,7 +5,8 @@ export default defineStore('statusStore', {
     isLoading: false,  //! 待修正
     cartLoadingItem: '',
     couponLoading: false,
-    paymentStep: 1
+    paymentStep: 1,
+    orderLoading: false
   }),
   
 })

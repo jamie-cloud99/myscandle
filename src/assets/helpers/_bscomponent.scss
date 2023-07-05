@@ -16,3 +16,7 @@
 .breadcrumb-item a{
   display: inline;
 }
+
+.table > :not(caption) > * > * {
+  color: inherit;
+}

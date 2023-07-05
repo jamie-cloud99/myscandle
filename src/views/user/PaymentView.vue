@@ -41,3 +41,21 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+.step-item {
+  height: 3rem;
+  width: 3rem;
+  line-height: 3rem;
+}
+
+.cart-img {
+  height: 5rem;
+  width: 5rem;
+  object-fit: cover;
+  @include pad {
+    height: 7rem;
+    width: 7rem;
+  }
+}
+</style>

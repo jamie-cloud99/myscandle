@@ -11,9 +11,11 @@ export default defineStore('cartStore', {
     cartList: [],
     cartsTotal: {
       total: 0,
-      final_total: 0
+      final_total: 0,
     },
     couponMessage: '',
+    orderId: '',
+    orderSubmitted: {},
   }),
   actions: {
     async fetchCart() {
@@ -28,6 +30,7 @@ export default defineStore('cartStore', {
           status.cartLoadingItem = ""
         }
       } catch (error) {
+        status.isLoading = false
         console.log(error)
         status.cartLoadingItem = ""
       }
@@ -110,14 +113,65 @@ export default defineStore('cartStore', {
         console.log(error)
       }
     },
+    async submitOrder(user, message="") {
+      status.orderLoading = true
+      const api = `${VITE_API}api/${VITE_PATH}/order`
+      try {
+        const res = await axios.post(api, {data: {user, message}})
+        if(res.data.success) {
+          status.orderLoading = false
+          this.orderId = res.data.orderId
+          status.paymentStep = 3
+        } else{
+          console.log(res.data)
+          status.orderLoading = false
+        }
+      } catch (error) {
+        console.log(error)
+        status.orderLoading = false
+      }
+    },
+    async fetchOrder(id) {
+      const api = `${VITE_API}api/${VITE_PATH}/order/${id}`
+      try {
+        const res = await axios.get(api)
+        if(res.data.success) {
+          status.isLoading = false
+          this.orderSubmitted = res.data.order
+        } else{
+          console.log(res.data)
+          status.isLoading = false
+        }
+      } catch (error) {
+        console.log(error)
+        status.isLoading = false
+      }
+    },
+    async checkout(id) {
+      const api = `${VITE_API}api/${VITE_PATH}/pay/${id}`
+      try {
+        
+        const res = await axios.post(api)
+        if(res.data.success) {
+          status.isLoading = false
+          this.orderSubmitted = {}
+          this.orderId = ''
+          console.log(res.data.message)
+        } 
+      } catch (error) {
+        console.log(error)
+        status.isLoading = false
+      }
+    },
     openCart() {
       status.paymentStep = 1
     },
     openOrder() {
       status.paymentStep = 2
     },
-    async submitOrder() {
+    openCheckout() {
       status.paymentStep = 3
+      this.fetchOrder(this.orderId)
     }
   }
 })

@@ -25,11 +25,13 @@
             <div class="d-md-flex">
               <button
                 class="btn btn-outline-primary btn-sm mb-2 mb-md-0 me-md-2"
-                @click="openModal()"
+                @click="openModal(order)"
               >
-                編輯
+                查看
               </button>
-              <button class="btn btn-outline-danger btn-sm" @click="openDeleteModal()">刪除</button>
+              <button class="btn btn-outline-danger btn-sm" @click="openDeleteModal(order)">
+                刪除
+              </button>
             </div>
           </td>
         </tr>
@@ -40,43 +42,95 @@
   <div class="mt-4 mb-5">
     <PaginationComponent :pages="pagination" @change-page="fetchOrders"></PaginationComponent>
   </div>
+
+    <OrderModal ref="orderModal" :order="tempOrder" @view="closeModal"></OrderModal>
+    <DelModal ref="deleteModal" :item="tempOrder" @confirm-deletion="confirmDeletion"></DelModal>
+    <LoadingComponent v-show="isLoading"></LoadingComponent>
 </template>
 
 <script>
 const { VITE_API, VITE_PATH } = import.meta.env
 
 import PaginationComponent from '../../components/admin/PaginationComponent.vue'
+import OrderModal from '../../components/admin/modal/OrderModal.vue'
+import DelModal from '../../components/admin/modal/DelOrderModal.vue'
+import toastMixin from '../../mixins/toastMixin'
 
 export default {
   components: {
-    PaginationComponent
+    PaginationComponent,
+    OrderModal,
+    DelModal
   },
   data() {
     return {
       orders: [],
       pagination: {},
       tempOrder: {},
-      messages: [],
       isLoading: true
     }
   },
+  mixins: [toastMixin],
   methods: {
     async fetchOrders(page = 1) {
       const api = `${VITE_API}api/${VITE_PATH}/admin/orders?page=${page}`
       try {
         const res = await this.axios.get(api)
+        console.log('fetchOrder',res)
         if (res.data.success) {
+          
           this.orders = res.data.orders
           this.pagination = res.data.pagination
-          this.messages = res.data.messages
           this.isLoading = false
-        }
+        } 
       } catch (error) {
-        console.log(error)
+        this.handleError()
       }
     },
-    openModal() {},
-    openDeleteModal() {}
+    async confirmDeletion(id) {
+      const api = `${VITE_API}api/${VITE_PATH}/admin/order/${id}`
+      try {
+        const res = await this.axios.delete(api)
+        if (res.data.success) {
+          this.fetchOrders(this.pagination.current_page)
+          this.$refs.deleteModal.hideModal()
+          this.showSuccessToast(res.data.message)
+          
+        } else {
+          this.showFailToast(res.data.message)
+        }
+      } catch (error) {
+        this.handleError()
+      }
+    },
+    async clearOrders() {
+      const api = `${VITE_API}api/${VITE_PATH}/admin/orders/all`
+      try {
+        const res = await this.axios.delete(api)
+        if (res.data.success) {
+          this.showSuccessToast(res.data.message)
+        } else {
+          this.showFailToast(res.data.message)
+        }
+      } catch (error) {
+        this.handleError()
+      }
+    },
+
+    closeModal() {
+      this.$refs.orderModal.hideModal()
+    },
+
+    openModal(order) {
+      this.tempOrder = JSON.parse(JSON.stringify(order))
+      this.$nextTick(() => {
+        this.$refs.orderModal.showModal()
+      })
+    },
+    openDeleteModal(order) {
+      this.tempOrder = JSON.parse(JSON.stringify(order))
+      this.$refs.deleteModal.showModal()
+    }
   },
   created() {
     this.fetchOrders()

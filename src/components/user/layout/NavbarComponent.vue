@@ -33,7 +33,7 @@
           <button type="button" class="search-close"><i class="bi bi-x fs-4"></i></button>
         </li>
         <li><button type="button" class="btn border-0"><i class="bi bi-person-fill fs-4"></i><span class="d-md-none ms-2">會員專區</span></button></li>
-        <li><button type="button" class="btn border-0"><i class="bi bi-handbag-fill fs-5"></i><span class="d-md-none ms-2">購物車</span></button></li>
+        <li><button type="button" class="btn border-0" @click.prevent="openCartModal"><i class="bi bi-handbag-fill fs-5"></i><span class="d-md-none ms-2">購物車</span></button></li>
       </ul>
     </div>
   </nav>
@@ -48,7 +48,6 @@
 
 
 }
-
 
 .logo-img{
   height: 40px;
@@ -89,4 +88,22 @@
 
 
 </style>
+
+<script>  
+import { mapState } from 'pinia'
+import cartStore from '../../../stores/cartStore'
+
+export default {
+  computed: {
+    ...mapState(cartStore, ['cartList'])
+  },
+  methods: {
+    openCartModal() {
+      this.$router.push('/cart')
+    }
+  }
+
+}
+
+</script>
 
