@@ -15,32 +15,26 @@
       <div class="row justify-content-between">
         <div class="col-1 d-none d-md-block">
           <ul>
-            <li class="mb-3">
-              <img
-                src="https://carrierefreres.com/media/catalog/product/cache/b53a7bebfe4e7b87173d57fde1fb1c7b/c/f/cf-pdp-bougie-lavande01-1600x1600.jpg"
-                alt=""
-              />
-            </li>
-            <li class="mb-3">
-              <img
-                src="https://carrierefreres.com/media/catalog/product/cache/b53a7bebfe4e7b87173d57fde1fb1c7b/c/f/cf-pdp-bougie-lavande02-1600x1600.jpg"
-                alt=""
-              />
-            </li>
-            <li class="mb-3">
-              <img
-                src="https://carrierefreres.com/media/catalog/product/cache/b53a7bebfe4e7b87173d57fde1fb1c7b/c/f/cf-pdp-bougie-lavande03-1600x1600.jpg"
-                alt=""
-              />
+            <li
+              class="image-list mb-3 position-relative"
+              v-for="img in imageList"
+              :key="img"
+              @click.prevent="changeImgView(img)"
+            >
+              <img :src="img" :alt="product.title" />
+              <div
+                v-show="tempImage === img"
+                class="h-100 w-100 position-absolute bg-white top-0 opacity-50"
+              ></div>
             </li>
           </ul>
         </div>
         <div class="col-md-5 mb-5">
-          <img class="d-block" :src="product.imageUrl" :alt="product.title" />
+          <img class="d-block" :src="tempImage" :alt="product.title" />
         </div>
         <div class="col-md-5 mb-5">
           <h2 class="h4 mb-3">{{ product.title }}</h2>
-          <h3 class="fs-6 text-highlight mb-4">薰苔調</h3>
+          <h3 class="fs-6 text-highlight mb-4">{{ product.notes }}</h3>
           <p class="h4 mb-5">
             NT$ {{ $format.currency(product.price) }}
             <s class="fs-6 text-secondary ms-3">NT$ {{ $format.currency(product.origin_price) }}</s>
@@ -76,20 +70,15 @@
             {{ product.description }}
           </p>
           <h4 class="fs-md mb-3">香味 /</h4>
-          <p>{{ product.content }}</p>
+          <p class="mb-4">{{ product.content }}</p>
+          <h4 v-if="product.specifications" class="fs-md mb-3">規格 /</h4>
+          <p v-html="wrapText(product.specifications)"></p>
         </div>
       </div>
     </div>
 
     <hr class="my-5" />
-    <h4 class="text-center py-3 mb-5">相關商品</h4>
-    <div class="overflow-hidden">
-      <div class="row">
-        <div class="col-md-3" v-for="item in relatedProducts" :key="item.id">
-          <ProductCard :product="item"></ProductCard>
-        </div>
-      </div>
-    </div>
+      <RelatedProducts :related-products="relatedProducts"></RelatedProducts>
   </div>
 </template>
 
@@ -98,22 +87,26 @@ const { VITE_API, VITE_PATH } = import.meta.env
 
 import toastMixin from '../../mixins/toastMixin'
 import QuantityBtn from '../../components/user/shop/QuantityBtn.vue'
-import ProductCard from '../../components/user/shop/ProductCard.vue'
+
 
 import { mapState, mapActions } from 'pinia'
 import cartStore from '../../stores/cartStore'
 import statusStore from '../../stores/statusStore'
+import RelatedProducts from '../../components/user/shop/RelatedProducts.vue'
+
 
 export default {
   components: {
     QuantityBtn,
-    ProductCard
+    RelatedProducts
   },
   mixins: [toastMixin],
   data() {
     return {
       product: {},
       quantity: 1,
+      imageList: [],
+      tempImage: '',
       relatedProducts: [],
       productsAll: [],
     }
@@ -123,16 +116,18 @@ export default {
     ...mapState(statusStore, ['isLoading', 'cartLoadingItem']),
     id() {
       return this.$route.params.productId
-    }
+    },
   },
   watch: {
     id(newId, oldId) {
-      if(newId !== oldId) {
+      if (newId !== oldId) {
         this.fetchProduct(newId)
       }
     }
   },
   methods: {
+    ...mapActions(cartStore, ['addToCart']),
+
     async fetchProduct(id) {
       const productApi = `${VITE_API}api/${VITE_PATH}/product/${id}`
       const productsAllApi = `${VITE_API}api/${VITE_PATH}/products/all`
@@ -145,23 +140,38 @@ export default {
           this.product = productRes.data.product
           this.productsAll = productsAllRes.data.products
           this.getCategoryProducts(this.product.category)
+          this.concatImageList()
+          this.tempImage = this.product.imageUrl
         }
       } catch (error) {
         this.handleError()
       }
     },
+    wrapText(text) {
+      if (text) return text.replace(/\n/g, '<br>')
+    },
     getCategoryProducts(category) {
-      this.relatedProducts = this.productsAll.filter((item) => item.category === category)
-      
+      const categoryProducts =  this.productsAll.filter((item) => item.category === category)
+      const index = categoryProducts.findIndex((item) => item.id === this.id)
+      categoryProducts.splice(index, 1)
+      console.log(categoryProducts, index, this.id)
+      this.relatedProducts = categoryProducts
+
     },
     getQuantity(num) {
       this.quantity = num
     },
-    ...mapActions(cartStore, ['addToCart'])
+    concatImageList() {
+      this.imageList = [this.product.imageUrl, ...this.product.imagesUrl]
+    },
+    changeImgView(image) {
+      this.tempImage = image
+    },
   },
   created() {
     this.fetchProduct(this.id)
   },
-  
 }
 </script>
+
+

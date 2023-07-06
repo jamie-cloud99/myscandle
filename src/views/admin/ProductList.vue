@@ -126,6 +126,7 @@ export default {
       }
     },
     openModal(isNew, item) {
+      
       this.isNew = isNew
       if (isNew) {
         this.tempProduct = {

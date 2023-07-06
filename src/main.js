@@ -10,6 +10,9 @@ import VueAxios from 'vue-axios'
 import 'bootstrap'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
+
+
+
 import { currency, date } from './methods/format'
 
 import LoadingComponent from './components/LoadingComponent.vue'

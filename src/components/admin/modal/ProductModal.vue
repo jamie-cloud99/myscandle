@@ -132,6 +132,30 @@
                   ></textarea>
                 </div>
               </div>
+              <div class="row gx-2">
+                <div class="mb-3 col-sm-6">
+                  <label for="note" class="form-label">香調</label>
+                  <select
+                    v-model="tempProduct.notes"
+                    type="text"
+                    class="form-select border"
+                    id="note"
+                  >
+                    <option class="text-secondary fs-sm" value="" disabled>請選擇香調</option>
+                    <option :value="item" v-for="item in notesList" :key="item"> {{ item }}</option>
+                </select>
+                </div>
+                <div class="mb-3 col-sm-6">
+                  <label for="specifications" class="form-label">商品規格</label>
+                  <textarea
+                    v-model="tempProduct.specifications"
+                    type="text"
+                    class="form-control border"
+                    id="specifications"
+                    placeholder="請輸入產品規格"
+                  ></textarea>
+                </div>
+              </div>
               <div class="mb-3">
                 <div class="form-check">
                   <input
@@ -279,6 +303,7 @@ export default {
     return {
       tempProduct: {},
       categoryList: ['香薰蠟燭', '擴香瓶', '香氛噴霧', '精緻禮盒'],
+      notesList: ['花香調', '東方調', '柑苔調', '薰苔調', '清新調', '木質調', '美食調'],
       showImgLimits: true,
       imageLoading: null
     }
@@ -340,9 +365,6 @@ export default {
       this.showImgLimits = !this.showImgLimits
     },
   },
-  mounted() {
-    this.$refs.productForm.resetForm()
-  }
 }
 </script>
 
