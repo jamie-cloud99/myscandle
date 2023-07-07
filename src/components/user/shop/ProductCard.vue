@@ -18,7 +18,7 @@
       <div class="d-flex align-items-center mb-2">
         <p class="align-baseline">
           NT$ {{ $format.currency(product.price) }}
-          <s class="text-secondary fs-sm ms-2 align-baseline"
+          <s v-if="product.price!==product.origin_price" class="text-secondary fs-sm ms-2 align-baseline"
             >NT$ {{ $format.currency(product.origin_price) }}</s
           >
         </p>

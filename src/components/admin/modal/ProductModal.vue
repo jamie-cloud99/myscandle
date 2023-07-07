@@ -304,7 +304,7 @@ export default {
       tempProduct: {},
       categoryList: ['香薰蠟燭', '擴香瓶', '香氛噴霧', '精緻禮盒'],
       notesList: ['花香調', '東方調', '柑苔調', '薰苔調', '清新調', '木質調', '美食調'],
-      showImgLimits: true,
+      showImgLimits: false,
       imageLoading: null
     }
   },

@@ -40,10 +40,10 @@
             <s class="fs-6 text-secondary ms-3">NT$ {{ $format.currency(product.origin_price) }}</s>
           </p>
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-lg-4 mb-3 mt-1">
               <QuantityBtn :quantity="quantity" @update="getQuantity"></QuantityBtn>
             </div>
-            <div class="col-md-8">
+            <div class="col-lg-8 mb-3">
               <button
                 type="button"
                 class="btn btn-primary w-100 rounded-sm px-3"
@@ -66,11 +66,11 @@
 
           <hr class="my-3" />
           <h4 class="fs-md mb-3">商品介紹 /</h4>
-          <p class="mb-4">
+          <p  class="mb-4">
             {{ product.description }}
           </p>
           <h4 class="fs-md mb-3">香味 /</h4>
-          <p class="mb-4">{{ product.content }}</p>
+          <p v-html="wrapText(product.content)" class="mb-4"></p>
           <h4 v-if="product.specifications" class="fs-md mb-3">規格 /</h4>
           <p v-html="wrapText(product.specifications)"></p>
         </div>
@@ -78,7 +78,7 @@
     </div>
 
     <hr class="my-5" />
-      <RelatedProducts :related-products="relatedProducts"></RelatedProducts>
+    <RelatedProducts :related-products="relatedProducts"></RelatedProducts>
   </div>
 </template>
 
@@ -88,12 +88,10 @@ const { VITE_API, VITE_PATH } = import.meta.env
 import toastMixin from '../../mixins/toastMixin'
 import QuantityBtn from '../../components/user/shop/QuantityBtn.vue'
 
-
 import { mapState, mapActions } from 'pinia'
 import cartStore from '../../stores/cartStore'
 import statusStore from '../../stores/statusStore'
 import RelatedProducts from '../../components/user/shop/RelatedProducts.vue'
-
 
 export default {
   components: {
@@ -108,7 +106,7 @@ export default {
       imageList: [],
       tempImage: '',
       relatedProducts: [],
-      productsAll: [],
+      productsAll: []
     }
   },
   computed: {
@@ -116,7 +114,7 @@ export default {
     ...mapState(statusStore, ['isLoading', 'cartLoadingItem']),
     id() {
       return this.$route.params.productId
-    },
+    }
   },
   watch: {
     id(newId, oldId) {
@@ -151,27 +149,24 @@ export default {
       if (text) return text.replace(/\n/g, '<br>')
     },
     getCategoryProducts(category) {
-      const categoryProducts =  this.productsAll.filter((item) => item.category === category)
-      const index = categoryProducts.findIndex((item) => item.id === this.id)
-      categoryProducts.splice(index, 1)
-      console.log(categoryProducts, index, this.id)
-      this.relatedProducts = categoryProducts
-
+      this.relatedProducts = this.productsAll.filter(
+        (item) => item.category === category && item.id !== this.id
+      )
     },
     getQuantity(num) {
       this.quantity = num
     },
     concatImageList() {
-      this.imageList = [this.product.imageUrl, ...this.product.imagesUrl]
+      this.imageList = this.product.imagesUrl
+        ? [this.product.imageUrl, ...this.product.imagesUrl]
+        : [this.product.imageUrl]
     },
     changeImgView(image) {
       this.tempImage = image
-    },
+    }
   },
   created() {
     this.fetchProduct(this.id)
-  },
+  }
 }
 </script>
-
-
