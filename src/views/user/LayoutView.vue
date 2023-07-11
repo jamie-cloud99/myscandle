@@ -1,6 +1,6 @@
 <template>
-  <NavbarComponent></NavbarComponent>
   <div class="bg-fix"></div>
+  <NavbarComponent :scroll-y="scrollY"></NavbarComponent>
   <ToastMessages></ToastMessages>
   <LoadingComponent v-show="isLoading"></LoadingComponent>
   <router-view></router-view>
@@ -26,8 +26,32 @@ export default {
       emitter
     }
   },
+  data() {
+    return {
+      scrollY: 100
+    }
+  },
   computed: {
     ...mapState(statusStore, ['isLoading'])
-  }
+  },
+  methods: {
+    showHeaderBg() {
+      if (this.$route.name ==='Home') {
+        this.scrollY = 500
+      } else if (this.$route.name ==='Shop') {
+        this.scrollY = 250
+      }
+      else {
+        this.scrollY = 0
+      }
+    }
+  },
+  watch: {
+    $route: {
+      handler: "showHeaderBg",
+      immediate: true
+    }
+  },
+  
 }
 </script>

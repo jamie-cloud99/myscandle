@@ -1,13 +1,13 @@
 <template>
   <img class="shop-bn-img object-fit-cover" src="src/assets/images/shop/shop-bn.webp" alt="" />
-  <div class="container mt-5">
-    <nav aria-label="breadcrumb">
+  <div class="container pt-5">
+    <!-- <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><RouterLink to="/shop">商品一覽</RouterLink></li>
         <li class="breadcrumb-item active" aria-current="page">所有商品</li>
       </ol>
-    </nav>
-    <div class="overflow-hidden my-5">
+    </nav> -->
+    <div class="overflow-hidden py-2">
       <div class="row gx-5">
         <div class="col-md-3">
           <ul class="list-group mb-5">
@@ -41,10 +41,10 @@
 
 <style lang="scss">
 .shop-bn-img {
-  min-height: 300px;
-  max-height: 350px;
+  min-height: 250px;
+  max-height: 300px;
   width: 100vw;
-  object-position: 60% bottom;
+  object-position: 80% bottom;
 }
 </style>
 
@@ -83,7 +83,7 @@ export default {
         const res = await this.axios.get(api)
         if (res.data.success) {
           this.productsAll = res.data.products
-          this.paginate(this.productsAll)
+          this.selectCategory(this.categorySelected)
         }
       } catch (error) {
         this.handleError()

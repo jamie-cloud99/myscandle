@@ -21,6 +21,7 @@ const router = createRouter({
         },
         {
           path: 'product/:productId',
+          name: 'Product',
           component: () => import('@/views/user/ProductDetail.vue')
         },
         {
@@ -55,7 +56,7 @@ const router = createRouter({
       children: [
         {
           path: 'product',
-          name: 'Product',
+          name: 'Products',
           component: () => import('@/views/admin/ProductList.vue')
         },
         {

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="row my-5">
+    <div class="row py-4">
       <div class="col-lg-8 pt-3 mb-5 mb-lg-0">
         
         <CartTable></CartTable>

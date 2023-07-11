@@ -241,9 +241,6 @@ export default {
       const index = this.pickedProducts.indexOf(item)
       this.swiper.slideTo(index)
     }
-  },
-  mounted() {
-    console.log(this.swiper)
   }
 }
 </script>

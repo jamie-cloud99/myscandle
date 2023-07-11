@@ -1,5 +1,6 @@
 <template>
-  <ul class="d-flex justify-content-center align-items-start my-5">
+  <div class="container pt-5">
+    <ul class="d-flex justify-content-center align-items-start pt-5">
     <li
       class="d-flex flex-column justify-content-center align-items-center mx-3"
       v-for="item in progress"
@@ -10,6 +11,7 @@
       <p class="step-title">{{ item.title }}</p>
     </li>
   </ul>
+  </div>
   <router-view></router-view>
 </template>
 

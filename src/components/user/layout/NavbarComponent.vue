@@ -1,109 +1,196 @@
 <template>
-  <nav class="navbar navbar-expand-md sticky-top bg-light">
-    <div class="container d-md-flex justify-content-between">
-
-      <h1 class="">
-        <span class="visually-hidden">mys香氛</span>
-        <RouterLink to="/"><img src="@/assets/images/logo/mys.svg" alt="mys" class="logo-img" height="27"></RouterLink></h1>
-      <button
-        class="navbar-toggler border-0"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse " id="navbarNav">
-        <ul class="navbar-nav align-items-center ms-md-4">
-          <li class="nav-item mx-2">
-            <RouterLink to="/shop" class="nav-link" aria-current="page">商品一覽</RouterLink>
-          </li>
-          <li class="nav-item mx-2">
-            <RouterLink to="/about" class="nav-link" href="#">關於我們</RouterLink>
-          </li>
-        </ul>
+  <div class="header py-2" :class="{ 'bg-primary': isScrollDown }">
+    <div class="container d-flex justify-content-between">
+      <button type="button" class="d-md-none menu-btn" @click.prevent="toggleMenu" :class="{active: showMenu}"><span class="navicon"></span></button>
+      <ul class="menu pt-3">
+        <li class="mb-2"><router-link to="/shop" class="menu-item link-light fs-5 p-3" @click.prevent="toggleMenu">SHOP</router-link></li>
+        <li class="mb-2"><router-link to="/shop" class="menu-item link-light fs-5 p-3" @click.prevent="toggleMenu">香薰蠟燭</router-link></li>
+        <li class="mb-2"><router-link to="/shop" class="menu-item link-light fs-5 p-3" @click.prevent="toggleMenu">擴香瓶</router-link></li>
+        <li class="mb-2"><router-link to="/shop" class="menu-item link-light fs-5 p-3" @click.prevent="toggleMenu">香氛噴霧</router-link></li>
+        <li class="mb-2"><router-link to="/shop" class="menu-item link-light fs-5 p-3" @click.prevent="toggleMenu">精緻禮盒</router-link></li>
+      </ul>
+      <div class="d-flex align-items-center">
+        <RouterLink to="/">
+          <span class="visually-hidden">mys香氛</span>
+          <img src="@/assets/images/logo/mys-light.svg" alt="mys香氛" class="logo-img" />
+        </RouterLink>
+        <RouterLink to="/shop" class="shop-link ms-5 px-2 link-light" :class="{ 'd-md-block': showShopBtn }">SHOP</RouterLink>
       </div>
-      <ul class="d-none d-md-flex align-items-center">
-        <li class="nav-search border-dark rounded-pill">
-          <button type="button" class="btn border-0"><i class="bi bi-search fs-5"></i><span class="d-md-none ms-2">會員專區</span></button>
-          <input type="search" class="form-control search-input" placeholder="搜尋商品名稱">
-          <button type="button" class="search-close"><i class="bi bi-x fs-4"></i></button>
+      <ul class="navbar-nav">
+        <li class="me-2">
+          <button
+            type="button"
+            class="btn border-0 position-relative"
+            @click.prevent="openCartModal"
+          >
+            <i class="bi bi-handbag-fill text-light fs-5"></i
+            ><span class="position-absolute cart-number badge rounded-pill bg-danger">
+              {{ cartList.length }}
+              <span class="visually-hidden">unread messages</span>
+            </span>
+          </button>
         </li>
-        <li><button type="button" class="btn border-0"><i class="bi bi-person-fill fs-4"></i><span class="d-md-none ms-2">會員專區</span></button></li>
-        <li><button type="button" class="btn border-0" @click.prevent="openCartModal"><i class="bi bi-handbag-fill fs-5"></i><span class="d-md-none ms-2">購物車</span></button></li>
       </ul>
     </div>
-  </nav>
+  </div>
 </template>
 
-
 <style lang="scss">
-.navbar{
-  height: 55px;
-  background: url('src/assets/images/background/bg.png');
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+$light: #f2edde;
+$primary: #804D1E;
 
-
+.header {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 500;
 }
 
-.logo-img{
-  height: 40px;
+.logo-img {
+  height: 44px;
   width: auto;
-  padding-top: 0.5rem;
+  padding-top: 0.25rem;
+}
+
+.shop-link {
+  display: none;
+  font-size: 1.15rem;
+  letter-spacing: 0.1rem;
+}
+
+.badge.cart-number {
+  top: 2px;
+  left: 1.75rem;
+}
+
+.navicon {
+  background: $light;
+  display: block;
+  height: 2px;
+  position: relative;
+  transition: background 0.2s ease-out;
+  width: 1.25rem;
+
+  &::before,
+  &::after {
+    z-index: 1000;
+    background: $light;
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    transition: all 0.2s ease-out;
+    width: 100%;
+  }
+  &::before {
+    top: -0.5rem;
+  }
+  &::after {
+    top: 0.5rem;
+  }
+}
+
+.active .navicon{
+    background: transparent;
   
+  &::before {
+    top: 0;
+    transform: rotate(-45deg);
+  }
+  &::after {
+    top: 0;
+    transform: rotate(45deg);
+  }
 }
 
-.navbar-toggler:focus{
-  box-shadow: none;
+.menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  background: $primary;
+  z-index: 800;
 }
 
-.nav-search{
+.menu-btn.active ~ .menu {
   display: flex;
-  &.expand{
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu-item {
+  letter-spacing: 0.1rem;
+}
+
+
+.nav-search {
+  display: flex;
+  &.expand {
     border: 1px solid black;
   }
 }
 
-.search-input, .search-close{
+.search-input,
+.search-close {
   display: none;
   font-size: 0.875rem;
 }
 
-.expand .search-input{
+.expand .search-input {
   display: block;
   background-color: inherit;
-  &:focus{
+  &:focus {
     border: 0;
     box-shadow: none;
   }
 }
 
-.expand .search-close{
+.expand .search-close {
   display: block;
 }
-
-
-
 </style>
 
-<script>  
+<script>
 import { mapState } from 'pinia'
 import cartStore from '../../../stores/cartStore'
 
 export default {
+  props: ['scrollY'],
+  data() {
+    return {
+      isScrollDown: true,
+      showShopBtn: false,
+      showMenu: false
+    }
+  },
+
   computed: {
     ...mapState(cartStore, ['cartList'])
   },
   methods: {
     openCartModal() {
       this.$router.push('/cart')
+    },
+    watchScroll(height = 0) {
+      this.isScrollDown = window.scrollY >= height ? true : false
+      this.showShopBtn = window.scrollY >= height ? true : false
+    },
+    toggleMenu() {
+      this.showMenu = !this.showMenu
     }
+  },
+  mounted() {
+    if (this.scrollY !== 0) {
+      window.addEventListener('scroll', () => {
+        this.watchScroll(this.scrollY)
+      })
+    }
+  },
+  beforeUnmount() {
+    window.removeEventListener('scroll', () => {
+      this.watchScroll(this.scrollY)
+    })
   }
-
 }
-
 </script>
-

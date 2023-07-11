@@ -1,6 +1,6 @@
 <template>
-  <div class="container my-5">
-    <nav aria-label="breadcrumb">
+  <div class="container py-5">
+    <nav aria-label="breadcrumb" class="mt-5">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><RouterLink to="/shop">商品一覽</RouterLink></li>
         <li class="breadcrumb-item" aria-current="page">
@@ -13,15 +13,15 @@
     </nav>
     <div class="overflow-hidden my-5">
       <div class="row justify-content-between">
-        <div class="col-1 d-none d-md-block">
-          <ul>
+        <div class="col-md-1 order-2 order-md-0">
+          <ul class="d-flex d-md-block">
             <li
               class="image-list mb-3 position-relative"
               v-for="img in imageList"
               :key="img"
               @click.prevent="changeImgView(img)"
             >
-              <img :src="img" :alt="product.title" />
+              <img :src="img" :alt="product.title" class="d-block"/>
               <div
                 v-show="tempImage === img"
                 class="h-100 w-100 position-absolute bg-white top-0 opacity-50"
@@ -29,10 +29,10 @@
             </li>
           </ul>
         </div>
-        <div class="col-md-5 mb-5">
+        <div class="col-md-5 mb-5 order-1">
           <img class="d-block" :src="tempImage" :alt="product.title" />
         </div>
-        <div class="col-md-5 mb-5">
+        <div class="col-md-5 mb-5 order-3">
           <h2 class="h4 mb-3">{{ product.title }}</h2>
           <h3 class="fs-6 text-highlight mb-4">{{ product.notes }}</h3>
           <p class="h4 mb-5">

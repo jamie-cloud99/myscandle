@@ -1,21 +1,16 @@
 <template>
-  
   <div class="banner position-relative">
     <img :src="banner.imgUrl" :alt="banner.title" class="d-block banner-img">
     <div class="banner-slogan position-absolute rounded-md">
       <h2 class="slogan-text text-light px-5 py-4 lh-normal">宛若仙境的清新空氣</h2>
-      <button type="button" class="slogan-btn btn btn-light rounded-md px-4 ms-5 mb-3">探索香氛</button>
+      <button type="button" @click.prevent="$router.push('/shop')" class="slogan-btn btn btn-light rounded-md px-4 ms-5 mb-3">探索香氛</button>
     </div>
   </div>
   <!-- 查看更多 動畫 -->
   <div class="container">
-
     <div class="pt-5 mt-5">
       <AboutUs></AboutUs>
     </div>
-    <!-- <div class="pt-5 mt-5">
-      <SpecialCategories></SpecialCategories>
-    </div> -->
     <div class="pt-5">
       <HotProducts></HotProducts>
     </div>
@@ -35,14 +30,12 @@
 
 
 <script>
-// import SpecialCategories from '../../components/user/home/SpecialCategories.vue';
 import HotProducts from '../../components/user/home/HotProducts.vue';
 import AboutUs from '../../components/user/home/AboutUs.vue';
 import OurFeatures from '../../components/user/home/OurFeatures.vue';
 
 export default{
   components:{
-    // SpecialCategories,
     HotProducts,
     AboutUs,
     OurFeatures
