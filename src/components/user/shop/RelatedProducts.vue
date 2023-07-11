@@ -20,7 +20,6 @@
 import { Autoplay } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
-import 'swiper/css/navigation'
 
 import ProductCard from './ProductCard.vue'
 

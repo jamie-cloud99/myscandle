@@ -16,11 +16,15 @@ body{
 
 .categories-list-item{
   transition: all 0.5s;
-  &.active, &:hover{
-    color: $primary;
+  color: $primary;
     background-color: $light;
     border: 1px solid $primary;
     border-radius: 1.5rem;
+  &.active, &:hover{
+    color: $light;
+    background-color: $primary;
+    border: 1px solid $primary;
+
 }
 }
 

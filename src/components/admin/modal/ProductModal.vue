@@ -199,7 +199,7 @@
                 <div class="col-sm-6 col-md-4 d-flex flex-column">
                   <img
                     v-if="tempProduct.imageUrl"
-                    class="img-fluid flex-grow-1"
+                    class="img-fluid object-cover flex-grow-1"
                     :alt="tempProduct.title"
                     :src="tempProduct.imageUrl"
                   />

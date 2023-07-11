@@ -15,9 +15,6 @@
 
 <style lang="scss">
 
-.categories-list{
-
-}
 
 .categories-item-text{
   position: relative;

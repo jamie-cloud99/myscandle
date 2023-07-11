@@ -13,9 +13,9 @@
     <div class="pt-5 mt-5">
       <AboutUs></AboutUs>
     </div>
-    <div class="pt-5 mt-5">
+    <!-- <div class="pt-5 mt-5">
       <SpecialCategories></SpecialCategories>
-    </div>
+    </div> -->
     <div class="pt-5">
       <HotProducts></HotProducts>
     </div>
@@ -35,14 +35,14 @@
 
 
 <script>
-import SpecialCategories from '../../components/user/home/SpecialCategories.vue';
+// import SpecialCategories from '../../components/user/home/SpecialCategories.vue';
 import HotProducts from '../../components/user/home/HotProducts.vue';
 import AboutUs from '../../components/user/home/AboutUs.vue';
 import OurFeatures from '../../components/user/home/OurFeatures.vue';
 
 export default{
   components:{
-    SpecialCategories,
+    // SpecialCategories,
     HotProducts,
     AboutUs,
     OurFeatures
@@ -53,26 +53,7 @@ export default{
         imgUrl: '/src/assets/images/banner/main.jpg',
         title: '呼吸，每一口都香甜純粹-mys'
       },
-      SpecialCategories: [
-        {
-          title: '經典從容香調',
-          description: '百年時光錘鍊，溫柔香氣縈繞鼻息，戒不掉的經典好味',
-          category: '熱銷商品',
-        },
-        {
-          title: '綻放仲夏情調',
-          description: '月光下茉莉，伴隨夏的奇思妙想迷人綻放',
-          category: '當季新品',
-        },
-        {
-          title: '浪漫收藏禮盒',
-          description: '精心設計的包裝禮盒，與不敗香氛組合，傳遞你分享幸福的喜悅',
-          category: '送禮推薦',
-        }
-      ],
-      products: [
 
-      ]
     }
   },
   
