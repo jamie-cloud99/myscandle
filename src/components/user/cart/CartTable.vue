@@ -1,17 +1,11 @@
 <template>
-  <div class="d-flex justify-content-between align-items-center mb-2">
-    <h2 class="h5 ps-0 ps-md-3">購物車清單</h2>
-    <button type="button" class="btn btn-outline-primary py-2" @click.prevent="openClearModal">
-      全部刪除
-    </button>
-  </div>
-  <ul>
-    <li class="border border-primary p-3" v-for="cart in cartList" :key="cart.id">
+  <ul class="list-group rounded-md">
+    <li class="border border-primary list-group-item p-3" v-for="cart in cartList" :key="cart.id">
       <div class="d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
           <img class="cart-img" :src="cart.product.imageUrl" :alt="cart.product.title" />
-          <div>
-            <h4 class="flex-grow-1 fs-6 px-2 mb-0">{{ cart.product.title }}</h4>
+          <div class="align-self-start ms-sm-4">
+            <RouterLink :to="`/product/${cart.product.id}`" class="flex-grow-1 product-link fs-6 px-2 mb-2">{{ cart.product.title }}</RouterLink>
             <p class="fs-sm px-2">NT$ {{ $format.currency(cart.product.price) }}</p>
           </div>
         </div>
@@ -31,7 +25,7 @@
     :item="tempCart"
     @confirm-deletion="deleteCartItem"
   ></DelCartModal>
-  <ClearCartsModal ref="clearCartsModal" @confirm-clear="clearAllCarts"></ClearCartsModal>
+  
 </template>
 
 <script>
@@ -40,14 +34,14 @@ import { mapState, mapActions } from 'pinia'
 import statusStore from '../../../stores/statusStore'
 import cartStore from '../../../stores/cartStore'
 import DelCartModal from './DelCartModal.vue'
-import ClearCartsModal from './ClearCartsModal.vue'
+
 
 export default {
   emits: ['open-del-modal'],
   components: {
     QuantityBtn,
     DelCartModal,
-    ClearCartsModal
+    
   },
   data() {
     return {
@@ -55,30 +49,37 @@ export default {
     }
   },
   computed: {
-    ...mapState(statusStore, ['isLoading']),
+    ...mapState(statusStore, ['isLoading', 'showDelModal']),
     ...mapState(cartStore, ['cartList', 'cartsTotal'])
   },
   methods: {
-    ...mapActions(cartStore, ['fetchCart', 'addToCart', 'updateCart', 'deleteCart', 'clearCarts']),
+    ...mapActions(cartStore, ['fetchCart', 'updateCart', 'deleteCart']),
     deleteCartItem(cartId) {
       this.deleteCart(cartId)
       this.$refs.delCartModal.hideModal()
     },
-    clearAllCarts() {
-      this.clearCarts()
-      this.$refs.clearCartsModal.hideModal()
-    },
+    
     openDelModal(cart) {
       this.tempCart = { ...cart }
       this.$refs.delCartModal.showModal()
     },
-    openClearModal() {
-      this.$refs.clearCartsModal.showModal()
-    }
+    
   },
   created() {
     this.fetchCart()
   }
 }
 </script>
+
+<style lang="scss">
+.cart-img {
+  height: 5rem;
+  width: 5rem;
+  object-fit: cover;
+  @include pad {
+    height: 7rem;
+    width: 7rem;
+  }
+}
+</style>
 

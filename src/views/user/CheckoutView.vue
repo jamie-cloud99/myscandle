@@ -1,42 +1,55 @@
 <template>
   <div class="container">
     <div class="row justify-content-center my-5">
-      <div class="col col-md-8 col-lg-6">
-        <div class="d-flex p-3 bg-light">
+      <div class="col col-md-9 col-xl-6">
+        <div class="d-flex p-3 bg-light rounded-md">
           <p class="fw-bold">訂單日期：{{ $format.date(orderSubmitted.create_at) }}</p>
-          <p class="fw-bold ms-4 flex-grow-1">訂單金額：NT$ {{ $format.currency(Math.floor(orderSubmitted.total)) }}</p>
-          <button type="button">收合明細</button>
+          <p class="fw-bold ms-4 flex-grow-1">
+            訂單金額：NT$ {{ $format.currency(Math.floor(orderSubmitted.total)) }}
+          </p>
+          <button type="button" @click="toggleOrder">收合明細</button>
         </div>
-        <table class="table my-4">
-          <tbody class="">
-            <tr class="border-bottom border-primary">
-              <td style="width: 40%;" class="px-3">訂單編號：</td>
-              <td>{{ orderSubmitted.id }}</td>
-            </tr>
-            <tr class="border-bottom border-primary">
-              <td style="width: 40%;" class="px-3">付款狀態：</td>
-              <td><p v-if="orderSubmitted.is_paid">已付款</p><p v-else>未付款</p></td>
-            </tr>
-            <tr class="border-bottom border-primary">
-              <td style="width: 40%;" class="px-3">收件人：</td>
-              <td>{{ orderSubmitted.user.name }}</td>
-            </tr>
-            <tr class="border-bottom border-primary">
-              <td style="width: 40%;" class="px-3">收件地址：</td>
-              <td>{{ orderSubmitted.user.address }}</td>
-            </tr>
-            <tr class="border-bottom border-primary">
-              <td style="width: 40%;" class="px-3">聯絡電話：</td>
-              <td>{{ orderSubmitted.user.tel }}</td>
-            </tr>
-            <tr class="border-bottom border-primary">
-              <td style="width: 40%;" class="px-3">email：</td>
-              <td>{{ orderSubmitted.user.email }}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="order-detail mt-4" :class="{ show: showDetail }">
+          <ul class="list-group rounded-md overflow-hidden">
+            <li class="list-group-item border-primary p-3" v-for="cart in orderSubmitted.products" :key="cart.id">
+              <div class="d-flex">
+                <img
+                  class="d-block cart-img"
+                  :src="cart.product.imageUrl"
+                  :alt="cart.product.title"
+                />
+                <div class="d-flex flex-column justify-content-between flex-grow-1">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <h4 class="flex-grow-1 fs-6 ps-2 mb-0">{{ cart.product.title }}</h4>
+                    <p class="flex-grow-1 text-primary-emphasis fs-sm text-end ps-2">
+                      x {{ cart.qty }}
+                    </p>
+                  </div>
+                  <p class="fs-sm ps-2 mt-2 flex-grow-1">
+                    NT$ {{ $format.currency(cart.product.price) }}
+                  </p>
+                  <div class="d-flex justify-content-end align-items-center mt-2">
+                    <s v-if="cart.total !== cart.final_total" class=""
+                      >NT$ {{ $format.currency(cart.total) }}</s
+                    >
+                    <p class="text-primary fw-bold ps-2 flex-grow-1">
+                      NT$ {{ $format.currency(cart.final_total) }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <table class="table my-4"></table>
         <div class="text-center mt-3">
-          <button type="button" class="btn btn-primary px-5" @click.prevent="completePayment(orderSubmitted.id)">確認付款</button>
+          <button
+            type="button"
+            class="btn btn-primary px-5"
+            @click.prevent="completePayment(orderSubmitted.id)"
+          >
+            確認付款
+          </button>
         </div>
       </div>
     </div>
@@ -49,15 +62,26 @@ import statusStore from '../../stores/statusStore'
 import cartStore from '../../stores/cartStore'
 
 export default {
+  components: {
+    
+  },
+  data() {
+    return {
+      showDetail: false
+    }
+  },
   computed: {
     ...mapState(statusStore, ['paymentStep']),
-    ...mapState(cartStore, ['orderSubmitted','orderId'])
+    ...mapState(cartStore, ['orderSubmitted', 'orderId'])
   },
   methods: {
     ...mapActions(cartStore, ['openCheckout', 'checkout']),
     completePayment(id) {
       this.checkout(id)
       this.$router.replace('/payment-success')
+    },
+    toggleOrder() {
+      this.showDetail = !this.showDetail
     }
   },
   created() {
@@ -65,3 +89,14 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.order-detail {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 1s ease-in-out;
+  &.show {
+    max-height: 100vh;
+  }
+}
+</style>

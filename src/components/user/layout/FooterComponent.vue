@@ -29,7 +29,7 @@
           </ul>
         </div>
       </div>
-      <div class="d-md-flex border-top border-primary py-3">
+      <div class="d-md-flex justify-content-end border-top border-primary fs-sm py-3">
         <p class="me-md-4">本站僅作為網頁作品練習使用</p>
         <p>mys 2023 © All Rights Reserved.</p>
       </div>

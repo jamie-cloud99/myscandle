@@ -8,10 +8,11 @@
     >
       <i class="bi bi-dash"></i></button
     ><input
-      class="form-control quantity text-center border border-primary bg-transparent mx-2"
+      class="form-control quantity text-center border border-primary bg-transparent rounded-md mx-2"
       type="number"
       min="1"
       v-model.number="tempQuantity"
+      disabled
     />
     <div v-if="cart.id===cartLoadingItem" class="spinner-border text-primary spinner-border-sm" role="status">
       <span class="visually-hidden">Loading...</span>

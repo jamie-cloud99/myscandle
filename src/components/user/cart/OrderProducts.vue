@@ -1,14 +1,6 @@
 <template>
-  <div class="d-flex justify-content-between align-items-center mb-2">
-    <RouterLink to="/cart" class="d-flex align-items-center flex-grow-1 text-primary-emphasis py-2"
-      ><i class="bi bi-chevron-left me-2"></i>返回購物車</RouterLink
-    >
-    <h2 class="h5 text-primary fw-bold">
-      訂單金額：NT${{ $format.currency(cartsTotal.final_total) }}
-    </h2>
-  </div>
-  <ul class="overflow-hidden">
-    <li class="border border-primary p-3" v-for="cart in cartList" :key="cart.id">
+  <ul class="list-group rounded-md overflow-hidden">
+    <li class="list-group-item border-primary p-3" v-for="cart in cartList" :key="cart.id">
       <div class="d-flex">
         <img class="d-block cart-img" :src="cart.product.imageUrl" :alt="cart.product.title" />
         <div class="d-flex flex-column justify-content-between flex-grow-1">

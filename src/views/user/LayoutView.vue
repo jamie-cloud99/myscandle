@@ -1,6 +1,7 @@
 <template>
   <div class="bg-fix"></div>
   <NavbarComponent :scroll-y="scrollY"></NavbarComponent>
+  <OffCanvaCart></OffCanvaCart>
   <ToastMessages></ToastMessages>
   <LoadingComponent v-show="isLoading"></LoadingComponent>
   <router-view></router-view>
@@ -9,9 +10,10 @@
 
 <script>
 import NavbarComponent from '../../components/user/layout/NavbarComponent.vue'
+import OffCanvaCart from '../../components/user/layout/OffCanvaCart.vue'
 import FooterComponent from '../../components/user/layout/FooterComponent.vue'
 import emitter from '../../methods/emitter'
-import ToastMessages from '../../components/ToastMessages.vue'
+import ToastMessages from '../../components/user/layout/ToastMessages.vue'
 import statusStore from '../../stores/statusStore'
 import { mapState } from 'pinia'
 
@@ -19,7 +21,8 @@ export default {
   components: {
     NavbarComponent,
     FooterComponent,
-    ToastMessages
+    ToastMessages,
+    OffCanvaCart
   },
   provide() {
     return {
@@ -32,17 +35,24 @@ export default {
     }
   },
   computed: {
-    ...mapState(statusStore, ['isLoading'])
+    ...mapState(statusStore, ['isLoading', 'showCart'])
   },
   methods: {
     showHeaderBg() {
       if (this.$route.name ==='Home') {
         this.scrollY = 500
       } else if (this.$route.name ==='Shop') {
-        this.scrollY = 250
+        this.scrollY = 10
       }
       else {
         this.scrollY = 0
+      }
+    },
+    disableScroll() {
+      if(this.showCart) {
+        document.body.style.position = 'fixed';
+      } else {
+        document.body.style.position = '';
       }
     }
   },
@@ -50,6 +60,9 @@ export default {
     $route: {
       handler: "showHeaderBg",
       immediate: true
+    },
+    showCart: {
+      handler: 'disableScroll'
     }
   },
   

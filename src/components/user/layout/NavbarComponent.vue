@@ -21,11 +21,11 @@
           <button
             type="button"
             class="btn border-0 position-relative"
-            @click.prevent="openCartModal"
+            @click.prevent="toggleCartPreview"
           >
             <i class="bi bi-handbag-fill text-light fs-5"></i
             ><span class="position-absolute cart-number badge rounded-pill bg-danger">
-              {{ cartList.length }}
+              {{ countCart }}
               <span class="visually-hidden">unread messages</span>
             </span>
           </button>
@@ -59,6 +59,7 @@ $primary: #804D1E;
 }
 
 .badge.cart-number {
+  pointer-events: none;
   top: 2px;
   left: 1.75rem;
 }
@@ -152,7 +153,8 @@ $primary: #804D1E;
 </style>
 
 <script>
-import { mapState } from 'pinia'
+import { mapState, mapActions } from 'pinia'
+import statusStore from '../../../stores/statusStore'
 import cartStore from '../../../stores/cartStore'
 
 export default {
@@ -161,31 +163,35 @@ export default {
     return {
       isScrollDown: true,
       showShopBtn: false,
-      showMenu: false
+      showMenu: false,
     }
   },
-
   computed: {
-    ...mapState(cartStore, ['cartList'])
+    ...mapState(cartStore, ['cartList']),
+    ...mapState(statusStore, ['showCart']),
+    countCart() {
+      return this.cartList.reduce((acc, cur) => acc +=cur.qty,0)
+    }
   },
   methods: {
-    openCartModal() {
-      this.$router.push('/cart')
-    },
+    ...mapActions(cartStore, ['fetchCart']),
+    ...mapActions(statusStore, ['toggleCartPreview']),
     watchScroll(height = 0) {
       this.isScrollDown = window.scrollY >= height ? true : false
       this.showShopBtn = window.scrollY >= height ? true : false
     },
     toggleMenu() {
       this.showMenu = !this.showMenu
-    }
+    },
+    
+  },
+  created() {
+    this.fetchCart()
   },
   mounted() {
-    if (this.scrollY !== 0) {
-      window.addEventListener('scroll', () => {
+    window.addEventListener('scroll', () => {
         this.watchScroll(this.scrollY)
       })
-    }
   },
   beforeUnmount() {
     window.removeEventListener('scroll', () => {

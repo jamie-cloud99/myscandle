@@ -1,10 +1,12 @@
 import { defineStore } from "pinia"
 import axios from "axios"
 import statusStore from "./statusStore"
+import toastStore from "./toastStore"
 
 const {VITE_API, VITE_PATH} = import.meta.env
 
 const status = statusStore()
+const toast = toastStore()
 
 export default defineStore('cartStore', {
   state: () => ({
@@ -19,6 +21,7 @@ export default defineStore('cartStore', {
   }),
   actions: {
     async fetchCart() {
+      status.isLoading = true
       const api = `${VITE_API}api/${VITE_PATH}/cart`
       try {
         const res = await axios.get(api)
@@ -42,14 +45,13 @@ export default defineStore('cartStore', {
       try {
         const res = await axios.post(api, {data: cart})
         if(res.data.success) {
-          console.log(res.data)
-          this.fetchCart()
+          await this.fetchCart()
+          toast.showSuccessToast(res.data.message)
         } else {
-          console.log(res.data)
+          toast.showFailToast(res.data.message)
         }
-
       } catch (error) {
-        console.log(error)
+        toast.handleError()
       }
     },
     async updateCart(cart, qty) {
@@ -58,14 +60,14 @@ export default defineStore('cartStore', {
       const data = {product_id: cart.product_id, qty }
       try {
         const res = await axios.put(api, {data})
-        
         if(res.data.success) {
-          this.fetchCart()
+          await this.fetchCart()
+          toast.showSuccessToast(res.data.message)
         } else {
-          console.log(res.data)
+          toast.showFailToast(res.data.message)
         }
       } catch (error) {
-        console.log(error)
+        toast.handleError()
       }
     },
     async deleteCart(cartId) {
@@ -73,27 +75,31 @@ export default defineStore('cartStore', {
       try {
         const res = await axios.delete(api)
         if(res.data.success) {
-          console.log(res.data) 
-          this.fetchCart()
+          await this.fetchCart()
+          toast.showSuccessToast(res.data.message)
         }else {
-          console.log(res.data)
+          toast.showFailToast(res.data.message)
         }
       } catch (error) {
-        console.log(error)
+        toast.handleError()
       }
     },
     async clearCarts() {
+      status.isLoading = true
       const api = `${VITE_API}api/${VITE_PATH}/carts`
       try {
         const res = await axios.delete(api)
         if(res.data.success) {
-          console.log(res.data)
-          this.fetchCart()
+          await this.fetchCart()
+          status.isLoading = false
+          toast.showSuccessToast(res.data.message)
         } else {
-          console.log(res.data)
+          status.isLoading = false
+          toast.showFailToast(res.data.message)
         }
       } catch (error) {
-        console.log(error)
+        status.isLoading = false
+        toast.handleError()
       }
     },
     async useCoupon(code) {
@@ -102,7 +108,7 @@ export default defineStore('cartStore', {
       try {
         const res = await axios.post(api, {data: {code}})
         if(res.data.success) {
-          console.log(res.data)
+
           this.couponMessage = res.data.message
           this.fetchCart()
           status.couponLoading = false
@@ -123,15 +129,14 @@ export default defineStore('cartStore', {
           this.orderId = res.data.orderId
           status.paymentStep = 3
         } else{
-          console.log(res.data)
           status.orderLoading = false
         }
       } catch (error) {
-        console.log(error)
         status.orderLoading = false
       }
     },
     async fetchOrder(id) {
+      status.isLoading = true
       const api = `${VITE_API}api/${VITE_PATH}/order/${id}`
       try {
         const res = await axios.get(api)
@@ -139,28 +144,27 @@ export default defineStore('cartStore', {
           status.isLoading = false
           this.orderSubmitted = res.data.order
         } else{
-          console.log(res.data)
           status.isLoading = false
+          toast.showFailToast(res.data.message)
         }
       } catch (error) {
-        console.log(error)
         status.isLoading = false
+        toast.handleError()
       }
     },
     async checkout(id) {
+      status.isLoading = true
       const api = `${VITE_API}api/${VITE_PATH}/pay/${id}`
       try {
-        
         const res = await axios.post(api)
         if(res.data.success) {
           status.isLoading = false
           this.orderSubmitted = {}
           this.orderId = ''
-          console.log(res.data.message)
         } 
       } catch (error) {
-        console.log(error)
         status.isLoading = false
+        toast.handleError()
       }
     },
     openCart() {

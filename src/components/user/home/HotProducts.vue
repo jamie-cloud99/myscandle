@@ -228,7 +228,7 @@ export default {
         }
       ],
       modules: [Pagination],
-      tempCategory: {category: '當季新品'},
+      tempCategory: {category: '熱銷商品'},
       swiper: null,
     }
   },

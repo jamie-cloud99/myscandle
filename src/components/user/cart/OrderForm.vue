@@ -5,7 +5,7 @@
     <div class="mb-3">
       <label for="name" class="form-label">收件人姓名<span class="text-danger">*</span></label>
       <VField
-        v-model="order.name"
+        v-model.trim="order.name"
         type="text"
         class="form-control bg-transparent border border-primary"
         id="name"
@@ -35,7 +35,7 @@
     <div class="mb-3">
       <label for="email" class="form-label">收件人 email<span class="text-danger">*</span></label>
       <VField
-        v-model="order.email"
+        v-model.trim="order.email"
         type="email"
         class="form-control bg-transparent border border-primary"
         id="email"
@@ -86,7 +86,7 @@
     <div class="mb-3">
       <label for="road" class="form-label">路名、巷弄號樓<span class="text-danger">*</span></label>
       <VField
-        v-model="order.road"
+        v-model.trim="order.road"
         type="text"
         class="form-control bg-transparent border border-primary"
         id="road"
@@ -102,7 +102,7 @@
       <label for="message" class="form-label">留言</label>
       <VField
         as="textarea"
-        v-model="message"
+        v-model.trim="message"
         class="form-control bg-transparent border border-primary"
         id="message"
         placeholder=""
@@ -110,7 +110,10 @@
       >
       </VField>
     </div>
-    <button type="submit" class="d-block btn btn-primary" :disabled="orderLoading"><span >送出訂單</span><span v-if="orderLoading" class="spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span></button>
+    <div class="d-flex pt-2">
+      <button type="submit" class="btn btn-primary ms-auto" :disabled="orderLoading"><span >送出訂單</span><span v-if="orderLoading" class="spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span></button>
+    </div>
+    
   </VForm>
 </template>
 

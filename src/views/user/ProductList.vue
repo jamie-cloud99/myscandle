@@ -18,7 +18,7 @@
               :class="{ active: item === categorySelected }"
               aria-current="true"
             >
-              <a href="#" @click.prevent="selectCategory(item)">{{ item }}</a>
+              <a href="#" @click.prevent="changeCategory(item)">{{ item }}</a>
             </li>
           </ul>
         </div>
@@ -41,90 +41,35 @@
 
 <style lang="scss">
 .shop-bn-img {
-  min-height: 250px;
-  max-height: 300px;
+ height: 100px;
   width: 100vw;
-  object-position: 80% bottom;
+  object-position: bottom;
 }
 </style>
 
 <script>
-const { VITE_API, VITE_PATH } = import.meta.env
 import ProductCard from '../../components/user/shop/ProductCard.vue'
 import PageComponent from '../../components/user/shop/PageComponent.vue'
-import toastMixin from '../../mixins/toastMixin'
+import statusStore from '../../stores/statusStore'
+import productsStore from '../../stores/productsStore'
+import { mapState, mapActions } from 'pinia'
 
 export default {
   components: {
     ProductCard,
     PageComponent
   },
-  mixins: [toastMixin],
-  data() {
-    return {
-      products: [],
-      productsAll: [],
-      tempProduct: {},
-      pagination: {
-        current_page: 1,
-        total_pages: 1,
-        has_next: true,
-        has_pre: false
-      },
-      isLoading: true,
-      categorySelected: '所有商品',
-      categoryList: ['所有商品', '香薰蠟燭', '擴香瓶', '香氛噴霧', '精緻禮盒']
-    }
-  },
+
   methods: {
-    async fetchAllProducts() {
-      const api = `${VITE_API}api/${VITE_PATH}/products/all`
-      try {
-        const res = await this.axios.get(api)
-        if (res.data.success) {
-          this.productsAll = res.data.products
-          this.selectCategory(this.categorySelected)
-        }
-      } catch (error) {
-        this.handleError()
-      }
-    },
-    selectCategory(category = '所有商品') {
-      this.$router.push({ path: '/shop', query: { category } })
-      this.categorySelected = category
-      this.paginate(this.categoryProducts)
-    },
-    paginate(items, curPage = 1, perPage = 12) {
-      const totalPages = Math.ceil(items.length / perPage)
-      if (curPage > totalPages) {
-        curPage = totalPages
-      }
-
-      const minIndex = (curPage - 1) * perPage
-      const maxIndex = curPage * perPage
-      const itemPaginated = items.slice(minIndex, maxIndex)
-
-      const page = {
-        current_page: curPage,
-        total_pages: totalPages,
-        has_pre: curPage > 1,
-        has_next: curPage < totalPages
-      }
-
-      this.pagination = { ...page }
-      this.products = [...itemPaginated]
-      this.isLoading = false
+    ...mapActions(productsStore,['fetchAllProducts', 'paginate', 'selectCategory']),
+    changeCategory(item) {
+      this.$router.push({ path: '/shop', query: { category: item } })
+      this.selectCategory(item)
     }
   },
   computed: {
-    categoryProducts() {
-      const productList =
-        this.categorySelected === '所有商品'
-          ? [...this.productsAll]
-          : this.productsAll.filter((item) => item.category === this.categorySelected)
-
-      return productList
-    }
+    ...mapState(statusStore, ['isLoading']),
+    ...mapState(productsStore, ['categoryProducts', 'categoryList', 'categorySelected', 'products', 'pagination'])
   },
 
   created() {

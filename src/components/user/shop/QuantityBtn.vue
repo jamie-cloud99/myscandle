@@ -12,6 +12,7 @@
       type="number"
       min="1"
       v-model.number="tempQuantity"
+      disabled
     />
     <button
       class="btn quantity-btn btn-outline-primary rounded-circle flex-shrink-0"

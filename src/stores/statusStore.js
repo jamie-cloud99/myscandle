@@ -6,7 +6,12 @@ export default defineStore('statusStore', {
     cartLoadingItem: '',
     couponLoading: false,
     paymentStep: 1,
-    orderLoading: false
+    orderLoading: false,
+    showCart: false,
   }),
-  
+  actions: {
+    toggleCartPreview() {
+      this.showCart = !this.showCart
+    }
+  }
 })

@@ -1,10 +1,13 @@
 import { defineStore } from "pinia"
-import emitter from "../methods/emitter"
 import statusStore from "./statusStore"
 
 const status = statusStore()
 
 export default defineStore('toastStore', {
+  state: () => ({
+    message: {},
+    count: 0
+  }),
   actions: {
     handleError() {
       status.isLoading = false
@@ -17,17 +20,17 @@ export default defineStore('toastStore', {
       this.pushMessage({
         style: 'success',
         content: message
-      })
+      });
     },
     showFailToast(message) {
       status.isLoading = false
       this.pushMessage({
         style: 'error',
         content: message
-      })
+      });
     },
     pushMessage(res) {
-      emitter.emit('push-message', res)
+      this.$patch({message: res, count: this.count+1})
     }
   }
 })

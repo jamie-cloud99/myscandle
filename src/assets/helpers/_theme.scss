@@ -13,9 +13,6 @@ body{
   color: #787149
 }
 
-
-
-
 .categories-list-item{
   transition: all 0.5s;
   color: $primary;
@@ -78,6 +75,13 @@ body{
   }
   .step-title{
     color: $primary;
+  }
+}
+
+
+.product-link {
+  &:hover {
+    text-decoration: underline;
   }
 }
 

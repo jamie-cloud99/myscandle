@@ -14,26 +14,13 @@
     <div class="overflow-hidden my-5">
       <div class="row justify-content-between">
         <div class="col-md-1 order-2 order-md-0">
-          <ul class="d-flex d-md-block">
-            <li
-              class="image-list mb-3 position-relative"
-              v-for="img in imageList"
-              :key="img"
-              @click.prevent="changeImgView(img)"
-            >
-              <img :src="img" :alt="product.title" class="d-block"/>
-              <div
-                v-show="tempImage === img"
-                class="h-100 w-100 position-absolute bg-white top-0 opacity-50"
-              ></div>
-            </li>
-          </ul>
+          <ThumbnailImages></ThumbnailImages>
         </div>
-        <div class="col-md-5 mb-5 order-1">
-          <img class="d-block" :src="tempImage" :alt="product.title" />
+        <div class="col-md-5 text-center mb-5 order-1">
+          <img class="" :src="tempImage" :alt="product.title" />
         </div>
         <div class="col-md-5 mb-5 order-3">
-          <h2 class="h4 mb-3">{{ product.title }}</h2>
+          <h1 class="h4 mb-3">{{ product.title }}</h1>
           <h3 class="fs-6 text-highlight mb-4">{{ product.notes }}</h3>
           <p class="h4 mb-5">
             NT$ {{ $format.currency(product.price) }}
@@ -65,13 +52,13 @@
           </div>
 
           <hr class="my-3" />
-          <h4 class="fs-md mb-3">商品介紹 /</h4>
+          <h2 class="fs-md mb-3">商品介紹 /</h2>
           <p  class="mb-4">
             {{ product.description }}
           </p>
-          <h4 class="fs-md mb-3">香味 /</h4>
+          <h2 class="fs-md mb-3">香味 /</h2>
           <p v-html="wrapText(product.content)" class="mb-4"></p>
-          <h4 v-if="product.specifications" class="fs-md mb-3">規格 /</h4>
+          <h2 v-if="product.specifications" class="fs-md mb-3">規格 /</h2>
           <p v-html="wrapText(product.specifications)"></p>
         </div>
       </div>
@@ -83,38 +70,33 @@
 </template>
 
 <script>
-const { VITE_API, VITE_PATH } = import.meta.env
-
-import toastMixin from '../../mixins/toastMixin'
 import QuantityBtn from '../../components/user/shop/QuantityBtn.vue'
+import RelatedProducts from '../../components/user/shop/RelatedProducts.vue'
+import ThumbnailImages from '../../components/user/shop/ThumbnailImages.vue'
 
 import { mapState, mapActions } from 'pinia'
 import cartStore from '../../stores/cartStore'
 import statusStore from '../../stores/statusStore'
-import RelatedProducts from '../../components/user/shop/RelatedProducts.vue'
+import productsStore from '../../stores/productsStore'
 
 export default {
   components: {
     QuantityBtn,
-    RelatedProducts
+    RelatedProducts,
+    ThumbnailImages
   },
-  mixins: [toastMixin],
   data() {
     return {
-      product: {},
       quantity: 1,
-      imageList: [],
-      tempImage: '',
-      relatedProducts: [],
-      productsAll: []
     }
   },
   computed: {
-    ...mapState(cartStore, ['cartList']),
-    ...mapState(statusStore, ['isLoading', 'cartLoadingItem']),
     id() {
       return this.$route.params.productId
-    }
+    },
+    ...mapState(cartStore, ['cartList']),
+    ...mapState(statusStore, ['isLoading', 'cartLoadingItem']),
+    ...mapState(productsStore, ['product', 'tempImage', 'relatedProducts'])
   },
   watch: {
     id(newId, oldId) {
@@ -124,46 +106,14 @@ export default {
     }
   },
   methods: {
-    ...mapActions(cartStore, ['addToCart']),
-
-    async fetchProduct(id) {
-      const productApi = `${VITE_API}api/${VITE_PATH}/product/${id}`
-      const productsAllApi = `${VITE_API}api/${VITE_PATH}/products/all`
-      try {
-        const [productRes, productsAllRes] = await Promise.all([
-          this.axios.get(productApi),
-          this.axios.get(productsAllApi)
-        ])
-        if (productRes.data.success) {
-          this.product = productRes.data.product
-          this.productsAll = productsAllRes.data.products
-          this.getCategoryProducts(this.product.category)
-          this.concatImageList()
-          this.tempImage = this.product.imageUrl
-        }
-      } catch (error) {
-        this.handleError()
-      }
-    },
     wrapText(text) {
       if (text) return text.replace(/\n/g, '<br>')
-    },
-    getCategoryProducts(category) {
-      this.relatedProducts = this.productsAll.filter(
-        (item) => item.category === category && item.id !== this.id
-      )
     },
     getQuantity(num) {
       this.quantity = num
     },
-    concatImageList() {
-      this.imageList = this.product.imagesUrl
-        ? [this.product.imageUrl, ...this.product.imagesUrl]
-        : [this.product.imageUrl]
-    },
-    changeImgView(image) {
-      this.tempImage = image
-    }
+    ...mapActions(cartStore, ['addToCart']),
+    ...mapActions(productsStore, ['fetchProduct'])
   },
   created() {
     this.fetchProduct(this.id)

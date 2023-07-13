@@ -2,8 +2,18 @@
   <div class="container">
     <div class="row py-4">
       <div class="col-lg-8 pt-3 mb-5 mb-lg-0">
-        
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h2 class="h5 ps-0 ps-md-3">購物車清單</h2>
+          <button
+            type="button"
+            class="btn btn-outline-primary py-2"
+            @click.prevent="openClearModal"
+          >
+            全部刪除
+          </button>
+        </div>
         <CartTable></CartTable>
+        <ClearCartsModal ref="clearCartsModal" @confirm-clear="clearAllCarts"></ClearCartsModal>
       </div>
       <div class="col-lg-4 pt-3 mb-5 mb-lg-0">
         <h3 class="h5 py-2 mb-3 ps-2">使用優惠券</h3>
@@ -71,7 +81,7 @@
 
     <div class="px-3 my-5">
       <div class="row">
-        <div class="col-lg-8 bg-primary bg-opacity-25 order-2 py-4">
+        <div class="col-lg-8 bg-primary bg-opacity-25 rounded-md order-2 py-4">
           <h3 class="fs-5 px-4">加購專區</h3>
           <div class="row mx-2 mt-4">
             <div class="col-lg-4" v-for="i in 3" :key="'i' + i">
@@ -94,7 +104,7 @@
 }
 
 .coupon-group .coupon-input {
-  border-radius: 0.375rem;
+  padding-left: 1rem;
   flex: 1;
   min-width: 9rem;
 }
@@ -110,11 +120,13 @@ import CartTable from '../../components/user/cart/CartTable.vue'
 import { mapState, mapActions } from 'pinia'
 import cartStore from '../../stores/cartStore'
 import statusStore from '../../stores/statusStore'
+import ClearCartsModal from '../../components/user/cart/ClearCartsModal.vue'
 
 export default {
   components: {
     AdditionalPurchase,
-    CartTable
+    CartTable,
+    ClearCartsModal
   },
   data() {
     return {
@@ -140,10 +152,17 @@ export default {
     ...mapState(statusStore, ['isLoading', 'couponLoading'])
   },
   methods: {
-    ...mapActions(cartStore, ['useCoupon', 'openCart']),
+    ...mapActions(cartStore, ['useCoupon', 'openCart', 'clearCarts']),
     openOrderPage() {
       this.$router.push('/cart/order')
-    }
+    },
+    openClearModal() {
+      this.$refs.clearCartsModal.showModal()
+    },
+    clearAllCarts() {
+      this.clearCarts()
+      this.$refs.clearCartsModal.hideModal()
+    },
   },
   created() {
     this.openCart()
