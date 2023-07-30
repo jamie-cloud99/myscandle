@@ -15,6 +15,10 @@ const router = createRouter({
           component: () => import('@/views/user/HomeView.vue')
         },
         {
+          path: '/brand',
+          component: () => import('@/views/user/BrandStory.vue')
+        },
+        {
           path: 'shop',
           name: 'Shop',
           component: () => import('@/views/user/ProductList.vue')
@@ -84,6 +88,12 @@ const router = createRouter({
   ],
   linkActiveClass: 'active',
   scrollBehavior (to, from, savedPosition) {
+    if (to.hash) {
+      return {
+        el: to.hash,
+        behavior: 'smooth',
+      }
+    }
     if (savedPosition) {
       return savedPosition
     } else {
