@@ -2,7 +2,7 @@ import { defineStore } from "pinia"
 
 export default defineStore('statusStore', {
   state: () => ({
-    isLoading: false,  //! 待修正
+    isLoading: false,
     cartLoadingItem: '',
     couponLoading: false,
     paymentStep: 1,

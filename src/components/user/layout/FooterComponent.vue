@@ -5,17 +5,14 @@
         <div class="col-6 col-md-4 mb-4">
           <h4 class="fs-6 fw-bold mb-4">關於我們</h4>
           <ul>
-            <li><a href="" class="mb-2">品牌故事</a></li>
+            <li><RouterLink to="/brand" class="mb-2">品牌故事</RouterLink></li>
             <li><a href="" class="mb-2">聯絡我們</a></li>
           </ul>
         </div>
         <div class="col-6 col-md-4 mb-4">
           <h4 class="fs-6 fw-bold mb-4">商品一覽</h4>
           <ul>
-            <li><a href="" class="mb-2">香薰蠟燭</a></li>
-            <li><a href="" class="mb-2">擴香瓶</a></li>
-            <li><a href="" class="mb-2">香氛噴霧</a></li>
-            <li><a href="" class="mb-2">融蠟燈</a></li>
+            <li v-for="item in menuCategories" :key="item"><a href="#" class="mb-2" @click.prevent="goToShop(item)">{{ item }}</a></li>
           </ul>
         </div>
         <div class="col-md-4 my-4 mt-md-0 mb-md-4">
@@ -36,6 +33,25 @@
     </div>
   </div>
 </template>
+
+<script>
+import { mapState, mapActions } from 'pinia'
+import productsStore from '../../../stores/productsStore'
+
+export default{
+  computed: {
+    ...mapState(productsStore, ['menuCategories'])
+  },
+  methods: {
+    ...mapActions(productsStore,['selectCategory']),
+    goToShop(item) {
+      this.selectCategory(item)
+      this.$router.push({ path: '/shop', query: { category: item}})
+    },
+  }
+}
+
+</script>
 
 <style lang="scss">
 .logo-md {

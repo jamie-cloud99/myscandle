@@ -100,7 +100,7 @@ export default defineStore('productsStore', {
     },
     changeImgView(image) {
       this.tempImage = image
-    }
+    },
   },
   getters: {
     categoryProducts() {
@@ -110,6 +110,15 @@ export default defineStore('productsStore', {
           : this.productsAll.filter((item) => item.category === this.categorySelected)
 
       return productList
+    },
+    menuCategories() {
+      const list = []
+      for(let i=0; i<this.categoryList.length;i++) {
+        if(i!==0) {
+          list.push(this.categoryList[i])
+        }
+      }
+      return list
     }
   }
 })

@@ -4,10 +4,7 @@
       <button type="button" class="d-md-none menu-btn" @click.prevent="toggleMenu" :class="{active: showMenu}"><span class="navicon"></span></button>
       <ul class="menu pt-3">
         <li class="mb-2"><router-link to="/shop" class="menu-item link-light fs-5 p-3" @click.prevent="toggleMenu">SHOP</router-link></li>
-        <li class="mb-2"><router-link to="/shop" class="menu-item link-light fs-5 p-3" @click.prevent="toggleMenu">香薰蠟燭</router-link></li>
-        <li class="mb-2"><router-link to="/shop" class="menu-item link-light fs-5 p-3" @click.prevent="toggleMenu">擴香瓶</router-link></li>
-        <li class="mb-2"><router-link to="/shop" class="menu-item link-light fs-5 p-3" @click.prevent="toggleMenu">香氛噴霧</router-link></li>
-        <li class="mb-2"><router-link to="/shop" class="menu-item link-light fs-5 p-3" @click.prevent="toggleMenu">精緻禮盒</router-link></li>
+        <li v-for="item in menuCategories" :key="item" class="mb-2"><a class="menu-item link-light fs-5 p-3" @click.prevent="goToShop(item)">{{ item }}</a></li>
       </ul>
       <div class="d-flex align-items-center">
         <RouterLink to="/">
@@ -156,6 +153,7 @@ $primary: #804D1E;
 import { mapState, mapActions } from 'pinia'
 import statusStore from '../../../stores/statusStore'
 import cartStore from '../../../stores/cartStore'
+import productsStore from '../../../stores/productsStore'
 
 export default {
   props: ['scrollY'],
@@ -164,18 +162,21 @@ export default {
       isScrollDown: true,
       showShopBtn: false,
       showMenu: false,
+      // menuCategories: []
     }
   },
   computed: {
     ...mapState(cartStore, ['cartList']),
     ...mapState(statusStore, ['showCart']),
+    ...mapState(productsStore, ['menuCategories']),
     countCart() {
       return this.cartList.reduce((acc, cur) => acc +=cur.qty,0)
-    }
+    },
   },
   methods: {
     ...mapActions(cartStore, ['fetchCart']),
     ...mapActions(statusStore, ['toggleCartPreview']),
+    ...mapActions(productsStore, ['selectCategory']),
     watchScroll(height = 0) {
       this.isScrollDown = window.scrollY >= height ? true : false
       this.showShopBtn = window.scrollY >= height ? true : false
@@ -183,7 +184,11 @@ export default {
     toggleMenu() {
       this.showMenu = !this.showMenu
     },
-    
+    goToShop(item) {
+      this.selectCategory(item)
+      this.toggleMenu()
+      this.$router.push({ path: '/shop', query: { category: item}})
+    },
   },
   created() {
     this.fetchCart()
