@@ -18,7 +18,7 @@
       </p>
     </div>
     <div class="col-md-6" ref="intro-img">
-      <img src="/images/aboutUs/about.png" alt="aboutus" />
+      <img src="/images/aboutus/us.png" alt="aboutus" />
     </div>
   </div>
 </template>
