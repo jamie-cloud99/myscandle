@@ -3,7 +3,7 @@
     <div class="col-md-5 mb-4" ref="intro">
       <img
         class="d-none d-md-block logo-lg mb-5 ps-4"
-        src="src/assets/images/logo/mys.svg"
+        src="/images/logo/mys.svg"
         alt="mys"
       />
       <p class="mb-4 ps-4">
@@ -18,7 +18,7 @@
       </p>
     </div>
     <div class="col-md-6" ref="intro-img">
-      <img src="src/assets/images/aboutus/aboutus.png" alt="" />
+      <img src="/images/aboutus/aboutus.png" alt="" />
     </div>
   </div>
 </template>

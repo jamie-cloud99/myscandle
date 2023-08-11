@@ -17,7 +17,7 @@
         </div>
         <div class="col-md-4 my-4 mt-md-0 mb-md-4">
           <h4 class="fs-6 fw-bold mb-4">
-            <img class="logo-md" src="src/assets/images/logo/mys.svg" alt="" />
+            <img class="logo-md" src="/images/logo/mys.svg" alt="" />
           </h4>
           <ul>
             <li class="mb-2">營業時間：Mon-Fri 9:00 - 18:00</li>

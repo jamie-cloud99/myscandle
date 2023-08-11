@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-md bg-light">
     <div class="container">
-      <RouterLink class="navbar-brand" to="/admin/product"><img src="@/assets/images/logo/mys.svg" alt="mys-logo" /></RouterLink>
+      <RouterLink class="navbar-brand" to="/admin/product"><img src="/images/logo/mys.svg" alt="mys-logo" /></RouterLink>
       <button
         class="navbar-toggler"
         type="button"

@@ -9,7 +9,7 @@
       <div class="d-flex align-items-center">
         <RouterLink to="/">
           <span class="visually-hidden">mys香氛</span>
-          <img src="@/assets/images/logo/mys-light.svg" alt="mys香氛" class="logo-img" />
+          <img src="/images/logo/mys-light.svg" alt="mys香氛" class="logo-img" />
         </RouterLink>
         <RouterLink to="/shop" class="shop-link ms-5 px-2 link-light" :class="{ 'd-md-block': showShopBtn }">SHOP</RouterLink>
       </div>
