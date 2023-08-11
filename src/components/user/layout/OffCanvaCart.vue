@@ -54,7 +54,7 @@ export default {
   height: 100%;
   overflow: auto;
   max-width: 500px;
-  background: url('./images/background/bg.png') no-repeat;
+  background: url('../images/background/bg.jpg') no-repeat;
   background-size: cover;
   z-index: 1051;
   transition: all 0.5s ;
