@@ -1,6 +1,6 @@
 <template>
   <div class="container pt-xl pb-5">
-    <img class="d-block brand-bn object-fit-cover" src="@/assets/images/others/brand-bn.jpg" alt="">
+    <img class="d-block brand-bn object-fit-cover" src="/images/others/brand-bn.jpg" alt="">
     <article class="mt-5">
       <h1 class="text-center h3 mb-3">Mys 香氛 —— 舒適溫馨的瑞典哲學</h1>
       <h2 class="text-center h5 mb-5">北歐秘境傳來的香氣，帶你享受心靈與感官的奇妙之旅。</h2>
@@ -20,7 +20,7 @@
           <div class="col-md-6 col-lg-5">
             <img
               class="object-fit-cover"
-              src="@/assets/images/others/brand-1.jpg"
+              src="/images/others/brand-1.jpg"
               alt=""
             />
           </div>
@@ -39,7 +39,7 @@
           <div class="col-md-6 col-lg-5">
             <img
               class="bject-fit-cover"
-              src="@/assets/images/others/brand-2.png"
+              src="/images/others/brand-2.png"
               alt=""
             />
           </div>
@@ -60,7 +60,7 @@
           <div class="col-md-6 col-lg-5">
             <img
               class="object-fit-cover"
-              src="@/assets/images/others/brand-3.jpg"
+              src="/images/others/brand-3.jpg"
               alt=""
             />
           </div>

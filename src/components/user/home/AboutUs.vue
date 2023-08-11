@@ -53,6 +53,7 @@ export default {
 </script>
 
 <style lang="scss">
+
 .logo-lg {
   height: 4rem;
   width: auto;

@@ -13,10 +13,10 @@
     </nav>
     <div class="overflow-hidden my-5">
       <div class="row justify-content-between">
-        <div class="col-md-1 order-2 order-md-0">
+        <div class="col-md-2 col-xl-1 order-2 order-md-0">
           <ThumbnailImages></ThumbnailImages>
         </div>
-        <div class="col-md-5 text-center mb-5 order-1">
+        <div class="col-md-5 text-center mb-3 mb-md-5 order-1">
           <img class="" :src="tempImage" :alt="product.title" />
         </div>
         <div class="col-md-5 mb-5 order-3">
