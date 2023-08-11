@@ -1,7 +1,7 @@
 <template>
   <div class="banner position-relative scrollbar-hidden pb-5">
     <div class="d-flex justify-content-center">
-      <img :src="banner.imgUrl" :alt="banner.title" class="d-block w-100 banner-img" />
+      <img :src="$format.getImageUrl(banner.path) " :alt="banner.title" class="d-block w-100 banner-img" />
     </div>
 
     <div class="banner-slogan position-absolute rounded-md" ref="slogan">
@@ -52,7 +52,7 @@ export default {
   data() {
     return {
       banner: {
-        imgUrl: '/src/assets/images/banner/main.jpg',
+        path: 'banner/main.jpg',
         title: '宛若仙境的清新空氣-mys'
       }
     }
@@ -159,6 +159,7 @@ export default {
   },
   created() {
     gsap.registerPlugin(ScrollTrigger)
+    
   }
 }
 </script>
@@ -222,7 +223,7 @@ export default {
 .flower {
   width: 50px;
   height: 50px;
-  background: center / contain no-repeat url('../../assets/images/others/flower.png');
+  background: center / contain no-repeat url('../images/others/flower.png');
   top: 60%;
   left: 140px;
   transform: translateY(-50%);

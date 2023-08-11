@@ -18,7 +18,7 @@
       </p>
     </div>
     <div class="col-md-6" ref="intro-img">
-      <img src="/images/aboutus/aboutus.png" alt="" />
+      <img src="/images/aboutUs/about.png" alt="aboutus" />
     </div>
   </div>
 </template>
@@ -31,7 +31,6 @@ export default {
   methods: {
     showAnimation() {
       const tl = gsap.timeline({ paused: true, defaults: { ease: 'power1.out' } })
-      console.log(this.$refs.intro)
       tl.from(this.$refs.intro, { autoAlpha: 0, scale: 0, y: 20, duration: 0.5 })
       .from(this.$refs['intro-img'], { autoAlpha: 0, x: 50, duration: 0.4 })
 

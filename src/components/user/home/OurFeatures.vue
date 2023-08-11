@@ -23,7 +23,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url('src/assets/images/feature/value.jpg');
+  background-image: url('../images/feature/value.jpg');
   background-attachment: fixed;
 
   border-radius: 3rem 0 3rem 0;

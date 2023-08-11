@@ -13,7 +13,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 
 
 
-import { currency, date } from './methods/format'
+import { currency, date, getImageUrl } from './methods/format'
 
 import LoadingComponent from './components/LoadingComponent.vue'
 
@@ -61,7 +61,7 @@ const options = {
 const app = createApp(App)
 
 app.config.globalProperties.$format = {
-  currency, date
+  currency, date, getImageUrl
 }
 
 
