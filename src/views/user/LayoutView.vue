@@ -39,32 +39,31 @@ export default {
   },
   methods: {
     showHeaderBg() {
-      if (this.$route.name ==='Home') {
-        this.scrollY = 500
-      } else if (this.$route.name ==='Shop') {
+      if (this.$route.name === 'Home') {
+        this.scrollY = 300
+      } else if (this.$route.name === 'Shop') {
         this.scrollY = 10
-      }
-      else {
+      } else {
         this.scrollY = 0
       }
     },
     disableScroll() {
-      if(this.showCart) {
-        document.body.style.position = 'fixed';
+      if (this.showCart) {
+        document.body.style.position = 'fixed'
       } else {
-        document.body.style.position = '';
+        document.body.style.position = ''
       }
     }
   },
   watch: {
     $route: {
-      handler: "showHeaderBg",
-      immediate: true
+      handler: 'showHeaderBg',
+      immediate: true,
+      deep: true
     },
     showCart: {
       handler: 'disableScroll'
     }
-  },
-  
+  }
 }
 </script>

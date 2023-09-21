@@ -1,23 +1,13 @@
 <template>
   <div class="container py-5">
-    <nav aria-label="breadcrumb" class="mt-5">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><RouterLink to="/shop">商品一覽</RouterLink></li>
-        <li class="breadcrumb-item" aria-current="page">
-          <RouterLink to="/shop?query=所有商品" class="text-nowrap">{{
-            product.category
-          }}</RouterLink>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page">{{ product.title }}</li>
-      </ol>
-    </nav>
-    <div class="overflow-hidden my-5">
+    <BreadcrumpComponent :nav-list="breadList" class="pt-lg-5"></BreadcrumpComponent>
+    <div class="overflow-hidden my-3 my-sm-5">
       <div class="row justify-content-between">
         <div class="col-md-2 col-xl-1 order-2 order-md-0">
           <ThumbnailImages></ThumbnailImages>
         </div>
         <div class="col-md-5 text-center mb-3 mb-md-5 order-1">
-          <img class="" :src="tempImage" :alt="product.title" />
+          <img class="object-fit-cover" :src="tempImage" :alt="product.title" />
         </div>
         <div class="col-md-5 mb-5 order-3">
           <h1 class="h4 mb-3">{{ product.title }}</h1>
@@ -26,34 +16,36 @@
             NT$ {{ $format.currency(product.price) }}
             <s class="fs-6 text-secondary ms-3">NT$ {{ $format.currency(product.origin_price) }}</s>
           </p>
-          <div class="row">
-            <div class="col-lg-4 mb-3 mt-1">
+          <div class="row gy-3 gy-sm-0 gy-md-3 gy-lg-0 mb-2">
+            <div class="col-sm-7 col-md-12 col-lg-6 col-xl-4 mt-1 mb-md-0">
               <QuantityBtn :quantity="quantity" @update="getQuantity"></QuantityBtn>
             </div>
-            <div class="col-lg-8 mb-3">
-              <button
-                type="button"
-                class="btn btn-primary w-100 rounded-sm px-3"
-                @click.prevent="addToCart(product.id, quantity)"
-                :disabled="cartLoadingItem === product.id"
-              >
-                加入購物車
-                <span
-                  v-if="cartLoadingItem === product.id"
-                  class="spinner-border spinner-border-sm"
-                  role="status"
-                  aria-hidden="true"
-                ></span>
-                <span v-if="cartLoadingItem === product.id" class="visually-hidden"
-                  >Loading...</span
+            <div class="col-sm-5 col-md-12 col-lg-6 col-xl-8">
+              <div class="d-flex justify-content-center justify-content-sm-start">
+                <button
+                  type="button"
+                  class="cart-btn btn btn-primary w-100 rounded-sm px-3"
+                  @click.prevent="addToCart(product.id, quantity)"
+                  :disabled="cartLoadingItem === product.id"
                 >
-              </button>
+                  加入購物車
+                  <span
+                    v-if="cartLoadingItem === product.id"
+                    class="spinner-border spinner-border-sm"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  <span v-if="cartLoadingItem === product.id" class="visually-hidden"
+                    >Loading...</span
+                  >
+                </button>
+              </div>
             </div>
           </div>
 
           <hr class="my-3" />
           <h2 class="fs-md mb-3">商品介紹 /</h2>
-          <p  class="mb-4">
+          <p class="mb-4">
             {{ product.description }}
           </p>
           <h2 class="fs-md mb-3">香味 /</h2>
@@ -73,6 +65,7 @@
 import QuantityBtn from '../../components/user/shop/QuantityBtn.vue'
 import RelatedProducts from '../../components/user/shop/RelatedProducts.vue'
 import ThumbnailImages from '../../components/user/shop/ThumbnailImages.vue'
+import BreadcrumpComponent from '../../components/user/layout/BreadcrumpComponent.vue'
 
 import { mapState, mapActions } from 'pinia'
 import cartStore from '../../stores/cartStore'
@@ -83,11 +76,18 @@ export default {
   components: {
     QuantityBtn,
     RelatedProducts,
-    ThumbnailImages
+    ThumbnailImages,
+    BreadcrumpComponent
   },
   data() {
     return {
       quantity: 1,
+      breadList: [
+        {
+          path: '/',
+          title: '首頁'
+        }
+      ]
     }
   },
   computed: {
@@ -96,13 +96,29 @@ export default {
     },
     ...mapState(cartStore, ['cartList']),
     ...mapState(statusStore, ['isLoading', 'cartLoadingItem']),
-    ...mapState(productsStore, ['product', 'tempImage', 'relatedProducts'])
+    ...mapState(productsStore, ['product', 'tempImage', 'relatedProducts', 'categorySelected'])
   },
   watch: {
     id(newId, oldId) {
       if (newId !== oldId) {
-        this.fetchProduct(newId)
+        this.fetchProduct(newId), this.recordHistoryView(this.product)
       }
+    },
+    product: {
+      handler() {
+        const newList = [
+          {
+            path: `/shop/?category=${this.categorySelected}`,
+            title: this.categorySelected
+          },
+          {
+            path: `/products/${this.id}`,
+            title: this.product.title
+          }
+        ]
+        this.breadList = [...this.breadList, ...newList]
+      },
+      deep: true
     }
   },
   methods: {
@@ -113,10 +129,19 @@ export default {
       this.quantity = num
     },
     ...mapActions(cartStore, ['addToCart']),
-    ...mapActions(productsStore, ['fetchProduct'])
+    ...mapActions(productsStore, ['fetchProduct', 'recordHistoryView'])
   },
   created() {
     this.fetchProduct(this.id)
+  },
+  mounted() {
+    this.recordHistoryView(this.product)
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.cart-btn {
+  max-width: 420px;
+}
+</style>

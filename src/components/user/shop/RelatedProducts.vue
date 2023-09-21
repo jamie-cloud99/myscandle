@@ -1,44 +1,39 @@
 <template>
   <h4 class="text-center py-3 mb-5">相關商品</h4>
   <div class="px-5">
-    <Swiper
+    <SwiperContainer
       :autoplay="swiperAutoplay"
       :modules="modules"
       :slides-per-view="1"
       :breakpoints="swiperBreakpoints"
       :space-between="32"
-      class="mySwiper"
     >
-      <SwiperSlide class="" v-for="item in relatedProducts" :key="item.id">
+      <SwiperSlide class="h-auto" v-for="item in relatedProducts" :key="item.id">
         <ProductCard :product="item"></ProductCard>
       </SwiperSlide>
-    </Swiper>
+    </SwiperContainer>
   </div>
 </template>
 
 <script>
 import { Autoplay } from 'swiper/modules'
-import { Swiper, SwiperSlide } from 'swiper/vue'
-import 'swiper/css'
 
 import ProductCard from './ProductCard.vue'
 
 export default {
   props: ['relatedProducts'],
   components: {
-    ProductCard,
-    Swiper,
-    SwiperSlide
+    ProductCard
   },
   data() {
     return {
       modules: [Autoplay],
       swiperBreakpoints: {
         576: {
-          slidesPerView: 2,
+          slidesPerView: 2
         },
         992: {
-          slidesPerView: 3,
+          slidesPerView: 3
         }
       },
       swiperAutoplay: {
@@ -48,9 +43,4 @@ export default {
     }
   }
 }
-
 </script>
-
-<style lang="scss">
-
-</style>

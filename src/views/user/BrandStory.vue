@@ -1,9 +1,16 @@
 <template>
-  <div class="container pt-xl pb-5">
-    <img class="d-block brand-bn object-fit-cover" src="/images/others/brand-bn.jpg" alt="">
+  <div class="container pt-xl pb-5 px-4">
+    <div class="position-relative">
+      <img class="d-block brand-bn object-fit-cover" src="/images/others/brand-bn.jpg" alt="MyS品牌故事">
+      <div class="bg-overlay position-absolute"></div>
+      <div class="position-absolute top-50 start-50 translate-middle">
+        <h1 class=" text-center h2 fw-bold mb-2 text-light"><span class="font-galada">MyS</span> 品牌故事</h1>
+        <h2 class="text-center h3 fw-medium mb-3 text-light text-opacity-85">舒適溫馨的瑞典哲學</h2>
+      </div>
+    </div>
     <article class="mt-5">
-      <h1 class="text-center h3 mb-3">Mys 香氛 —— 舒適溫馨的瑞典哲學</h1>
-      <h2 class="text-center h5 mb-5">北歐秘境傳來的香氣，帶你享受心靈與感官的奇妙之旅。</h2>
+      
+      <h3 class="text-center h5 fw-bold mb-5 text-opacity-75">北歐秘境傳來的香氣，帶你享受心靈與感官的奇妙之旅。</h3>
       <div class="content lh-lg">
         <div class="row mb-5 justify-content-center row-gap-3 align-items-start">
           <div class="col-md-6 col-lg-5">
@@ -19,7 +26,7 @@
           </div>
           <div class="col-md-6 col-lg-5">
             <img
-              class="object-fit-cover"
+              class="brand-img object-fit-cover"
               src="/images/others/brand-1.jpg"
               alt=""
             />
@@ -38,8 +45,8 @@
           </div>
           <div class="col-md-6 col-lg-5">
             <img
-              class="bject-fit-cover"
-              src="/images/others/brand-2.png"
+              class="brand-img object-fit-cover"
+              src="/images/others/brand-2.jpg"
               alt=""
             />
           </div>
@@ -55,11 +62,11 @@
               在這個瞬息萬變的世界裡，Mys
               希望能陪伴你，帶給你一份來自瑞典的舒適溫馨哲學，讓每個瞬間都成為最美好的 mys 時光。
             </p>
-            <router-link class="btn btn-outline-primary"  to="/shop">尋找你的命定香氛<i class="bi bi-arrow-up-right ms-2 align-middle"></i></router-link>
+            <router-link class="btn btn-outline-primary fw-semibold"  to="/shop">尋找你的命定香氛<i class="bi bi-arrow-up-right ms-2 align-middle"></i></router-link>
           </div>
           <div class="col-md-6 col-lg-5">
             <img
-              class="object-fit-cover"
+              class="brand-img object-fit-cover"
               src="/images/others/brand-3.jpg"
               alt=""
             />
@@ -72,8 +79,29 @@
 
 
 <style lang="scss">
+.bg-overlay {
+  inset: 0;
+  background: rgba( #000000, 0.4);
+}
+
 .brand-bn {
   width: 100%;
   max-height: 300px;
+}
+
+.brand-img {
+  width: 100%;
+  max-height: 400px;
+  @include desktop {
+    max-height: 300px;
+  }
+}
+
+.text-opacity-75 {
+  opacity: 0.75;
+}
+
+.text-opacity-85 {
+  opacity: 0.85;
 }
 </style>

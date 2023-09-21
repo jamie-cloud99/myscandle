@@ -49,6 +49,7 @@ export default {
   height: 3rem;
   width: 3rem;
   line-height: 3rem;
+  letter-spacing: 0;
 }
 
 

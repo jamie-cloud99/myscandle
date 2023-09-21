@@ -3,13 +3,13 @@
     <h3 class="value-title text-light align-middle">Our Value</h3>
   </div>
 
-  <ul class="row border-top border-bottom border-primary">
+  <ul class="row border-top border-bottom border-primary border-opacity-50 my-md-3">
     <li
-      class="col-md-3 border-md-end border-bottom-lg-none border-primary my-md-3"
+      class="col-md-3 value-item border-md-end border-bottom-lg-none border-primary border-opacity-50"
       v-for="item in features"
       :key="item.title"
     >
-      <div class="px-3 py-4">
+      <div class="value-content px-3 py-4">
         <p class="fs-4 mb-4"><i class="bi" :class="item.icon"></i></p>
         <h4 class="fs-md fw-bold mb-3">{{ item.title }}</h4>
         <p>{{ item.description }}</p>
@@ -17,31 +17,6 @@
     </li>
   </ul>
 </template>
-
-<style lang="scss">
-.subtitle {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-image: url('../images/feature/value.jpg');
-  background-attachment: fixed;
-
-  border-radius: 3rem 0 3rem 0;
-}
-
-.border-bottom-lg-none:not(:last-of-type) {
-  border-bottom: 1px solid #000;
-  @include pad {
-    border-bottom: 0;
-  }
-}
-
-.border-md-end:not(:last-of-type) {
-  @include pad {
-    border-right: 1px solid black;
-  }
-}
-</style>
 
 <script>
 export default {
@@ -73,3 +48,48 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+@import 'bootstrap/scss/functions';
+@import '../../../assets/helpers/variables';
+
+.subtitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../images/feature/value.jpg');
+  background-attachment: fixed;
+
+  border-radius: 3rem 0 3rem 0;
+}
+
+.border-bottom-lg-none:not(:last-of-type) {
+  border-bottom: 1px solid #000;
+  @include pad {
+    border-bottom: 0;
+  }
+}
+
+.border-md-end:not(:last-of-type) {
+  @include pad {
+    border-right: 1px solid black;
+  }
+}
+
+.value-item {
+  cursor: pointer;
+  &:nth-child(odd) {
+    background: $light;
+    // &:hover {
+    //   background: $light;
+    // }
+  }
+  &:nth-child(even) {
+    background: $red-brown-30;
+  }
+  &:hover {
+      background: $red-brown;
+      color: $light;
+    }
+}
+</style>

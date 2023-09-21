@@ -1,8 +1,20 @@
 <template>
   <div class="banner position-relative scrollbar-hidden pb-5">
     <div class="d-flex justify-content-center">
-      <img :src="$format.getImageUrl(banner.path) " :alt="banner.title" class="d-block w-100 banner-img" />
+      <img
+        :src="$format.getImageUrl(banner.path)"
+        :alt="banner.title"
+        class="d-block w-100 banner-img"
+      />
     </div>
+
+    <ul class="d-none d-md-block menu-pc position-absolute top-50 text-light fs-4 fw-bold">
+      <li v-for="item in menuCategories" :key="item">
+        <router-link to="#" class="menu-pc-item px-3 py-2" @click="goToShop(item)">{{
+          item
+        }}</router-link>
+      </li>
+    </ul>
 
     <div class="banner-slogan position-absolute rounded-md" ref="slogan">
       <h1 class="slogan-text text-light px-5 py-4 lh-normal">宛若仙境的清新香氣</h1>
@@ -14,34 +26,32 @@
         探索香氛
       </button>
     </div>
-    <div class="flower position-absolute"></div>
-    <div class="scrolldownArrow position-absolute"><RouterLink to="#us" class="display-3 text-light"><i class="bi bi-arrow-down-circle"></i></RouterLink></div>
+    <div class="scrolldownArrow position-absolute">
+      <RouterLink to="#us" class="display-3 text-light"
+        ><i class="bi bi-arrow-down-circle"></i
+      ></RouterLink>
+    </div>
   </div>
-  <!-- 查看更多 動畫 -->
   <div class="container">
-    <div class="pt-xl" id="us">
-      <AboutUs ></AboutUs>
+    <div class="pt-xl position-relative" id="us">
+      <AboutUs></AboutUs>
     </div>
     <div class="pt-5">
       <HotProducts></HotProducts>
     </div>
-    <div class="pt-5 mt-5">
+    <div class="pt-5 mt-lg-5">
       <OurFeatures></OurFeatures>
-    </div>
-
-    <div class="mt-5">
-      <!-- 需替換 -->
-      <!-- <img src="src/assets/images/quiz/quiz2.png" alt=""> -->
     </div>
   </div>
 </template>
 
 <script>
+import { mapState, mapActions } from 'pinia'
+import productsStore from '../../stores/productsStore'
+import statusStore from '../../stores/statusStore'
 import HotProducts from '../../components/user/home/HotProducts.vue'
 import AboutUs from '../../components/user/home/AboutUs.vue'
 import OurFeatures from '../../components/user/home/OurFeatures.vue'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 export default {
   components: {
@@ -57,126 +67,66 @@ export default {
       }
     }
   },
-  mounted() {
-    this.$nextTick(() => {
-      this.fadeInBannerSlogan()
-    })
-    this.moveFlower()
-    this.scrollControl('.flower')
+  computed: {
+    ...mapState(productsStore, ['menuCategories'])
   },
   methods: {
-    fadeInBannerSlogan() {
-      const bannerSlogan = this.$refs.slogan
-      bannerSlogan.classList.add('fade-in')
-    },
-    scrollControl(item) {
-      let tl
-      const triggerElement = item
-      const windowWidth = window.innerWidth
-
-      if (windowWidth < 768) {
-        tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: triggerElement,
-            start: 'top 50%',
-            end: 'top 1%',
-            scrub: 0.5
-          }
-        })
-
-        tl.to(item, {
-          top: '50%',
-          left: '50%',
-          yPercent: '-50', // translate(0, -100%)
-          duration: 20,
-          position: 'absolute'
-        }).to(item, {
-          top: '100%',
-          left: '50%',
-          yPercent: '-100', // translate(0, -100%)
-          duration: 20,
-          position: 'absolute'
-        })
-      } else if (windowWidth < 1200) {
-        tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: triggerElement,
-            start: 'top 70%',
-            end: 'top 1%',
-            scrub: 0.5
-          }
-        })
-
-        tl.from(item, {
-          top: '65%',
-          right: 350,
-          duration: 10,
-          position: 'absolute'
-        }).to(item, {
-          top: '100%',
-          right: '20%',
-          yPercent: '-100',
-          duration: 20,
-          position: 'absolute'
-        })
-      } else {
-        tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: triggerElement,
-
-            start: 'top 40%',
-            end: 'top 1%',
-            scrub: 0.5
-          }
-        })
-
-        tl.from(item, {
-          top: '60%',
-          right: 370,
-          duration: 10,
-          position: 'absolute'
-        }).to(item, {
-          top: '100%',
-          right: '20%',
-          yPercent: '-100',
-          duration: 20,
-          position: 'absolute'
-        })
-      }
-    },
-
-    moveFlower() {
-      gsap.to('.flower', {
-        rotation: 360,
-        duration: 3,
-        onComplete: () => this.repeatScale('.flower')
-      })
-    },
-    repeatScale(selector) {
-      const timeline = gsap.timeline()
-      timeline.to(selector, { scale: 0.5, duration: 1.5, opacity: 0.3, yoyo: true, repeat: -1 })
+    ...mapActions(productsStore, ['selectCategory']),
+    ...mapActions(statusStore, ['readyPage']),
+    goToShop(item) {
+      this.selectCategory(item)
+      this.$router.push({ path: '/shop', query: { category: item } })
     }
   },
-  created() {
-    gsap.registerPlugin(ScrollTrigger)
-    
+  mounted() {
+    this.readyPage()
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+@import 'bootstrap/scss/functions';
+@import '../../assets/helpers/variables';
+
 .banner {
   overflow-x: hidden;
+}
+
+.menu-pc {
+  z-index: 100;
+  left: 5rem;
+  filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.06));
+  @include desktop {
+    left: 10rem;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    background: $light;
+    left: -1rem;
+    height: 205px;
+    width: 1px;
+    z-index: 100;
+  }
+}
+
+.menu-pc-item {
+  &:hover {
+    color: $primary;
+    opacity: 90%;
+    background: $light;
+    border-radius: 3rem;
+    box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+  }
 }
 
 .banner-slogan {
   top: 50%;
   backdrop-filter: blur(1.5px);
   line-height: 1.5;
-
-  opacity: 0;
-  transform: translateY(250px);
-  transition: opacity 1s 0.5s ease-out, transform 1s 0.5s ease-out;
+  transform: translateY(-50%);
 
   @include pad {
     right: 5rem;
@@ -186,15 +136,13 @@ export default {
   }
 }
 
-.banner-slogan.fade-in {
-  opacity: 1; // 动画结束后的透明度设为 1
-  transform: translateY(-50%); // 动画结束后恢复初始位置
-}
-
 .banner-img {
   min-height: 500px;
   object-position: 60% 50%;
   object-fit: cover;
+  @include desktop {
+    height: 100vh;
+  }
 }
 
 .slogan-text {
@@ -220,34 +168,15 @@ export default {
   }
 }
 
-.flower {
-  width: 50px;
-  height: 50px;
-  background: center / contain no-repeat url('../images/others/flower.png');
-  top: 60%;
-  left: 140px;
-  transform: translateY(-50%);
-  @include pad {
-    top: 40%;
-    left: auto;
-    right: 20%;
-  }
-  @include desktop {
-    top: 50%;
-    right: 20%;
-  }
-}
-
 .scrolldownArrow {
-  bottom: 20px;
+  bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 100;
   @include pad {
-    bottom: 5px;
   }
   @include desktop {
-    bottom: 5px;
+    bottom: 4rem;
   }
 
   &::before {

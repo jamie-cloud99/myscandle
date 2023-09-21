@@ -1,12 +1,6 @@
 <template>
-  <img class="shop-bn-img object-fit-cover" src="/images/shop/shop-bn.webp" alt="" />
-  <div class="container pt-5">
-    <!-- <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><RouterLink to="/shop">商品一覽</RouterLink></li>
-        <li class="breadcrumb-item active" aria-current="page">所有商品</li>
-      </ol>
-    </nav> -->
+  <img class="shop-bn-img object-fit-cover" src="/images/shop/shop-bg-img.webp" alt="" />
+  <div class="container pt-lg-5">
     <div class="overflow-hidden py-2">
       <div class="row gx-5">
         <div class="col-md-3">

@@ -5,23 +5,49 @@
         <div class="col-6 col-md-4 mb-4">
           <h4 class="fs-6 fw-bold mb-4">關於我們</h4>
           <ul>
-            <li><RouterLink to="/brand" class="mb-2">品牌故事</RouterLink></li>
-            <li><a href="" class="mb-2">聯絡我們</a></li>
+            <li class="menu-item">
+              <div class="position-relative">
+                <RouterLink to="/brand" class="menu-item d-block mb-2">
+                  品牌故事
+                </RouterLink>
+                <span class="menu-item-active position-absolute text-primary z-1"
+                  ><i class="bi bi-egg-fill"></i
+                ></span>
+              </div>
+              
+            </li>
+            <li>
+              <div class="position-relative">
+                <RouterLink to="/contactus" class="menu-item d-block mb-2">
+                  聯絡我們
+                </RouterLink>
+                <span class="menu-item-active position-absolute text-primary z-1"
+                  ><i class="bi bi-egg-fill"></i
+                ></span>
+              </div>
+            </li>
           </ul>
         </div>
         <div class="col-6 col-md-4 mb-4">
           <h4 class="fs-6 fw-bold mb-4">商品一覽</h4>
           <ul>
-            <li v-for="item in menuCategories" :key="item"><a href="#" class="mb-2" @click.prevent="goToShop(item)">{{ item }}</a></li>
+            <li v-for="item in menuCategories" :key="item" class="menu-item">
+              <div class="position-relative">
+                <RouterLink to="#" class="menu-item d-block mb-2" @click.prevent="goToShop(item)">{{
+                  item
+                }}</RouterLink>
+                <span class="menu-item-active position-absolute text-primary z-1"
+                  ><i class="bi bi-egg-fill"></i
+                ></span>
+              </div>
+            </li>
           </ul>
         </div>
         <div class="col-md-4 my-4 mt-md-0 mb-md-4">
-          <h4 class="fs-6 fw-bold mb-4">
-            <img class="logo-md" src="/images/logo/mys.svg" alt="" />
-          </h4>
+          <h4 class="font-galada fs-2 display-lg-3 mb-3">MyS</h4>
           <ul>
             <li class="mb-2">營業時間：Mon-Fri 9:00 - 18:00</li>
-            <li class="mb-2">電話：04 2344 9833</li>
+            <li class="mb-2"><a href="tel:+886-423449833"> 電話：04-2344-9833</a></li>
             <li><a href="mailto:mys@gmail.com" class="mb-2">E-mail：mys@gmail.com</a></li>
           </ul>
         </div>
@@ -38,24 +64,36 @@
 import { mapState, mapActions } from 'pinia'
 import productsStore from '../../../stores/productsStore'
 
-export default{
+export default {
   computed: {
     ...mapState(productsStore, ['menuCategories'])
   },
   methods: {
-    ...mapActions(productsStore,['selectCategory']),
+    ...mapActions(productsStore, ['selectCategory']),
     goToShop(item) {
       this.selectCategory(item)
-      this.$router.push({ path: '/shop', query: { category: item}})
-    },
+      this.$router.push({ path: '/shop', query: { category: item } })
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.menu-item {
+  
+  &:hover {
+    font-weight: 700;
+  }
+  &:hover ~ .menu-item-active {
+    display: block;
   }
 }
 
-</script>
-
-<style lang="scss">
-.logo-md {
-  height: 3rem;
-  width: auto;
+.menu-item-active {
+  display: none;
+  top: 50%;
+  left: -1.5rem;
+  
+  transform: translateY(-50%);
 }
 </style>

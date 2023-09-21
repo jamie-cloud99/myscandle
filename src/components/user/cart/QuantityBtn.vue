@@ -65,7 +65,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .quantity-btn {
   width: 1.5rem;
   height: 1.5rem;

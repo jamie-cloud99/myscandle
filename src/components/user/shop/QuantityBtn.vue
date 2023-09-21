@@ -1,7 +1,7 @@
 <template>
-  <div class="d-flex justify-content-center align-items-center">
+  <div class="d-flex justify-content-center justify-content-sm-start align-items-center">
     <button
-      class="btn quantity-btn btn-outline-primary rounded-circle flex-shrink-0"
+      class="btn quantity-btn btn-outline-primary rounded-lg-circle flex-shrink-0"
       type="button"
       @click.prevent="updateNum('minus')"
       :disabled="tempQuantity <= 1"
@@ -15,7 +15,7 @@
       disabled
     />
     <button
-      class="btn quantity-btn btn-outline-primary rounded-circle flex-shrink-0"
+      class="btn quantity-btn btn-outline-primary rounded-lg-circle flex-shrink-0"
       type="button"
       @click.prevent="updateNum('add')"
       :disabled="tempQuantity >= 10"
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import {mapState, mapActions} from 'pinia'
+import { mapState, mapActions } from 'pinia'
 import statusStore from '../../../stores/statusStore'
 import cartStore from '../../../stores/cartStore'
 
@@ -59,7 +59,6 @@ export default {
         : this.$emit('update', --this.tempQuantity)
     },
     ...mapActions(cartStore, ['addToCart'])
-
   },
   created() {
     this.tempQuantity = this.quantity
@@ -67,20 +66,27 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .quantity-btn {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 3rem;
+  height: 2rem;
   padding: 0;
+  @include desktop {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 }
 
 .quantity {
   height: 2rem;
-  width: 4rem;
+  width: 100%;
+  max-width: 300px;
+  @include desktop {
+    width: 4rem;
+  }
 }
 
 .bi::before {
   line-height: 1.5;
-  vertical-align: 0.1em;
 }
 </style>

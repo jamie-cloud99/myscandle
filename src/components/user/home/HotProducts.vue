@@ -1,7 +1,9 @@
 <template>
-  <Swiper :modules="modules" @swiper="onSwiper">
+  <SwiperContainer :modules="modules" @swiper="onSwiper">
     <template #container-start>
-      <ul class="categories-list d-flex justify-content-center align-items-center text-body py-4 mb-3">
+      <ul
+        class="categories-list d-flex justify-content-center align-items-center text-body py-4 mb-3"
+      >
         <li v-for="item in pickedProducts" :key="item.category">
           <button
             @click="changeCategory(item)"
@@ -18,109 +20,138 @@
     <SwiperSlide class="px-3" v-for="category in pickedProducts" :key="category.categoryTitle">
       <h3 class="h3 text-center mb-3">{{ category.categoryTitle }}</h3>
       <p class="text-center mb-5">{{ category.description }}</p>
-      <div class="row justify-content-center">
-        <div class="col-md-6">
-          <RouterLink :to="'/product/'+category.products[0].id" class="card rounded-md border-primary h-100 overflow-hidden">
+      <div class="d-none d-lg-block">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <RouterLink
+              :to="'/product/' + category.products[0].id"
+              class="card rounded-md border-primary h-100 overflow-hidden"
+            >
+              <div class="ratio ratio-1x1 overflow-hidden">
+                <img
+                  :src="category.products[0].imageUrl"
+                  :alt="category.products[0].title"
+                  class="product-img"
+                  loading="lazy"
+                />
+              </div>
+              <div class="card-body pb-lg-0">
+                <div class="card-title fs-md fw-bold">{{ category.products[0].title }}</div>
+                <div class="d-flex align-items-center">
+                  <div class="badge rounded-pill text-bg-light fs-6 fw-normal lh-base">
+                    {{ category.products[0].category }}
+                  </div>
+                  <p class="text-secondary ms-auto">
+                    NT$ {{ $format.currency(category.products[0].price) }}
+                  </p>
+                </div>
+              </div>
+              <div class="card-footer bg-transparent border-top-0 pt-0"></div>
+            </RouterLink>
+          </div>
+          <div class="col-md-6">
+            <div class="d-none d-md-flex flex-column">
+              <RouterLink
+                :to="'/product/' + category.products[1].id"
+                class="card rounded-md border-primary overflow-hidden mb-3 mb-lg-4"
+              >
+                <div class="d-flex">
+                  <div class="w-60 ratio ratio-1x1 overflow-hidden">
+                    <img
+                      :src="category.products[1].imageUrl"
+                      :alt="category.products[1].title"
+                      class="product-img"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="w-40 d-flex flex-column">
+                    <div class="card-body">
+                      <div class="card-title fs-md fw-bold mb-3">
+                        {{ category.products[1].title }}
+                      </div>
+                      <div class="badge rounded-pill text-bg-light fs-6 fw-normal lh-base mb-3">
+                        {{ category.products[1].category }}
+                      </div>
+                      <p class="text-secondary ms-auto">
+                        NT$ {{ $format.currency(category.products[1].price) }}
+                      </p>
+                    </div>
+                    <div class="card-footer bg-transparent border-primary">
+                      <a class="text-end" href="#"
+                        >查看商品<i class="bi bi-arrow-right-short ms-2"></i
+                      ></a>
+                    </div>
+                  </div>
+                </div>
+              </RouterLink>
+              <RouterLink
+                :to="'/product/' + category.products[2].id"
+                class="card rounded-md border-primary overflow-hidden"
+              >
+                <div class="d-flex">
+                  <div class="w-60 ratio ratio-1x1 overflow-hidden">
+                    <img
+                      :src="category.products[2].imageUrl"
+                      :alt="category.products[2].title"
+                      class="product-img"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="w-40 d-flex flex-column">
+                    <div class="card-body">
+                      <div class="card-title fs-md fw-bold mb-3">
+                        {{ category.products[2].title }}
+                      </div>
+                      <div class="badge rounded-pill text-bg-light fs-6 fw-normal lh-base mb-3">
+                        {{ category.products[2].category }}
+                      </div>
+                      <p class="text-secondary ms-auto">
+                        NT$ {{ $format.currency(category.products[2].price) }}
+                      </p>
+                    </div>
+                    <div class="card-footer bg-transparent border-primary">
+                      <a class="text-end" href="#"
+                        >查看商品<i class="bi bi-arrow-right-short ms-2"></i
+                      ></a>
+                    </div>
+                  </div>
+                </div>
+              </RouterLink>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ul class="d-block d-lg-none">
+        <li v-for="product in category.products" :key="product.id" class="mb-3 mb-md-4">
+          <RouterLink
+            :to="'/product/' + product.id"
+            class="product-card card rounded-md border-primary h-100 overflow-hidden"
+          >
             <div class="ratio ratio-1x1">
-              <img
-                :src="category.products[0].imageUrl"
-                :alt="category.products[0].title"
-                loading="lazy"
-                class="d-block"
-              />
+              <img :src="product.imageUrl" :alt="product.title" loading="lazy" class="d-block" />
             </div>
             <div class="card-body pb-lg-0">
-              <div class="card-title fs-md fw-bold">{{ category.products[0].title }}</div>
+              <div class="card-title fs-md fw-bold">{{ product.title }}</div>
               <div class="d-flex align-items-center">
                 <div class="badge rounded-pill text-bg-light fs-6 fw-normal lh-base">
-                  {{ category.products[0].category }}
+                  {{ product.category }}
                 </div>
-                <p class="text-secondary ms-auto">
-                  NT$ {{ $format.currency(category.products[0].price) }}
-                </p>
+                <p class="text-secondary ms-auto">NT$ {{ $format.currency(product.price) }}</p>
               </div>
             </div>
             <div class="card-footer bg-transparent border-top-0 pt-0"></div>
           </RouterLink>
-        </div>
-        <div class="col-md-6">
-          <div class="d-none d-md-flex flex-column">
-            <RouterLink :to="'/product/'+category.products[1].id" class="card rounded-md border-primary overflow-hidden mb-3 mb-lg-4">
-              <div class="d-flex">
-                <div class="w-60 ratio ratio-1x1">
-                  <img
-                    :src="category.products[1].imageUrl"
-                    :alt="category.products[1].title"
-                    class="d-block h-100 object-fit-cover"
-                  />
-                </div>
-                <div class="w-40 d-flex flex-column">
-                  <div class="card-body">
-                    <div class="card-title fs-md fw-bold mb-3">
-                      {{ category.products[1].title }}
-                    </div>
-                    <div class="badge rounded-pill text-bg-light fs-6 fw-normal lh-base mb-3">
-                      {{ category.products[1].category }}
-                    </div>
-                    <p class="text-secondary ms-auto">
-                      NT$ {{ $format.currency(category.products[1].price) }}
-                    </p>
-                  </div>
-                  <div class="card-footer bg-transparent border-primary">
-                    <a class="text-end" href="#"
-                      >查看商品<i class="bi bi-arrow-right-short ms-2"></i
-                    ></a>
-                  </div>
-                </div>
-              </div>
-            </RouterLink>
-            <RouterLink :to="'/product/'+category.products[2].id" class="card rounded-md border-primary overflow-hidden">
-              <div class="d-flex">
-                <div class="w-60 ratio ratio-1x1">
-                  <img
-                    :src="category.products[2].imageUrl"
-                    :alt="category.products[2].title"
-                    class="d-block h-100 object-fit-cover"
-                  />
-                </div>
-                <div class="w-40 d-flex flex-column">
-                  <div class="card-body">
-                    <div class="card-title fs-md fw-bold mb-3">
-                      {{ category.products[2].title }}
-                    </div>
-                    <div class="badge rounded-pill text-bg-light fs-6 fw-normal lh-base mb-3">
-                      蠟燭
-                    </div>
-                    <p class="text-secondary ms-auto">
-                      NT$ {{ $format.currency(category.products[2].price) }}
-                    </p>
-                  </div>
-                  <div class="card-footer bg-transparent border-primary">
-                    <a class="text-end" href="#"
-                      >查看商品<i class="bi bi-arrow-right-short ms-2"></i
-                    ></a>
-                  </div>
-                </div>
-              </div>
-            </RouterLink>
-          </div>
-        </div>
-      </div>
+        </li>
+      </ul>
     </SwiperSlide>
-  </Swiper>
+  </SwiperContainer>
 </template>
 
 <script>
 import { Pagination } from 'swiper/modules'
-import { Swiper, SwiperSlide } from 'swiper/vue'
-import 'swiper/css'
 import 'swiper/css/pagination'
 
 export default {
-  components: {
-    Swiper,
-    SwiperSlide
-  },
   data() {
     return {
       pickedProducts: [
@@ -228,13 +259,13 @@ export default {
         }
       ],
       modules: [Pagination],
-      tempCategory: {category: '熱銷商品'},
-      swiper: null,
+      tempCategory: { category: '熱銷商品' },
+      swiper: null
     }
   },
   methods: {
     onSwiper(swiper) {
-      this.swiper = swiper;
+      this.swiper = swiper
     },
     changeCategory(item) {
       this.tempCategory = { ...item }
@@ -245,9 +276,23 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .categories-item-text {
   position: relative;
   z-index: 10;
+}
+
+.product-card {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.product-img {
+  display: block;
+  object-fit: cover;
+  transition: all 300ms ease-in-out;
+  &:hover {
+    scale: 110%;
+  }
 }
 </style>

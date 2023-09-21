@@ -68,7 +68,7 @@ export default {
   inset: 0;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: ˊ00;
+  z-index: 800;
   transform: translateX(-100%);
   transition: all 0.3s;
   &.show {

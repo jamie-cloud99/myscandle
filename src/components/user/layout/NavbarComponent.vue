@@ -1,17 +1,57 @@
 <template>
   <div class="header py-2" :class="{ 'bg-primary': isScrollDown }">
     <div class="container d-flex justify-content-between">
-      <button type="button" class="d-md-none menu-btn" @click.prevent="toggleMenu" :class="{active: showMenu}"><span class="navicon"></span></button>
-      <ul class="menu pt-3">
-        <li class="mb-2"><router-link to="/shop" class="menu-item link-light fs-5 p-3" @click.prevent="toggleMenu">SHOP</router-link></li>
-        <li v-for="item in menuCategories" :key="item" class="mb-2"><a class="menu-item link-light fs-5 p-3" @click.prevent="goToShop(item)">{{ item }}</a></li>
+      <button
+        type="button"
+        class="d-md-none menu-btn"
+        @click.prevent="toggleMenu"
+        :class="{ active: showMenu }"
+      >
+        <span class="navicon"></span>
+      </button>
+      <ul class="menu pt-3 fw-semibold">
+        <li class="menu-item mb-2 text-light py-3">
+          <h3 class="fs-1 fw-bold">SHOP</h3>
+        </li>
+        <li v-for="item in menuCategories" :key="item" class="mb-2">
+          <div class="position-relative">
+            <RouterLink
+              to="#"
+              class="menu-item link-light fs-5 p-3 d-block"
+              @click.prevent="goToShop(item)"
+              >{{ item }}</RouterLink
+            >
+            <span class="menu-item-active position-absolute text-light"
+              ><i class="bi bi-egg-fill"></i
+            ></span>
+          </div>
+        </li>
+        <li class="menu-item mb-2 text-light py-3">
+          <h3 class="fs-1 fw-bold">
+            <router-link to="/brand" class="d-block" @click.prevent="toggleMenu">
+              品牌故事
+            </router-link>
+          </h3>
+        </li>
+        <li class="menu-item mb-2 text-light py-3">
+          <h3 class="fs-1 fw-bold">
+            <router-link to="/contactus" class="d-block" @click.prevent="toggleMenu">
+              聯絡我們
+            </router-link>
+          </h3>
+        </li>
       </ul>
       <div class="d-flex align-items-center">
-        <RouterLink to="/">
-          <span class="visually-hidden">mys香氛</span>
+        <RouterLink to="/" class="d-flex align-items-end gap-2">
           <img src="/images/logo/mys-light.svg" alt="mys香氛" class="logo-img" />
+          <h5 class="font-galada text-light fs-1 fs-lg-2">MyS</h5>
         </RouterLink>
-        <RouterLink to="/shop" class="shop-link ms-5 px-2 link-light" :class="{ 'd-md-block': showShopBtn }">SHOP</RouterLink>
+        <RouterLink
+          to="/shop"
+          class="shop-link ms-5 px-3 py-1 rounded-md fw-semibold"
+          :class="{ 'd-md-block': showShopBtn }"
+          >SHOP</RouterLink
+        >
       </div>
       <ul class="navbar-nav">
         <li class="me-2">
@@ -32,9 +72,65 @@
   </div>
 </template>
 
-<style lang="scss">
-$light: #f2edde;
-$primary: #804D1E;
+<script>
+import { mapState, mapActions } from 'pinia'
+import statusStore from '../../../stores/statusStore'
+import cartStore from '../../../stores/cartStore'
+import productsStore from '../../../stores/productsStore'
+
+export default {
+  props: ['scrollY'],
+  data() {
+    return {
+      isScrollDown: true,
+      showShopBtn: false,
+      showMenu: false
+    }
+  },
+  computed: {
+    ...mapState(cartStore, ['cartList']),
+    ...mapState(statusStore, ['showCart']),
+    ...mapState(productsStore, ['menuCategories']),
+    countCart() {
+      return this.cartList.reduce((acc, cur) => (acc += cur.qty), 0)
+    }
+  },
+  methods: {
+    ...mapActions(cartStore, ['fetchCart']),
+    ...mapActions(statusStore, ['toggleCartPreview']),
+    ...mapActions(productsStore, ['selectCategory']),
+    watchScroll(height = 0) {
+      this.isScrollDown = window.scrollY >= height ? true : false
+      this.showShopBtn = window.scrollY >= height ? true : false
+    },
+    toggleMenu() {
+      this.showMenu = !this.showMenu
+    },
+    goToShop(item) {
+      this.selectCategory(item)
+      this.toggleMenu()
+      this.$router.push({ path: '/shop', query: { category: item } })
+    }
+  },
+  created() {
+    this.fetchCart()
+  },
+  mounted() {
+    window.addEventListener('scroll', () => {
+      this.watchScroll(this.scrollY)
+    })
+  },
+  beforeUnmount() {
+    window.removeEventListener('scroll', () => {
+      this.watchScroll(this.scrollY)
+    })
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import 'bootstrap/scss/functions';
+@import '../../../assets/helpers/variables';
 
 .header {
   position: fixed;
@@ -46,13 +142,17 @@ $primary: #804D1E;
 .logo-img {
   height: 44px;
   width: auto;
-  padding-top: 0.25rem;
 }
 
 .shop-link {
   display: none;
   font-size: 1.15rem;
   letter-spacing: 0.1rem;
+  color: $light;
+  &:hover {
+    background: $light;
+    color: $primary;
+  }
 }
 
 .badge.cart-number {
@@ -88,9 +188,9 @@ $primary: #804D1E;
   }
 }
 
-.active .navicon{
-    background: transparent;
-  
+.active .navicon {
+  background: transparent;
+
   &::before {
     top: 0;
     transform: rotate(-45deg);
@@ -114,13 +214,24 @@ $primary: #804D1E;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: start;
+  padding: 0 6rem;
 }
 
 .menu-item {
-  letter-spacing: 0.1rem;
+  letter-spacing: 0.5rem;
+
+  &:active ~ .menu-item-active {
+    display: block;
+  }
 }
 
+.menu-item-active {
+  display: none;
+  top: 50%;
+  right: -1rem;
+  transform: translateY(-50%);
+}
 
 .nav-search {
   display: flex;
@@ -148,60 +259,3 @@ $primary: #804D1E;
   display: block;
 }
 </style>
-
-<script>
-import { mapState, mapActions } from 'pinia'
-import statusStore from '../../../stores/statusStore'
-import cartStore from '../../../stores/cartStore'
-import productsStore from '../../../stores/productsStore'
-
-export default {
-  props: ['scrollY'],
-  data() {
-    return {
-      isScrollDown: true,
-      showShopBtn: false,
-      showMenu: false,
-      // menuCategories: []
-    }
-  },
-  computed: {
-    ...mapState(cartStore, ['cartList']),
-    ...mapState(statusStore, ['showCart']),
-    ...mapState(productsStore, ['menuCategories']),
-    countCart() {
-      return this.cartList.reduce((acc, cur) => acc +=cur.qty,0)
-    },
-  },
-  methods: {
-    ...mapActions(cartStore, ['fetchCart']),
-    ...mapActions(statusStore, ['toggleCartPreview']),
-    ...mapActions(productsStore, ['selectCategory']),
-    watchScroll(height = 0) {
-      this.isScrollDown = window.scrollY >= height ? true : false
-      this.showShopBtn = window.scrollY >= height ? true : false
-    },
-    toggleMenu() {
-      this.showMenu = !this.showMenu
-    },
-    goToShop(item) {
-      this.selectCategory(item)
-      this.toggleMenu()
-      this.$router.push({ path: '/shop', query: { category: item}})
-    },
-  },
-  created() {
-    this.fetchCart()
-  },
-  mounted() {
-    window.addEventListener('scroll', () => {
-        this.watchScroll(this.scrollY)
-      })
-  },
-  beforeUnmount() {
-    window.removeEventListener('scroll', () => {
-      this.watchScroll(this.scrollY)
-    })
-  }
-}
-</script>

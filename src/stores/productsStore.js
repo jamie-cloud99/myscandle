@@ -23,7 +23,8 @@ export default defineStore('productsStore', {
     product: {},
     imageList: [],
     tempImage: '',
-    relatedProducts: []
+    relatedProducts: [],
+    histoyView: []
   }),
   actions: {
     async fetchAllProducts() {
@@ -52,16 +53,17 @@ export default defineStore('productsStore', {
         if (productRes.data.success) {
           this.product = productRes.data.product
           this.productsAll = productsAllRes.data.products
-          this.getCategoryProducts(this.product.category)
+          this.getRelatedProducts(this.product)
           this.concatImageList()
           this.tempImage = this.product.imageUrl
         }
       } catch (error) {
         toast.handleError()
-        status.isLoading =false
+        status.isLoading = false
       }
     },
     selectCategory(category = '所有商品') {
+      
       this.categorySelected = category
       this.paginate(this.categoryProducts)
     },
@@ -86,21 +88,26 @@ export default defineStore('productsStore', {
       this.products = [...itemPaginated]
       status.isLoading = false
     },
-    getCategoryProducts(category) {
+    getRelatedProducts(product) {
       this.relatedProducts = this.productsAll.filter(
-        (item) => item.category === category && item.id !== this.id
+        (item) => item.category === product.category && item.id !== product.id
       )
-      status.isLoading =false
+      status.isLoading = false
     },
     concatImageList() {
       this.imageList = this.product.imagesUrl
         ? [this.product.imageUrl, ...this.product.imagesUrl]
         : [this.product.imageUrl]
-      status.isLoading =false
+      status.isLoading = false
     },
     changeImgView(image) {
       this.tempImage = image
     },
+    recordHistoryView(item) {
+      if(item) this.histoyView.push(item.id)
+      const history = JSON.stringify(this.histoyView) 
+      localStorage.setItem('historyView', history)
+    }
   },
   getters: {
     categoryProducts() {
@@ -113,8 +120,8 @@ export default defineStore('productsStore', {
     },
     menuCategories() {
       const list = []
-      for(let i=0; i<this.categoryList.length;i++) {
-        if(i!==0) {
+      for (let i = 0; i < this.categoryList.length; i++) {
+        if (i !== 0) {
           list.push(this.categoryList[i])
         }
       }

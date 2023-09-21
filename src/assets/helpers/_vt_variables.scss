@@ -12,8 +12,8 @@ $vt-color-info: #2196f3 !default;
 $vt-text-color-info: #fff !default;
 
 // toast variable
-$vt-color-success: $light;
-$vt-text-color-success: $primary;
+$vt-color-success: $light !default;
+$vt-text-color-success: $primary !default;
 
 // $vt-text-color-success: #fff !default;
 $vt-color-warning: #ffc107 !default;
