@@ -57,7 +57,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url('../images/feature/value.jpg');
+  background-image: url('https://i.imgur.com/sXAeKug.jpg'), url('../images/feature/value.jpg');
   background-attachment: fixed;
 
   border-radius: 3rem 0 3rem 0;

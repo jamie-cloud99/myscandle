@@ -1,7 +1,7 @@
 <template>
   <div class="container pt-xl pb-5 px-4">
     <div class="position-relative">
-      <img class="d-block brand-bn object-fit-cover" src="/images/others/brand.jpg" alt="MyS品牌故事">
+      <img class="d-block brand-bn object-fit-cover" src="https://i.imgur.com/Y02ej83.jpg" alt="MyS品牌故事" referrerpolicy="no-referrer">
       <div class="bg-overlay position-absolute"></div>
       <div class="position-absolute top-50 start-50 translate-middle">
         <h1 class=" text-center h2 fw-bold mb-2 text-light"><span class="font-galada">MyS</span> 品牌故事</h1>
