@@ -1,7 +1,7 @@
 <template>
   <div class="container pt-xl pb-5 px-4">
     <div class="position-relative">
-      <img class="d-block brand-bn object-fit-cover" src="/images/others/brand-bn.jpg" alt="MyS品牌故事">
+      <img class="d-block brand-bn object-fit-cover" src="/images/others/brand.jpg" alt="MyS品牌故事">
       <div class="bg-overlay position-absolute"></div>
       <div class="position-absolute top-50 start-50 translate-middle">
         <h1 class=" text-center h2 fw-bold mb-2 text-light"><span class="font-galada">MyS</span> 品牌故事</h1>
@@ -28,7 +28,7 @@
             <img
               class="brand-img object-fit-cover"
               src="/images/others/brand-1.jpg"
-              alt=""
+              alt=" Mys香氛來自瑞典的生活哲學"
             />
           </div>
         </div>
@@ -47,7 +47,7 @@
             <img
               class="brand-img object-fit-cover"
               src="/images/others/brand-2.jpg"
-              alt=""
+              alt="Mys香氛堅持純素成分"
             />
           </div>
         </div>
@@ -67,8 +67,9 @@
           <div class="col-md-6 col-lg-5">
             <img
               class="brand-img object-fit-cover"
-              src="/images/others/brand-3.jpg"
-              alt=""
+              src="https://i.imgur.com/lS9nCWy.jpg"
+              alt="美好的 mys 時光"
+              referrerpolicy="no-referrer"
             />
           </div>
         </div>
