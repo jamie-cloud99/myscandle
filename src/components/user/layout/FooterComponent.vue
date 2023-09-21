@@ -4,23 +4,19 @@
       <div class="row pb-5">
         <div class="col-6 col-md-4 mb-4">
           <h4 class="fs-6 fw-bold mb-4">關於我們</h4>
+
           <ul>
             <li class="menu-item">
               <div class="position-relative">
-                <RouterLink to="/brand" class="menu-item d-block mb-2">
-                  品牌故事
-                </RouterLink>
+                <RouterLink to="/brand" class="menu-item d-block mb-2"> 品牌故事 </RouterLink>
                 <span class="menu-item-active position-absolute text-primary z-1"
                   ><i class="bi bi-egg-fill"></i
                 ></span>
               </div>
-              
             </li>
             <li>
               <div class="position-relative">
-                <RouterLink to="/contactus" class="menu-item d-block mb-2">
-                  聯絡我們
-                </RouterLink>
+                <RouterLink to="/contactus" class="menu-item d-block mb-2"> 聯絡我們 </RouterLink>
                 <span class="menu-item-active position-absolute text-primary z-1"
                   ><i class="bi bi-egg-fill"></i
                 ></span>
@@ -44,7 +40,11 @@
           </ul>
         </div>
         <div class="col-md-4 my-4 mt-md-0 mb-md-4">
-          <h4 class="font-galada fs-2 display-lg-3 mb-3">MyS</h4>
+          <div class="d-flex align-items-center mb-3">
+            <h4 class="font-galada fs-2 display-lg-3 ">MyS</h4>
+            <RouterLink to="/admin" class="btn btn-light ms-3"
+            >登入後台</RouterLink>
+          </div>
           <ul>
             <li class="mb-2">營業時間：Mon-Fri 9:00 - 18:00</li>
             <li class="mb-2"><a href="tel:+886-423449833"> 電話：04-2344-9833</a></li>
@@ -80,7 +80,6 @@ export default {
 
 <style lang="scss" scoped>
 .menu-item {
-  
   &:hover {
     font-weight: 700;
   }
@@ -93,7 +92,7 @@ export default {
   display: none;
   top: 50%;
   left: -1.5rem;
-  
+
   transform: translateY(-50%);
 }
 </style>

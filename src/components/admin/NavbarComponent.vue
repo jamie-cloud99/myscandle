@@ -1,7 +1,9 @@
 <template>
   <nav class="navbar navbar-expand-md bg-light">
     <div class="container">
-      <RouterLink class="navbar-brand" to="/admin/product"><img src="/images/logo/mys.svg" alt="mys-logo" /></RouterLink>
+      <RouterLink class="navbar-brand" to="/admin/product">
+        <h5 class="font-galada text-primary fs-1 fs-lg-2">MyS</h5>
+      </RouterLink>
       <button
         class="navbar-toggler"
         type="button"
