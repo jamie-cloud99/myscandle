@@ -6,28 +6,25 @@
   <LoadingComponent v-show="isLoading"></LoadingComponent>
   <router-view></router-view>
   <FooterComponent></FooterComponent>
+  <ScrollToTop></ScrollToTop>
 </template>
 
 <script>
+import { mapState } from 'pinia'
+import statusStore from '../../stores/statusStore'
 import NavbarComponent from '../../components/user/layout/NavbarComponent.vue'
 import OffCanvaCart from '../../components/user/layout/OffCanvaCart.vue'
 import FooterComponent from '../../components/user/layout/FooterComponent.vue'
-import emitter from '../../methods/emitter'
 import ToastMessages from '../../components/user/layout/ToastMessages.vue'
-import statusStore from '../../stores/statusStore'
-import { mapState } from 'pinia'
+import ScrollToTop from '../../components/user/layout/ScrollToTop.vue'
 
 export default {
   components: {
     NavbarComponent,
     FooterComponent,
     ToastMessages,
-    OffCanvaCart
-  },
-  provide() {
-    return {
-      emitter
-    }
+    OffCanvaCart,
+    ScrollToTop
   },
   data() {
     return {
