@@ -24,7 +24,9 @@ export default defineStore('productsStore', {
     imageList: [],
     tempImage: '',
     relatedProducts: [],
-    histoyView: []
+    histoyView: [],
+    filteredProducts: [],
+    keywordList: ['蠟燭', '擴香', '薰衣草', '禮盒', '木質調','玫瑰', '純素'],
   }),
   actions: {
     async fetchAllProducts() {
@@ -63,7 +65,6 @@ export default defineStore('productsStore', {
       }
     },
     selectCategory(category = '所有商品') {
-      
       this.categorySelected = category
       this.paginate(this.categoryProducts)
     },
@@ -87,6 +88,7 @@ export default defineStore('productsStore', {
       this.pagination = { ...page }
       this.products = [...itemPaginated]
       status.isLoading = false
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     },
     getRelatedProducts(product) {
       this.relatedProducts = this.productsAll.filter(
@@ -104,9 +106,40 @@ export default defineStore('productsStore', {
       this.tempImage = image
     },
     recordHistoryView(item) {
-      if(item) this.histoyView.push(item.id)
-      const history = JSON.stringify(this.histoyView) 
+      if (item) this.histoyView.push(item.id)
+      const history = JSON.stringify(this.histoyView)
       localStorage.setItem('historyView', history)
+    },
+    filterProducts(priceRanges) {
+      const selectedRanges = priceRanges
+        .flatMap(JSON.parse)
+        .map(Number)
+        .sort((a, b) => a - b)
+
+      this.filteredProducts = selectedRanges[0]
+        ? selectedRanges.reduce((acc, cur, index, ary) => {
+            if (index % 2 === 0) {
+              const nextVal = ary[index + 1]
+              acc.push(
+                ...this.categoryProducts.filter(
+                  (product) => product.price >= cur && product.price < nextVal
+                )
+              )
+            }
+            return acc
+          }, [])
+        : this.categoryProducts
+      this.paginate(this.filteredProducts)
+    },
+    async searchProducts(keyword) {
+      
+      await this.fetchAllProducts()
+      this.filteredProducts = this.productsAll.filter((product) => {
+        const searchFields = [product.title, product.content, product.description, product.notes, product.category]
+        // if field is undefined return false
+        return searchFields.some((field) => field && field.includes(keyword))
+      })
+      this.paginate(this.filteredProducts)
     }
   },
   getters: {
@@ -115,7 +148,7 @@ export default defineStore('productsStore', {
         this.categorySelected === '所有商品'
           ? [...this.productsAll]
           : this.productsAll.filter((item) => item.category === this.categorySelected)
-
+      this.filteredProducts = productList
       return productList
     },
     menuCategories() {
