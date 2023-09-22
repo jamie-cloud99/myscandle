@@ -1,6 +1,8 @@
 <template>
   <div class="container py-5">
-    <BreadcrumpComponent :nav-list="breadList" class="pt-lg-5"></BreadcrumpComponent>
+    <div class="mb-3 pt-5">
+      <BreadcrumpComponent :nav-list="breadList"></BreadcrumpComponent>
+    </div>
     <div class="overflow-hidden my-3 my-sm-5">
       <div class="row justify-content-between">
         <div class="col-md-2 col-xl-1 order-2 order-md-0">
@@ -108,6 +110,10 @@ export default {
       handler() {
         const newList = [
           {
+          path: '/',
+          title: '首頁'
+        },
+          {
             path: `/shop/?category=${this.categorySelected}`,
             title: this.categorySelected
           },
@@ -116,7 +122,7 @@ export default {
             title: this.product.title
           }
         ]
-        this.breadList = [...this.breadList, ...newList]
+        this.breadList = [...newList]
       },
       deep: true
     }

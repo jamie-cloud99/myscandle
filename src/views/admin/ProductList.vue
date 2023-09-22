@@ -40,12 +40,14 @@
     </table>
   </div>
 
-  <div class=" mt-4 mb-5">
-    <PaginationComponent 
-        :pages="pagination" @change-page="fetchPageProducts"></PaginationComponent>
+  <div class="mt-4 mb-5">
+    <PaginationComponent :pages="pagination" @change-page="fetchPageProducts"></PaginationComponent>
   </div>
 
-  <ProductModal ref="productModal" :product="tempProduct" :is-new="isNew"
+  <ProductModal
+    ref="productModal"
+    :product="tempProduct"
+    :is-new="isNew"
     @update-product="updateProduct"
   ></ProductModal>
   <DelModal ref="deleteModal" :item="tempProduct" @confirm-deletion="confirmDeletion"></DelModal>
@@ -114,7 +116,7 @@ export default {
       const api = `${VITE_API}api/${VITE_PATH}/admin/product/${item.id}`
       try {
         const res = await this.axios.delete(api)
-        if(res.data.success) { 
+        if (res.data.success) {
           await this.fetchPageProducts(this.pagination.current_page)
           this.$refs.deleteModal.hideModal()
           this.showSuccessToast(res.data.message)
@@ -126,7 +128,6 @@ export default {
       }
     },
     openModal(isNew, item) {
-      
       this.isNew = isNew
       if (isNew) {
         this.tempProduct = {
@@ -135,8 +136,8 @@ export default {
           imagesUrl: []
         }
       } else {
-        this.tempProduct = {...item}
-        if(!this.tempProduct.imagesUrl) {
+        this.tempProduct = { ...item }
+        if (!this.tempProduct.imagesUrl) {
           this.tempProduct.imagesUrl = []
         }
       }
@@ -145,12 +146,10 @@ export default {
     openDeleteModal(item) {
       this.tempProduct = item
       this.$refs.deleteModal.showModal()
-    },
+    }
   },
   created() {
     this.fetchPageProducts()
   }
 }
 </script>
-
-
