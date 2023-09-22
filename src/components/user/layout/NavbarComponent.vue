@@ -11,7 +11,12 @@
       </button>
       <ul class="menu pt-3 fw-semibold">
         <li class="menu-item mb-2 text-light py-3">
-          <h3 class="fs-1 fw-bold">商品一覽</h3>
+          <h3 class="fs-1 fw-bold">
+            <router-link to="/shop" class="d-block" @click.prevent="goToShop(null)">
+              商品一覽
+            </router-link>
+          </h3>
+          
         </li>
         <li v-for="item in menuCategories" :key="item" class="mb-2">
           <div class="position-relative">
@@ -128,9 +133,16 @@ export default {
       this.showMenu = !this.showMenu
     },
     goToShop(item) {
-      this.selectCategory(item)
+      
       this.toggleMenu()
-      this.$router.push({ path: '/shop', query: { category: item } })
+      if(item === null) {
+        this.$router.push('/shop')
+      } else {
+        this.selectCategory(item)
+        this.$router.push({ path: '/shop', query: { category: item } })
+      }
+      
+      
     },
     toggleSearch() {
       this.showSearchBox = !this.showSearchBox

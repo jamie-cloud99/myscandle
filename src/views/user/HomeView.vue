@@ -1,6 +1,6 @@
 <template>
   <div class="banner position-relative scrollbar-hidden pb-5">
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center overflow-hidden">
       <img
         data-aos="fade-down"
         data-aos-delay="200"
@@ -42,7 +42,7 @@
       ></RouterLink>
     </div>
   </div>
-  <div class="container">
+  <div class="container overflow-hidden">
     <div data-aos="fade-up" data-aos-delay="50" class="pt-xl position-relative" id="us">
       <AboutUs></AboutUs>
     </div>
