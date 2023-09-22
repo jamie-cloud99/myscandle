@@ -1,15 +1,16 @@
 <template>
   <div class="offcanva-cart p-3" :class="{show: showCart, 'transform-none': showDelModal}">
-    <button type="button" class="text-primary mb-3" @click.prevent="toggleCartPreview"><i class="bi bi-chevron-double-left me-2"></i>返回</button>
+    <button type="button" class="shop-link text-primary mb-3" @click="toggleCartPreview"><i class="bi bi-chevron-double-left me-2"></i>返回</button>
     <h3 class="fs-5 mb-3">購物清單</h3>
     <div class="mb-3">
       <CartTable></CartTable> 
     </div>
-    <div v-if="cartList.length" class="mb-3 text-end">
-      <button type="btn" class="btn btn-primary" @click.prevent="goCartPage">前往結帳</button>
+    <div v-if="cartList.length" class="mb-3 d-flex justify-content-end">
+      <button type="btn" class="btn btn-outline-primary px-4" @click="goShopPage">繼續逛逛</button>
+      <button type="btn" class="btn btn-primary px-4 ms-3" @click="goCartPage">前往結帳</button>
     </div>
     <div v-else class="mb-4 text-center">
-      <button  class="btn btn-primary px-3" type="button" @click.prevent="goShopPage">購物車空空如也，去看一些好商品吧！</button>
+      <button  class="btn btn-primary px-3" type="button" @click="goShopPage">購物車空空如也，去看一些好商品吧！</button>
     </div>
   </div>
   <div class="overlay" :class="{show: showCart}"></div>
@@ -43,7 +44,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 .offcanva-cart {
   position: fixed;
@@ -54,7 +55,7 @@ export default {
   height: 100%;
   overflow: auto;
   max-width: 500px;
-  background: url('../images/background/bg.jpg') no-repeat;
+  background: url('https://i.imgur.com/6vGoqRp.jpg'),url('../images/background/bg.png') no-repeat;
   background-size: cover;
   z-index: 1051;
   transition: all 0.5s ;
@@ -76,8 +77,12 @@ export default {
   }
 }
 
-
-.bi.bi-chevron-double-left {
-  vertical-align: middle;
+.shop-link {
+  &:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
 }
+
+
 </style>

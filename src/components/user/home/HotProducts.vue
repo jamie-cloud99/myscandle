@@ -4,7 +4,12 @@
       <ul
         class="categories-list d-flex justify-content-center align-items-center text-body py-4 mb-3"
       >
-        <li v-for="item in pickedProducts" :key="item.category">
+        <li
+          data-aos="fade-up"
+          data-aos-delay="50"
+          v-for="item in pickedProducts"
+          :key="item.category"
+        >
           <button
             @click="changeCategory(item)"
             type="button"
@@ -18,12 +23,18 @@
     </template>
 
     <SwiperSlide class="px-3" v-for="category in pickedProducts" :key="category.categoryTitle">
-      <h3 class="h3 text-center mb-3">{{ category.categoryTitle }}</h3>
-      <p class="text-center mb-5">{{ category.description }}</p>
+      <h3 data-aos="fade-up" data-aos-delay="50" class="h3 text-center mb-3">
+        {{ category.categoryTitle }}
+      </h3>
+      <p data-aos="fade-up" data-aos-delay="150" class="text-center mb-5">
+        {{ category.description }}
+      </p>
       <div class="d-none d-lg-block">
         <div class="row justify-content-center">
           <div class="col-md-6">
             <RouterLink
+              data-aos="fade-up-right"
+              data-aos-delay="500"
               :to="'/product/' + category.products[0].id"
               class="card rounded-md border-primary h-100 overflow-hidden"
             >
@@ -52,6 +63,8 @@
           <div class="col-md-6">
             <div class="d-none d-md-flex flex-column">
               <RouterLink
+                data-aos="fade-up-left"
+                data-aos-delay="500"
                 :to="'/product/' + category.products[1].id"
                 class="card rounded-md border-primary overflow-hidden mb-3 mb-lg-4"
               >
@@ -85,6 +98,9 @@
                 </div>
               </RouterLink>
               <RouterLink
+                data-aos="fade-up-left"
+                data-aos-delay="300"
+                data-aos-duration="700"
                 :to="'/product/' + category.products[2].id"
                 class="card rounded-md border-primary overflow-hidden"
               >
@@ -124,6 +140,8 @@
       <ul class="d-block d-lg-none">
         <li v-for="product in category.products" :key="product.id" class="mb-3 mb-md-4">
           <RouterLink
+            data-aos="zoom-in-up"
+            data-aos-duration="600"
             :to="'/product/' + product.id"
             class="product-card card rounded-md border-primary h-100 overflow-hidden"
           >

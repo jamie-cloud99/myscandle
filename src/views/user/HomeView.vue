@@ -2,6 +2,8 @@
   <div class="banner position-relative scrollbar-hidden pb-5">
     <div class="d-flex justify-content-center">
       <img
+        data-aos="fade-down"
+        data-aos-delay="200"
         :src="$format.getImageUrl(banner.path)"
         :alt="banner.title"
         class="d-block w-100 banner-img"
@@ -17,8 +19,16 @@
     </ul>
 
     <div class="banner-slogan position-absolute rounded-md" ref="slogan">
-      <h1 class="slogan-text text-light px-5 py-4 lh-normal">宛若仙境的清新香氣</h1>
+      <h1
+        data-aos="fade-up"
+        data-aos-delay="500"
+        class="slogan-text text-light px-5 py-4 lh-normal"
+      >
+        宛若仙境的清新香氣
+      </h1>
       <button
+        data-aos="fade-up"
+        data-aos-delay="700"
         type="button"
         @click.prevent="$router.push('/shop')"
         class="slogan-btn btn btn-primary rounded-md px-4 ms-5 mb-3"
@@ -33,7 +43,7 @@
     </div>
   </div>
   <div class="container">
-    <div class="pt-xl position-relative" id="us">
+    <div data-aos="fade-up" data-aos-delay="50" class="pt-xl position-relative" id="us">
       <AboutUs></AboutUs>
     </div>
     <div class="pt-5">
@@ -46,6 +56,8 @@
 </template>
 
 <script>
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 import { mapState, mapActions } from 'pinia'
 import productsStore from '../../stores/productsStore'
 import statusStore from '../../stores/statusStore'
@@ -80,6 +92,9 @@ export default {
   },
   mounted() {
     this.readyPage()
+    AOS.init({
+      duration: 500
+    })
   }
 }
 </script>

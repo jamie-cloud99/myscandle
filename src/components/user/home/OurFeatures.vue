@@ -5,6 +5,8 @@
 
   <ul class="row border-top border-bottom border-primary border-opacity-50 my-md-3">
     <li
+      data-aos="fade-up"
+      data-aos-delay="250"
       class="col-md-3 value-item border-md-end border-bottom-lg-none border-primary border-opacity-50"
       v-for="item in features"
       :key="item.title"
@@ -88,8 +90,8 @@ export default {
     background: $red-brown-30;
   }
   &:hover {
-      background: $red-brown;
-      color: $light;
-    }
+    background: $red-brown;
+    color: $light;
+  }
 }
 </style>
