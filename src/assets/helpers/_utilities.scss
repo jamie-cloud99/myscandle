@@ -19,7 +19,9 @@
   border-radius: 1.5rem !important;
 }
 
-
+.vertical-text {
+  writing-mode: vertical-rl;
+}
 
 // font-size
 
@@ -41,6 +43,10 @@
 
 .w-40{
   width: 40%;
+}
+
+.w-fit {
+  width: fit-content;
 }
 
 .pt-xl {

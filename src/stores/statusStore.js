@@ -20,7 +20,7 @@ export default defineStore('statusStore', {
         this.btnLoading = false
       }, 2000)
     },
-    readyPage () {
+    readyPage() {
       this.isLoading = false
     }
   }

@@ -11,7 +11,7 @@
       </button>
       <ul class="menu pt-3 fw-semibold">
         <li class="menu-item mb-2 text-light py-3">
-          <h3 class="fs-1 fw-bold">SHOP</h3>
+          <h3 class="fs-1 fw-bold">商品一覽</h3>
         </li>
         <li v-for="item in menuCategories" :key="item" class="mb-2">
           <div class="position-relative">
@@ -46,21 +46,38 @@
           <img src="/images/logo/mys-light.svg" alt="mys香氛" class="logo-img" />
           <h5 class="font-galada text-light fs-1 fs-lg-2">MyS</h5>
         </RouterLink>
-        <RouterLink
-          to="/shop"
-          class="shop-link ms-5 px-3 py-1 rounded-md fw-semibold"
-          :class="{ 'd-md-block': showShopBtn }"
-          >SHOP</RouterLink
-        >
+        <div class="d-none d-md-flex ms-3">
+          <RouterLink to="/shop" class="shop-link px-3 py-1 rounded-md fw-semibold"
+            >商品一覽</RouterLink
+          >
+          <RouterLink to="/brand" class="shop-link px-3 py-1 rounded-md fw-semibold"
+            >品牌故事</RouterLink
+          >
+        </div>
       </div>
-      <ul class="navbar-nav">
-        <li class="me-2">
+      <ul class="d-flex me-2">
+        <li class="">
+          <div class="position-relative">
+            <button
+              type="button"
+              class="nav-btn btn border-0 position-relative fs-5"
+              @click="toggleSearch"
+              :class="{ active: showSearchBox }"
+            >
+              <i class="bi bi-search"></i>
+            </button>
+            <div class="search-pos position-absolute" :class="{ expand: showSearchBox }">
+              <SearchDropdown @search="goSearch"></SearchDropdown>
+            </div>
+          </div>
+        </li>
+        <li>
           <button
             type="button"
-            class="btn border-0 position-relative"
+            class="nav-btn btn border-0 position-relative fs-5"
             @click.prevent="toggleCartPreview"
           >
-            <i class="bi bi-handbag-fill text-light fs-5"></i
+            <i class="bi bi-handbag-fill"></i
             ><span class="position-absolute cart-number badge rounded-pill bg-danger">
               {{ countCart }}
               <span class="visually-hidden">unread messages</span>
@@ -77,14 +94,18 @@ import { mapState, mapActions } from 'pinia'
 import statusStore from '../../../stores/statusStore'
 import cartStore from '../../../stores/cartStore'
 import productsStore from '../../../stores/productsStore'
+import SearchDropdown from './SearchDropdown.vue'
 
 export default {
   props: ['scrollY'],
+  components: {
+    SearchDropdown
+  },
   data() {
     return {
       isScrollDown: true,
-      showShopBtn: false,
-      showMenu: false
+      showMenu: false,
+      showSearchBox: false
     }
   },
   computed: {
@@ -98,7 +119,7 @@ export default {
   methods: {
     ...mapActions(cartStore, ['fetchCart']),
     ...mapActions(statusStore, ['toggleCartPreview']),
-    ...mapActions(productsStore, ['selectCategory']),
+    ...mapActions(productsStore, ['selectCategory', 'searchProducts']),
     watchScroll(height = 0) {
       this.isScrollDown = window.scrollY >= height ? true : false
       this.showShopBtn = window.scrollY >= height ? true : false
@@ -110,6 +131,21 @@ export default {
       this.selectCategory(item)
       this.toggleMenu()
       this.$router.push({ path: '/shop', query: { category: item } })
+    },
+    toggleSearch() {
+      this.showSearchBox = !this.showSearchBox
+    },
+    goSearch(keyword) {
+      this.searchProducts(keyword)
+      this.toggleSearch()
+      this.$router.push({ path: '/search', query: { kw: keyword } })
+    }
+  },
+  watch: {
+    scrollY() {
+      if (this.scrollY === 0) {
+        this.isScrollDown = true
+      }
     }
   },
   created() {
@@ -145,10 +181,10 @@ export default {
 }
 
 .shop-link {
-  display: none;
   font-size: 1.15rem;
   letter-spacing: 0.1rem;
   color: $light;
+  filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
   &:hover {
     background: $light;
     color: $primary;
@@ -233,29 +269,27 @@ export default {
   transform: translateY(-50%);
 }
 
-.nav-search {
-  display: flex;
+.search-pos {
+  bottom: -1rem;
+  right: 0;
+  max-height: 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  transform: translateY(100%);
+  transition: all 300ms ease-in-out;
   &.expand {
-    border: 1px solid black;
+    max-height: 400px;
   }
 }
 
-.search-input,
-.search-close {
-  display: none;
-  font-size: 0.875rem;
-}
-
-.expand .search-input {
-  display: block;
-  background-color: inherit;
-  &:focus {
-    border: 0;
-    box-shadow: none;
+.nav-btn {
+  color: $light;
+  filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
+  &:hover,
+  &:active,
+  &.active {
+    background: $light;
+    color: $primary;
   }
-}
-
-.expand .search-close {
-  display: block;
 }
 </style>

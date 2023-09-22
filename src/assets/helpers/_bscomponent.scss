@@ -20,3 +20,11 @@
 .table > :not(caption) > * > * {
   color: inherit;
 }
+
+.list-group-item {
+  font-weight: 500;
+  &:hover:not(.active) {
+    background: $light;
+    font-weight: 700;
+  }
+}
