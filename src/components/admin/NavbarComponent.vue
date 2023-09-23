@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-md bg-light">
     <div class="container">
-      <RouterLink class="navbar-brand" to="/admin/product">
+      <RouterLink class="navbar-brand" to="/">
         <h5 class="font-galada text-primary fs-1 fs-lg-2">MyS</h5>
       </RouterLink>
       <button

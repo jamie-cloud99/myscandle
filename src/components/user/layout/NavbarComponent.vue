@@ -16,7 +16,6 @@
               商品一覽
             </router-link>
           </h3>
-          
         </li>
         <li v-for="item in menuCategories" :key="item" class="mb-2">
           <div class="position-relative">
@@ -85,7 +84,7 @@
             <i class="bi bi-handbag-fill"></i
             ><span class="position-absolute cart-number badge rounded-pill bg-danger">
               {{ countCart }}
-              <span class="visually-hidden">unread messages</span>
+              <span class="visually-hidden">cart number</span>
             </span>
           </button>
         </li>
@@ -133,16 +132,13 @@ export default {
       this.showMenu = !this.showMenu
     },
     goToShop(item) {
-      
       this.toggleMenu()
-      if(item === null) {
+      if (item === null) {
         this.$router.push('/shop')
       } else {
         this.selectCategory(item)
         this.$router.push({ path: '/shop', query: { category: item } })
       }
-      
-      
     },
     toggleSearch() {
       this.showSearchBox = !this.showSearchBox
