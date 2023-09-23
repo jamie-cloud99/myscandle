@@ -13,12 +13,12 @@
 @import 'bootstrap/scss/mixins';
 @import 'bootstrap/scss/root';
 
-
+@import './helpers/utilities';
 @import 'bootstrap/scss/bootstrap';
 @import './helpers/rwd';
 @import './helpers/reset';
 @import './helpers/bscomponent';
-@import './helpers/utilities';
+
 @import './helpers/theme';
 
 
