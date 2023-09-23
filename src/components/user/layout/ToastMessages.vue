@@ -6,11 +6,6 @@ import toastStore from '../../../stores/toastStore'
 import { useToast } from 'vue-toastification'
 
 export default {
-  data() {
-    return {
-
-    }
-  },
   computed: {
     ...mapState(toastStore, ['message', 'count'])
   },
@@ -28,6 +23,6 @@ export default {
     count: {
       handler: 'createToast'
     }
-  },
+  }
 }
 </script>

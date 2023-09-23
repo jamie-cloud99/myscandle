@@ -1,20 +1,7 @@
 <template>
-  <div class="container pt-xl">
-    <div class="position-relative">
-      <img
-        class="d-block brand-bn object-fit-cover"
-        src="/images/others/contact.jpg"
-        alt="聯絡我們"
-      />
-      <div class="bg-overlay position-absolute"></div>
-      <div class="position-absolute top-50 start-50 translate-middle">
-        <h1 class="text-center h2 fw-bold mb-2 text-light">聯絡我們</h1>
-        <h2 class="text-center h3 fw-medium mb-3 text-light text-opacity-85">
-          寫下你的問題，專人立即聯繫
-        </h2>
-      </div>
-    </div>
+  <CustomBanner :content="banner"></CustomBanner>
 
+  <div class="container pb-lg-5">
     <div class="row justify-content-center mt-5">
       <div class="col-lg-6">
         <VForm
@@ -37,7 +24,7 @@
             </VField>
             <ErrorMessage name="主旨" class="invalid-feedback"></ErrorMessage>
           </div>
-          
+
           <div class="mb-3">
             <label for="message" class="form-label">意見回饋 / 問題描述</label>
             <VField
@@ -108,11 +95,23 @@
 </template>
 
 <script>
-import { mapState, mapActions} from 'pinia'
+import { mapState, mapActions } from 'pinia'
 import statusStore from '../../stores/statusStore'
-
+import CustomBanner from '../../components/user/others/CustomBanner.vue'
 
 export default {
+  components: {
+    CustomBanner
+  },
+  data() {
+    return {
+      banner: {
+        title: '聯絡我們',
+        subtitle: '寫下你的問題，專人立即聯繫',
+        imgUrl: '/images/others/contact.jpg'
+      }
+    }
+  },
   computed: {
     ...mapState(statusStore, ['btnLoading'])
   },

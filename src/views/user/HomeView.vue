@@ -128,6 +128,7 @@ export default {
 }
 
 .menu-pc-item {
+  filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
   &:hover {
     color: $primary;
     opacity: 90%;
@@ -163,6 +164,7 @@ export default {
 .slogan-text {
   letter-spacing: 0.05rem;
   font-weight: bolder;
+  filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
   @include pad {
     font-size: 2.5rem;
   }
@@ -177,9 +179,7 @@ export default {
 
   &:hover {
     border: 1px solid;
-    outline-color: rgba(255, 255, 255, 0);
-    outline: 1px solid;
-    outline-offset: 2px;
+    box-shadow: inset 0 0 20px rgba(144, 130, 130, 0.5), 0 0 20px rgba(255, 255, 255, 0.2), 5px 5px 0 1px rgb(255, 245, 237);
   }
 }
 

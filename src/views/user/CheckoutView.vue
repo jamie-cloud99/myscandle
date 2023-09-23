@@ -7,7 +7,9 @@
           <p class="fw-bold ms-4 flex-grow-1">
             訂單金額：NT$ {{ $format.currency(Math.floor(orderSubmitted.total)) }}
           </p>
-          <button type="button" @click="toggleOrder">收合明細</button>
+          <button type="button" class="detail-btn" @click="toggleOrder">
+            <span v-if="showDetail">收合</span>
+            <span v-else>展開</span>明細</button>
         </div>
         <div class="order-detail mt-4" :class="{ show: showDetail }">
           <ul class="list-group rounded-md overflow-hidden">
@@ -67,7 +69,7 @@ export default {
   },
   data() {
     return {
-      showDetail: false
+      showDetail: true
     }
   },
   computed: {
@@ -90,7 +92,14 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.detail-btn {
+  &:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+}
+
 .order-detail {
   max-height: 0;
   overflow: hidden;
