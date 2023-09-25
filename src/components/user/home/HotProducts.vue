@@ -31,13 +31,21 @@
                 :to="'/product/' + category.products[0].id"
                 class="card rounded-md border-primary h-100 overflow-hidden"
               >
-                <div class="ratio ratio-1x1 overflow-hidden">
+                <div class="position-relative ratio ratio-1x1 overflow-hidden">
                   <img
                     :src="category.products[0].imageUrl"
                     :alt="category.products[0].title"
                     class="product-img"
                     loading="lazy"
                   />
+                  <div class="card-img-overlay position-absolute"></div>
+                  <button
+                    type="button"
+                    class="cart-btn btn btn-primary position-absolute"
+                    @click.prevent="addToCart(category.products[0].id)"
+                  >
+                    加入購物車
+                  </button>
                 </div>
                 <div class="card-body pb-lg-0">
                   <div class="card-title fs-md fw-bold">{{ category.products[0].title }}</div>
@@ -66,14 +74,23 @@
                   class="card rounded-md border-primary overflow-hidden mb-3 mb-lg-4"
                 >
                   <div class="d-flex">
-                    <div class="w-60 ratio ratio-1x1 overflow-hidden">
+                    <div class="w-60 ratio ratio-1x1 overflow-hidden position-relative">
                       <img
                         :src="category.products[1].imageUrl"
                         :alt="category.products[1].title"
                         class="product-img"
                         loading="lazy"
                       />
+                      <div class="card-img-overlay position-absolute"></div>
+                      <button
+                        type="button"
+                        class="cart-btn btn btn-primary position-absolute"
+                        @click.prevent="addToCart(category.products[1].id)"
+                      >
+                        加入購物車
+                      </button>
                     </div>
+
                     <div class="w-40 d-flex flex-column">
                       <div class="card-body">
                         <div class="card-title fs-md fw-bold mb-3">
@@ -106,13 +123,21 @@
                   class="card rounded-md border-primary overflow-hidden"
                 >
                   <div class="d-flex">
-                    <div class="w-60 ratio ratio-1x1 overflow-hidden">
+                    <div class="w-60 ratio ratio-1x1 overflow-hidden position-relative">
                       <img
                         :src="category.products[2].imageUrl"
                         :alt="category.products[2].title"
                         class="product-img"
                         loading="lazy"
                       />
+                      <div class="card-img-overlay position-absolute"></div>
+                      <button
+                        type="button"
+                        class="cart-btn btn btn-primary position-absolute"
+                        @click.prevent="addToCart(category.products[2].id)"
+                      >
+                        加入購物車
+                      </button>
                     </div>
                     <div class="w-40 d-flex flex-column">
                       <div class="card-body">
@@ -150,8 +175,21 @@
               :to="'/product/' + product.id"
               class="product-card card rounded-md border-primary h-100 overflow-hidden"
             >
-              <div class="ratio ratio-1x1">
-                <img :src="product.imageUrl" :alt="product.title" loading="lazy" class="d-block" />
+              <div class="ratio ratio-1x1 overflow-hidden position-relative">
+                <img
+                  :src="product.imageUrl"
+                  :alt="product.title"
+                  loading="lazy"
+                  class="product-img"
+                />
+                <div class="card-img-overlay position-absolute"></div>
+                    <button
+                      type="button"
+                      class="cart-btn btn btn-primary position-absolute"
+                      @click.prevent="addToCart(product.id)"
+                    >
+                      加入購物車
+                    </button>
               </div>
               <div class="card-body pb-lg-0">
                 <div class="card-title fs-md fw-bold">{{ product.title }}</div>
@@ -180,6 +218,7 @@ import { Pagination } from 'swiper/modules'
 import 'swiper/css/pagination'
 import { mapActions } from 'pinia'
 import productsStore from '../../../stores/productsStore'
+import cartStore from '../../../stores/cartStore'
 
 export default {
   data() {
@@ -295,6 +334,7 @@ export default {
   },
   methods: {
     ...mapActions(productsStore, ['searchProducts']),
+    ...mapActions(cartStore, ['addToCart']),
     onSwiper(swiper) {
       this.swiper = swiper
     },
@@ -335,10 +375,38 @@ export default {
   display: block;
   object-fit: cover;
   transition: all 300ms ease-in-out;
-  &:hover {
+}
+
+.card-img-overlay {
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  z-index: 1;
+}
+
+.cart-btn {
+  display: none;
+  top: 50%;
+  left: 50%;
+  width: 150px;
+  height: 50px;
+  border-radius: 2rem;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.card:hover {
+  .card-img-overlay {
+    opacity: 1;
+  }
+  .product-img {
     scale: 110%;
   }
+  .cart-btn {
+    display: inline-block;
+  }
 }
+
 .categories-list-item {
   transition: all 0.5s ease-in-out;
   color: $primary;

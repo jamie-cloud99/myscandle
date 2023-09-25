@@ -13,7 +13,9 @@
         </div>
         <div class="col-md-5 mb-5 order-3">
           <h1 class="h4 mb-3">{{ product.title }}</h1>
-          <h3 class="fs-6 text-highlight mb-4">{{ product.notes }}</h3>
+          <h3 class="note-btn fs-6 text-highlight mb-4" @click="goSearch(product.notes)">
+            {{ product.notes }}
+          </h3>
           <p class="h4 mb-5">
             NT$ {{ $format.currency(product.price) }}
             <s class="fs-6 text-secondary ms-3">NT$ {{ $format.currency(product.origin_price) }}</s>
@@ -110,9 +112,9 @@ export default {
       handler() {
         const newList = [
           {
-          path: '/',
-          title: '首頁'
-        },
+            path: '/',
+            title: '首頁'
+          },
           {
             path: `/shop/?category=${this.categorySelected}`,
             title: this.categorySelected
@@ -128,14 +130,18 @@ export default {
     }
   },
   methods: {
+    ...mapActions(cartStore, ['addToCart']),
+    ...mapActions(productsStore, ['fetchProduct', 'recordHistoryView', 'searchProducts']),
     wrapText(text) {
       if (text) return text.replace(/\n/g, '<br>')
     },
     getQuantity(num) {
       this.quantity = num
     },
-    ...mapActions(cartStore, ['addToCart']),
-    ...mapActions(productsStore, ['fetchProduct', 'recordHistoryView'])
+    goSearch(keyword) {
+      this.searchProducts(keyword)
+      this.$router.push({ path: '/search', query: { kw: keyword } })
+    }
   },
   created() {
     this.fetchProduct(this.id)
@@ -149,5 +155,12 @@ export default {
 <style lang="scss" scoped>
 .cart-btn {
   max-width: 420px;
+}
+
+.note-btn {
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
 }
 </style>

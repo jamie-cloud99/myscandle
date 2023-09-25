@@ -59,6 +59,14 @@ export default {
     },
     
   },
+  watch: {
+    cart: {
+      handler() {
+         this.tempQuantity = this.cart.qty
+      },
+      deep: true
+    }
+  },  
   created() {
     this.tempQuantity = this.cart.qty
   }
