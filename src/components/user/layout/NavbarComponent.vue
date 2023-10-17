@@ -4,7 +4,7 @@
       <button
         type="button"
         class="d-md-none menu-btn"
-        @click.prevent="toggleMenu"
+        @click="toggleMenu"
         :class="{ active: showMenu }"
       >
         <span class="navicon"></span>
@@ -12,9 +12,9 @@
       <ul class="menu pt-3 fw-semibold">
         <li class="menu-item mb-2 text-light py-3">
           <h3 class="fs-1 fw-bold">
-            <router-link to="/shop" class="d-block" @click.prevent="goToShop(null)">
+            <RouterLink to="/shop" class="d-block" @click.prevent="goToShop(null)">
               商品一覽
-            </router-link>
+            </RouterLink>
           </h3>
         </li>
         <li v-for="item in menuCategories" :key="item" class="mb-2">
@@ -32,16 +32,16 @@
         </li>
         <li class="menu-item mb-2 text-light py-3">
           <h3 class="fs-1 fw-bold">
-            <router-link to="/brand" class="d-block" @click.prevent="toggleMenu">
+            <RouterLink to="/brand" class="d-block" @click.prevent="toggleMenu">
               品牌故事
-            </router-link>
+            </RouterLink>
           </h3>
         </li>
         <li class="menu-item mb-2 text-light py-3">
           <h3 class="fs-1 fw-bold">
-            <router-link to="/contactus" class="d-block" @click.prevent="toggleMenu">
+            <RouterLink to="/contactus" class="d-block" @click.prevent="toggleMenu">
               聯絡我們
-            </router-link>
+            </RouterLink>
           </h3>
         </li>
       </ul>
@@ -60,7 +60,7 @@
         </div>
       </div>
       <ul class="d-flex me-2">
-        <li class="">
+        <li>
           <div class="position-relative">
             <button
               type="button"
@@ -71,7 +71,7 @@
               <i class="bi bi-search"></i>
             </button>
             <div class="search-pos position-absolute" :class="{ expand: showSearchBox }">
-              <SearchDropdown @search="goSearch"></SearchDropdown>
+              <SearchDropdown @search="goSearch"/>
             </div>
           </div>
         </li>
@@ -79,10 +79,10 @@
           <button
             type="button"
             class="nav-btn btn border-0 position-relative fs-5"
-            @click.prevent="toggleCartPreview"
+            @click="toggleCartPreview"
           >
             <i class="bi bi-handbag-fill"></i
-            ><span class="position-absolute cart-number badge rounded-pill bg-danger">
+            ><span v-if="countCart" class="position-absolute cart-number badge rounded-pill bg-danger">
               {{ countCart }}
               <span class="visually-hidden">cart number</span>
             </span>
@@ -95,9 +95,9 @@
 
 <script>
 import { mapState, mapActions } from 'pinia'
-import statusStore from '../../../stores/statusStore'
-import cartStore from '../../../stores/cartStore'
-import productsStore from '../../../stores/productsStore'
+import statusStore from '@/stores/statusStore'
+import cartStore from '@/stores/cartStore'
+import productsStore from '@/stores/productsStore'
 import SearchDropdown from './SearchDropdown.vue'
 
 export default {
@@ -174,7 +174,7 @@ export default {
 
 <style lang="scss" scoped>
 @import 'bootstrap/scss/functions';
-@import '../../../assets/helpers/variables';
+@import '@/assets/helpers/variables';
 
 .header {
   position: fixed;

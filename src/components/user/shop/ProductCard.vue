@@ -1,5 +1,5 @@
 <template>
-  <router-link
+  <RouterLink
     :to="`/product/${product.id}`"
     class="card border-0 bg-transparent h-100 overflow-hidden"
   >
@@ -39,13 +39,13 @@
         <span v-if="cartLoadingItem === product.id" class="visually-hidden">Loading...</span>
       </button>
     </div>
-  </router-link>
+  </RouterLink>
 </template>
 
 <script>
 import { mapState, mapActions } from 'pinia'
-import cartStore from '../../../stores/cartStore'
-import statusStore from '../../../stores/statusStore'
+import cartStore from '@/stores/cartStore'
+import statusStore from '@/stores/statusStore'
 
 export default {
   props: ['product'],

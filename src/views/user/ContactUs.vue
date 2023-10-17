@@ -1,5 +1,5 @@
 <template>
-  <CustomBanner :content="banner"></CustomBanner>
+  <CustomBanner :content="banner" />
 
   <div class="container pb-lg-5">
     <div class="row justify-content-center mt-5">
@@ -16,13 +16,12 @@
               type="text"
               class="form-control bg-transparent border-bottom border-primary rounded-0"
               id="title"
-              placeholder=""
               name="主旨"
               rules="required"
               :class="{ 'is-invalid': errors['主旨'] }"
-            >
-            </VField>
-            <ErrorMessage name="主旨" class="invalid-feedback"></ErrorMessage>
+            />
+
+            <ErrorMessage name="主旨" class="invalid-feedback" />
           </div>
 
           <div class="mb-3">
@@ -31,10 +30,11 @@
               as="textarea"
               class="form-control bg-transparent border-bottom border-primary rounded-0"
               id="message"
-              placeholder=""
+              placeholder="請輸入您的問題或意見"
               name="問題"
-            >
-            </VField>
+              :class="{ 'is-invalid': errors['問題'] }"
+            />
+            <ErrorMessage name="問題" class="invalid-feedback" />
           </div>
           <div class="mb-3">
             <label for="name" class="form-label">姓名<span class="text-danger">*</span></label>
@@ -46,9 +46,9 @@
               name="姓名"
               rules="required"
               :class="{ 'is-invalid': errors['姓名'] }"
-            >
-            </VField>
-            <ErrorMessage name="姓名" class="invalid-feedback"></ErrorMessage>
+            />
+
+            <ErrorMessage name="姓名" class="invalid-feedback" />
           </div>
           <div class="mb-3">
             <label for="phone" class="form-label">手機<span class="text-danger">*</span></label>
@@ -60,9 +60,9 @@
               name="手機"
               :rules="isPhone"
               :class="{ 'is-invalid': errors['手機'] }"
-            >
-            </VField>
-            <ErrorMessage name="手機" class="invalid-feedback"></ErrorMessage>
+            />
+
+            <ErrorMessage name="手機" class="invalid-feedback" />
           </div>
           <div class="mb-3">
             <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
@@ -74,8 +74,7 @@
               name="email"
               rules="email|required"
               :class="{ 'is-invalid': errors['email'] }"
-            >
-            </VField>
+            />
           </div>
           <div class="d-flex pt-2">
             <button type="submit" class="btn btn-primary ms-auto" :disabled="btnLoading">
@@ -96,8 +95,8 @@
 
 <script>
 import { mapState, mapActions } from 'pinia'
-import statusStore from '../../stores/statusStore'
-import CustomBanner from '../../components/user/others/CustomBanner.vue'
+import statusStore from '@/stores/statusStore'
+import CustomBanner from '@/components/user/others/CustomBanner.vue'
 
 export default {
   components: {

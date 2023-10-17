@@ -183,13 +183,13 @@
                   class="product-img"
                 />
                 <div class="card-img-overlay position-absolute"></div>
-                    <button
-                      type="button"
-                      class="cart-btn btn btn-primary position-absolute"
-                      @click.prevent="addToCart(product.id)"
-                    >
-                      加入購物車
-                    </button>
+                <button
+                  type="button"
+                  class="cart-btn btn btn-primary position-absolute"
+                  @click.prevent="addToCart(product.id)"
+                >
+                  加入購物車
+                </button>
               </div>
               <div class="card-body pb-lg-0">
                 <div class="card-title fs-md fw-bold">{{ product.title }}</div>
@@ -217,8 +217,8 @@
 import { Pagination } from 'swiper/modules'
 import 'swiper/css/pagination'
 import { mapActions } from 'pinia'
-import productsStore from '../../../stores/productsStore'
-import cartStore from '../../../stores/cartStore'
+import productsStore from '@/stores/productsStore'
+import cartStore from '@/stores/cartStore'
 
 export default {
   data() {
@@ -353,7 +353,7 @@ export default {
 
 <style lang="scss" scoped>
 @import 'bootstrap/scss/functions';
-@import '../../../assets/helpers/variables';
+@import '@/assets/helpers/variables';
 
 .product-card {
   max-width: 500px;

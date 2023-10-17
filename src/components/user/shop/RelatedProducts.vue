@@ -9,7 +9,7 @@
       :space-between="32"
     >
       <SwiperSlide class="h-auto" v-for="item in relatedProducts" :key="item.id">
-        <ProductCard :product="item"></ProductCard>
+        <ProductCard :product="item" />
       </SwiperSlide>
     </SwiperContainer>
   </div>

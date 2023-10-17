@@ -1,6 +1,6 @@
 <template>
   <div class="text-end my-4">
-    <button class="btn btn-primary" @click="openModal(true)">新增產品資料</button>
+    <button type="button" class="btn btn-primary" @click="openModal(true)">新增產品資料</button>
   </div>
   <div class="d-flex justify-content-center table-responsive">
     <table class="table mt-4">
@@ -13,7 +13,7 @@
           <th width="150">編輯</th>
         </tr>
       </thead>
-      <tbody class="">
+      <tbody>
         <tr v-for="product in products" :key="product.id" class="border-bottom">
           <td>{{ product.category }}</td>
           <td>{{ product.title }}</td>
@@ -25,12 +25,17 @@
           <td>
             <div class="d-md-flex">
               <button
+                type="button"
                 class="btn btn-outline-primary btn-sm mb-2 mb-md-0 me-md-2"
                 @click="openModal(false, product)"
               >
                 編輯
               </button>
-              <button class="btn btn-outline-danger btn-sm" @click="openDeleteModal(product)">
+              <button
+                type="button"
+                class="btn btn-outline-danger btn-sm"
+                @click="openDeleteModal(product)"
+              >
                 刪除
               </button>
             </div>
@@ -41,7 +46,7 @@
   </div>
 
   <div class="mt-4 mb-5">
-    <PaginationComponent :pages="pagination" @change-page="fetchPageProducts"></PaginationComponent>
+    <PaginationComponent :pages="pagination" @change-page="fetchPageProducts" />
   </div>
 
   <ProductModal
@@ -49,18 +54,18 @@
     :product="tempProduct"
     :is-new="isNew"
     @update-product="updateProduct"
-  ></ProductModal>
-  <DelModal ref="deleteModal" :item="tempProduct" @confirm-deletion="confirmDeletion"></DelModal>
+  />
+  <DelModal ref="deleteModal" :item="tempProduct" @confirm-deletion="confirmDeletion" />
 
-  <LoadingComponent v-show="isLoading"></LoadingComponent>
+  <LoadingComponent v-show="isLoading" />
 </template>
 
 <script>
 const { VITE_API, VITE_PATH } = import.meta.env
-import ProductModal from '../../components/admin/modal/ProductModal.vue'
-import DelModal from '../../components/admin/modal/DelModal.vue'
-import PaginationComponent from '../../components/admin/PaginationComponent.vue'
-import toastMixin from '../../mixins/toastMixin'
+import ProductModal from '@/components/admin/modal/ProductModal.vue'
+import DelModal from '@/components/admin/modal/DelModal.vue'
+import PaginationComponent from '@/components/admin/PaginationComponent.vue'
+import toastMixin from '@/mixins/toastMixin'
 
 export default {
   components: {

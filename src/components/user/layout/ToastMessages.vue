@@ -2,7 +2,7 @@
 
 <script>
 import { mapActions, mapState } from 'pinia'
-import toastStore from '../../../stores/toastStore'
+import toastStore from '@/stores/toastStore'
 import { useToast } from 'vue-toastification'
 
 export default {

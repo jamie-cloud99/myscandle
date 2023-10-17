@@ -1,5 +1,5 @@
 <template>
-  <h3 class="about-title position-absolute start-50 translate-middle-x z-n1 text-center ">
+  <h3 class="about-title position-absolute start-50 translate-middle-x z-n1 text-center">
     ABOUT US
   </h3>
   <div class="row justify-content-center align-items-center" ref="about">
@@ -66,6 +66,5 @@ export default {
     letter-spacing: 1rem;
     font-size: 100px;
   }
-  
 }
 </style>

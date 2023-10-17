@@ -6,7 +6,7 @@
         <h2 class="h4 mb-3">付款成功</h2>
         <p class="mb-4">感謝您訂購 mys 的商品，<br />商品將於 2-5 個工作天內完成配送</p>
         <div class="d-flex justify-content-center">
-          <router-link to="/" class="btn btn-primary">返回首頁</router-link>
+          <RouterLink to="/" class="btn btn-primary">返回首頁</RouterLink>
         </div>
       </div>
     </div>

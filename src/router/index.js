@@ -86,7 +86,7 @@ const router = createRouter({
     {
       path: '/login',
       name: 'Login',
-      component: () => import('@/views/adminLogin.vue')
+      component: () => import('@/views/AdminLogin.vue')
     },
     {
       path: '/:pathMatch(.*)*',

@@ -30,9 +30,9 @@
                     rules="required"
                     placeholder="請輸入商品名稱"
                     :class="{ 'is-invalid': errors['商品名稱'] }"
-                  >
-                  </VField>
-                  <ErrorMessage name="商品名稱" class="invalid-feedback"></ErrorMessage>
+                  />
+
+                  <ErrorMessage name="商品名稱" class="invalid-feedback" />
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="category" class="form-label"
@@ -53,7 +53,7 @@
                       {{ item }}
                     </option>
                   </VField>
-                  <ErrorMessage name="商品類別" class="invalid-feedback"></ErrorMessage>
+                  <ErrorMessage name="商品類別" class="invalid-feedback" />
                 </div>
               </div>
               <div class="row gx-2">
@@ -70,9 +70,9 @@
                     rules="required"
                     placeholder="請輸入單位"
                     :class="{ 'is-invalid': errors['單位'] }"
-                  >
-                  </VField>
-                  <ErrorMessage name="單位" class="invalid-feedback"></ErrorMessage>
+                  />
+
+                  <ErrorMessage name="單位" class="invalid-feedback" />
                 </div>
                 <div class="mb-3 col-md-4">
                   <label for="origin_price" class="form-label"
@@ -87,9 +87,9 @@
                     placeholder="請輸入定價"
                     :rules="isPrice"
                     :class="{ 'is-invalid': errors['定價'] }"
-                  >
-                  </VField>
-                  <ErrorMessage name="定價" class="invalid-feedback"></ErrorMessage>
+                  />
+
+                  <ErrorMessage name="定價" class="invalid-feedback" />
                 </div>
                 <div class="mb-3 col-md-4">
                   <label for="price" class="form-label"
@@ -104,9 +104,9 @@
                     placeholder="請輸入售價"
                     :rules="isCheaperPrice"
                     :class="{ 'is-invalid': errors['售價'] }"
-                  >
-                  </VField>
-                  <ErrorMessage name="售價" class="invalid-feedback"></ErrorMessage>
+                  />
+
+                  <ErrorMessage name="售價" class="invalid-feedback" />
                 </div>
               </div>
               <hr />
@@ -142,8 +142,8 @@
                     id="note"
                   >
                     <option class="text-secondary fs-sm" value="" disabled>請選擇香調</option>
-                    <option :value="item" v-for="item in notesList" :key="item"> {{ item }}</option>
-                </select>
+                    <option :value="item" v-for="item in notesList" :key="item">{{ item }}</option>
+                  </select>
                 </div>
                 <div class="mb-3 col-sm-6">
                   <label for="specifications" class="form-label">商品規格</label>
@@ -207,16 +207,27 @@
                     v-else
                     class="img-template d-flex justify-content-center align-items-center bg-white h-100 w-100 flex-grow-1"
                   >
-                    <span v-if="imageLoading===0" class="spinner-border text-dark" role="status" aria-hidden="true"></span>
+                    <span
+                      v-if="imageLoading === 0"
+                      class="spinner-border text-dark"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
                     <span v-else><i class="bi bi-image h3"></i></span>
                   </div>
                   <div class="d-flex justify-content-between align-items-center mt-2">
                     <p class="fs-sm">首圖</p>
-                    <button type="button" class="btn btn-outline-dark border-0 btn-sm ms-auto me-2"
-                      @click.prevent="deleteImage(0)" ><i class="fs-sm bi bi-trash text-center"></i>
+                    <button
+                      type="button"
+                      class="btn btn-outline-dark border-0 btn-sm ms-auto me-2"
+                      @click="deleteImage(0)"
+                    >
+                      <i class="fs-sm bi bi-trash text-center"></i>
                     </button>
-                    <label for="main-img" class="btn btn-light btn-sm"
-                    :class="{disabled: tempProduct.imageUrl}"
+                    <label
+                      for="main-img"
+                      class="btn btn-light btn-sm"
+                      :class="{ disabled: tempProduct.imageUrl }"
                       ><i class="fs-sm bi bi-upload text-center"></i>
                       <input
                         @change="uploadImage(0)"
@@ -235,26 +246,34 @@
                       :alt="tempProduct.title"
                       :src="tempProduct.imagesUrl[i - 1]"
                     />
-                    
                   </div>
                   <div
                     v-else
                     class="img-template d-flex justify-content-center align-items-center bg-white h-100 w-100 flex-grow-1"
-                  > 
-                  
-                  <span v-if="imageLoading===i" class="spinner-border text-dark" role="status" aria-hidden="true"></span>
-                  <span v-else><i class="bi bi-image h3"></i></span>
-                    
-                    
+                  >
+                    <span
+                      v-if="imageLoading === i"
+                      class="spinner-border text-dark"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                    <span v-else><i class="bi bi-image h3"></i></span>
                   </div>
                   <div class="d-flex justify-content-between align-items-center mt-2">
                     <p class="fs-sm">商品圖 - {{ i + 1 }}</p>
-                    <button type="button" class="btn btn-outline-dark border-0 btn-sm ms-auto me-2"
-                    @click.prevent="deleteImage(i)"><i class="fs-sm bi bi-trash text-center"></i>
+                    <button
+                      type="button"
+                      class="btn btn-outline-dark border-0 btn-sm ms-auto me-2"
+                      @click="deleteImage(i)"
+                    >
+                      <i class="fs-sm bi bi-trash text-center"></i>
                     </button>
-                    <label :for="'other-img' + i" class="btn btn-light btn-sm"
+                    <label
+                      :for="'other-img' + i"
+                      class="btn btn-light btn-sm"
                       v-if="tempProduct.imagesUrl"
-                      :class="{disabled: tempProduct.imagesUrl[i-1]}" ><i class="fs-sm bi bi-upload text-center"></i>
+                      :class="{ disabled: tempProduct.imagesUrl[i - 1] }"
+                      ><i class="fs-sm bi bi-upload text-center"></i>
                       <input
                         @change="uploadImage(i)"
                         :id="'other-img' + i"
@@ -281,7 +300,7 @@
 </template>
 
 <script>
-import modalMixin from '../../../mixins/modalMixin'
+import modalMixin from '@/mixins/modalMixin'
 
 export default {
   props: {
@@ -354,17 +373,14 @@ export default {
           }
         })
       }
-      
     },
     deleteImage(order) {
-      order === 0 
-        ? this.tempProduct.imageUrl = ''
-        : this.tempProduct.imagesUrl[order-1] = ''
+      order === 0 ? (this.tempProduct.imageUrl = '') : (this.tempProduct.imagesUrl[order - 1] = '')
     },
     toggleUpLoadLimits() {
       this.showImgLimits = !this.showImgLimits
-    },
-  },
+    }
+  }
 }
 </script>
 

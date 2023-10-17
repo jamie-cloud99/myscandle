@@ -36,16 +36,16 @@
                   name="優惠券名稱"
                   rules="required"
                   :class="{ 'is-invalid': errors['優惠券名稱'] }"
-                >
-                </VField>
-                <ErrorMessage name="優惠券名稱" class="invalid-feedback"></ErrorMessage>
+                />
+
+                <ErrorMessage name="優惠券名稱" class="invalid-feedback" />
               </div>
               <div class="col-md-6 mb-3">
                 <label for="code" class="form-label"
                   >優惠券代碼<span class="text-danger">*</span></label
                 >
                 <VField
-                v-model="tempCoupon.code"
+                  v-model="tempCoupon.code"
                   type="text"
                   class="form-control border"
                   id="code"
@@ -53,10 +53,9 @@
                   name="優惠代碼"
                   :rules="isCode"
                   :class="{ 'is-invalid': errors['優惠代碼'] }"
-                >
-                </VField>
-                <ErrorMessage name="優惠代碼" class="invalid-feedback"></ErrorMessage>
-                
+                />
+
+                <ErrorMessage name="優惠代碼" class="invalid-feedback" />
               </div>
             </div>
             <div class="row gx-2">
@@ -75,9 +74,9 @@
                   name="折扣"
                   :rules="isPercent"
                   :class="{ 'is-invalid': errors['折扣'] }"
-                >
-                </VField>
-                <ErrorMessage name="折扣" class="invalid-feedback"></ErrorMessage>
+                />
+
+                <ErrorMessage name="折扣" class="invalid-feedback" />
                 <p class="form-text">請輸入正整數，例如 70% (7 折)請輸入：70</p>
               </div>
               <div class="col-md-6 mb-3">
@@ -85,14 +84,17 @@
                   >到期日<span class="text-danger">*</span></label
                 >
                 <VField
-                v-model="dueDate" type="date" class="form-control border" id="due_date"
+                  v-model="dueDate"
+                  type="date"
+                  class="form-control border"
+                  id="due_date"
                   name="到期日"
                   rules="required"
                   :class="{ 'is-invalid': errors['到期日'] }"
-                >
-                </VField>
-                <ErrorMessage name="到期日" class="invalid-feedback"></ErrorMessage>
-                
+                />
+
+                <ErrorMessage name="到期日" class="invalid-feedback" />
+
                 <p class="form-text">日期格式 月/日/西元年，例如：09/19/2025</p>
               </div>
             </div>
@@ -125,7 +127,7 @@
 </template>
 
 <script>
-import modalMixin from '../../../mixins/modalMixin'
+import modalMixin from '@/mixins/modalMixin'
 
 export default {
   mixins: [modalMixin],
@@ -155,7 +157,7 @@ export default {
       return !tensDigit.test(num) ? '請輸入1-100的整數' : true
     },
     isCode(text) {
-      if(!text) return '優惠代碼 為必填'
+      if (!text) return '優惠代碼 為必填'
       const regex = /^[A-Za-z0-9]{5,10}$/
       return !regex.test(text) ? '請輸入5-10個字元，可接受英文字母大小寫、數字' : true
     }

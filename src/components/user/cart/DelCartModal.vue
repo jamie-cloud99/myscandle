@@ -21,16 +21,12 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body">
-          商品刪除後將無法復原，確定要永久刪除？
-        </div>
+        <div class="modal-body">商品刪除後將無法復原，確定要永久刪除？</div>
         <div class="modal-footer border-0">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">取消</button>
-          <button
-            type="button"
-            class="btn btn-primary"
-            @click="$emit('confirm-deletion', item.id)"
-          >
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+            取消
+          </button>
+          <button type="button" class="btn btn-primary" @click="$emit('confirm-deletion', item.id)">
             確認刪除
           </button>
         </div>
@@ -40,14 +36,12 @@
 </template>
 
 <script>
-import modalMixin from '../../../mixins/modalMixin'
-
+import modalMixin from '@/mixins/modalMixin'
 
 export default {
   props: ['item'],
   emits: ['confirm-deletion'],
 
-  mixins: [modalMixin],
-
+  mixins: [modalMixin]
 }
 </script>

@@ -1,23 +1,23 @@
 <template>
   <div class="container pt-5">
     <ul class="d-flex justify-content-center align-items-start pt-5">
-    <li
-      class="d-flex flex-column justify-content-center align-items-center mx-3"
-      v-for="item in progress"
-      :key="'step' + item.step"
-      :class="{active: item.step === paymentStep}"
-    >
-      <p class="step-item rounded-circle text-center mb-3">{{ item.step }}</p>
-      <p class="step-title">{{ item.title }}</p>
-    </li>
-  </ul>
+      <li
+        class="d-flex flex-column justify-content-center align-items-center mx-3"
+        v-for="item in progress"
+        :key="'step' + item.step"
+        :class="{ active: item.step === paymentStep }"
+      >
+        <p class="step-item rounded-circle text-center mb-3">{{ item.step }}</p>
+        <p class="step-title">{{ item.title }}</p>
+      </li>
+    </ul>
   </div>
-  <router-view></router-view>
+  <RouterView />
 </template>
 
 <script>
 import { mapState } from 'pinia'
-import statusStore from '../../stores/statusStore'
+import statusStore from '@/stores/statusStore'
 
 export default {
   data() {
@@ -35,12 +35,12 @@ export default {
           step: 3,
           title: '結帳'
         }
-      ],
+      ]
     }
   },
   computed: {
     ...mapState(statusStore, ['paymentStep'])
-  },
+  }
 }
 </script>
 
@@ -51,6 +51,4 @@ export default {
   line-height: 3rem;
   letter-spacing: 0;
 }
-
-
 </style>

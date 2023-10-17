@@ -2,12 +2,12 @@
   <img
     class="shop-bn-img object-fit-cover"
     src="https://i.imgur.com/6pbKl60.png"
-    alt=""
+    alt="Mys商品一覽"
     referrerpolicy="no-referrer"
   />
   <div class="container pt-3 overflow-hidden">
     <div class="d-sm-flex justify-content-between align-items-center mb-3">
-      <BreadcrumpComponent :nav-list="breadList" class="order-2 mb-4 mb-sm-0"></BreadcrumpComponent>
+      <BreadcrumpComponent :nav-list="breadList" class="order-2 mb-4 mb-sm-0" />
       <div class="position-relative w-fit">
         <h1 class="h2 fw-semibold d-inline-block">商品一覽</h1>
         <div class="decorate-circle"></div>
@@ -16,7 +16,7 @@
     <div class="overflow-hidden py-2">
       <div class="row gx-4 gx-lg-5">
         <div class="col-md-3">
-          <FilterComponent class="pt-5"></FilterComponent>
+          <FilterComponent class="pt-5" />
         </div>
         <div class="col-md-9">
           <div class="d-md-flex">
@@ -45,7 +45,7 @@
                     type="button"
                     class="category-btn btn btn-light"
                     :class="{ active: item === categorySelected }"
-                    @click.prevent="changeCategory(item)"
+                    @click="changeCategory(item)"
                   >
                     {{ item }}
                   </button>
@@ -56,14 +56,14 @@
           <div v-if="products.length" class="overflow-hidden">
             <ul class="row gy-4">
               <li class="col-sm-6 col-lg-4" v-for="product in products" :key="product.id">
-                <ProductCard :product="product"></ProductCard>
+                <ProductCard :product="product" />
               </li>
               <div class="d-flex justify-content-center py-2">
                 <PageComponent
                   :pages="pagination"
                   :items="filteredProducts"
                   @change-page="paginate"
-                ></PageComponent>
+                />
               </div>
             </ul>
           </div>
@@ -78,12 +78,12 @@
 
 <script>
 import { mapState, mapActions } from 'pinia'
-import statusStore from '../../stores/statusStore'
-import productsStore from '../../stores/productsStore'
-import BreadcrumpComponent from '../../components/user/layout/BreadcrumpComponent.vue'
-import FilterComponent from '../../components/user/shop/FilterComponent.vue'
-import ProductCard from '../../components/user/shop/ProductCard.vue'
-import PageComponent from '../../components/user/shop/PageComponent.vue'
+import statusStore from '@/stores/statusStore'
+import productsStore from '@/stores/productsStore'
+import BreadcrumpComponent from '@/components/user/layout/BreadcrumpComponent.vue'
+import FilterComponent from '@/components/user/shop/FilterComponent.vue'
+import ProductCard from '@/components/user/shop/ProductCard.vue'
+import PageComponent from '@/components/user/shop/PageComponent.vue'
 
 export default {
   components: {

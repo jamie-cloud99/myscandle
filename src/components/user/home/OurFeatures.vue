@@ -53,7 +53,7 @@ export default {
 
 <style lang="scss">
 @import 'bootstrap/scss/functions';
-@import '../../../assets/helpers/variables';
+@import '@/assets/helpers/variables';
 
 .subtitle {
   display: flex;

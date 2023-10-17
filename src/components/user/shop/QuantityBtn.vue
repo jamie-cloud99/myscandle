@@ -27,8 +27,8 @@
 
 <script>
 import { mapState, mapActions } from 'pinia'
-import statusStore from '../../../stores/statusStore'
-import cartStore from '../../../stores/cartStore'
+import statusStore from '@/stores/statusStore'
+import cartStore from '@/stores/cartStore'
 
 export default {
   props: {
@@ -70,10 +70,12 @@ export default {
 .quantity-btn {
   width: 3rem;
   height: 2rem;
+ 
   padding: 0;
   @include desktop {
     width: 1.5rem;
     height: 1.5rem;
+
   }
 }
 
@@ -87,6 +89,6 @@ export default {
 }
 
 .bi::before {
-  line-height: 1.5;
+  vertical-align: 0;
 }
 </style>

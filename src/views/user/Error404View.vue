@@ -31,7 +31,7 @@ export default {
 
       this.countDownId = setInterval(() => {
         this.timeRemaining = Math.round((timeUp - Date.now()) / 1000)
-        if (this.timeRemaining <=0) {
+        if (this.timeRemaining <= 0) {
           clearInterval(this.countDownId)
           this.$router.push('/')
           return

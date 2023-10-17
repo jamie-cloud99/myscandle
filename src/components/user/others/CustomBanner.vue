@@ -19,13 +19,11 @@
 </template>
 
 <script>
-
 export default {
   props: {
     content: Object
   }
 }
-
 </script>
 
 <style lang="scss" scoped>
@@ -51,6 +49,4 @@ export default {
 .text-opacity-85 {
   opacity: 0.85;
 }
-
-
 </style>

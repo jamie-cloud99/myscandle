@@ -128,12 +128,12 @@
 
 <script>
 import { mapState, mapActions } from 'pinia'
-import cartStore from '../../stores/cartStore'
-import statusStore from '../../stores/statusStore'
-import slideStore from '../../stores/slideStore'
-import ProductCard from '../../components/user/shop/ProductCard.vue'
-import CartTable from '../../components/user/cart/CartTable.vue'
-import ClearCartsModal from '../../components/user/cart/ClearCartsModal.vue'
+import cartStore from '@/stores/cartStore'
+import statusStore from '@/stores/statusStore'
+import slideStore from '@/stores/slideStore'
+import ProductCard from '@/components/user/shop/ProductCard.vue'
+import CartTable from '@/components/user/cart/CartTable.vue'
+import ClearCartsModal from '@/components/user/cart/ClearCartsModal.vue'
 
 export default {
   components: {

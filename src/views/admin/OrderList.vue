@@ -11,7 +11,7 @@
           <th width="150">編輯</th>
         </tr>
       </thead>
-      <tbody class="">
+      <tbody>
         <tr v-for="order in orders" :key="order.id" class="border-bottom">
           <td>{{ $format.date(order.create_at) }}</td>
           <td>{{ order.id }}</td>
@@ -24,12 +24,17 @@
           <td>
             <div class="d-md-flex">
               <button
+                type="button"
                 class="btn btn-outline-primary btn-sm mb-2 mb-md-0 me-md-2"
                 @click="openModal(order)"
               >
                 查看
               </button>
-              <button class="btn btn-outline-danger btn-sm" @click="openDeleteModal(order)">
+              <button
+                type="button"
+                class="btn btn-outline-danger btn-sm"
+                @click="openDeleteModal(order)"
+              >
                 刪除
               </button>
             </div>
@@ -40,21 +45,21 @@
   </div>
 
   <div class="mt-4 mb-5">
-    <PaginationComponent :pages="pagination" @change-page="fetchOrders"></PaginationComponent>
+    <PaginationComponent :pages="pagination" @change-page="fetchOrders" />
   </div>
 
-    <OrderModal ref="orderModal" :order="tempOrder" @view="closeModal"></OrderModal>
-    <DelModal ref="deleteModal" :item="tempOrder" @confirm-deletion="confirmDeletion"></DelModal>
-    <LoadingComponent v-show="isLoading"></LoadingComponent>
+  <OrderModal ref="orderModal" :order="tempOrder" @view="closeModal" />
+  <DelModal ref="deleteModal" :item="tempOrder" @confirm-deletion="confirmDeletion" />
+  <LoadingComponent v-show="isLoading" />
 </template>
 
 <script>
 const { VITE_API, VITE_PATH } = import.meta.env
 
-import PaginationComponent from '../../components/admin/PaginationComponent.vue'
-import OrderModal from '../../components/admin/modal/OrderModal.vue'
-import DelModal from '../../components/admin/modal/DelOrderModal.vue'
-import toastMixin from '../../mixins/toastMixin'
+import PaginationComponent from '@/components/admin/PaginationComponent.vue'
+import OrderModal from '@/components/admin/modal/OrderModal.vue'
+import DelModal from '@/components/admin/modal/DelOrderModal.vue'
+import toastMixin from '@/mixins/toastMixin'
 
 export default {
   components: {
@@ -76,13 +81,12 @@ export default {
       const api = `${VITE_API}api/${VITE_PATH}/admin/orders?page=${page}`
       try {
         const res = await this.axios.get(api)
-        console.log('fetchOrder',res)
+        console.log('fetchOrder', res)
         if (res.data.success) {
-          
           this.orders = res.data.orders
           this.pagination = res.data.pagination
           this.isLoading = false
-        } 
+        }
       } catch (error) {
         this.handleError()
       }
@@ -95,7 +99,6 @@ export default {
           this.fetchOrders(this.pagination.current_page)
           this.$refs.deleteModal.hideModal()
           this.showSuccessToast(res.data.message)
-          
         } else {
           this.showFailToast(res.data.message)
         }

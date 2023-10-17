@@ -1,6 +1,6 @@
 <template>
   <div class="text-end my-4">
-    <button class="btn btn-primary" @click="openModal(true)">新增優惠券</button>
+    <button type="button" class="btn btn-primary" @click="openModal(true)">新增優惠券</button>
   </div>
   <div class="d-flex justify-content-center table-responsive">
     <table class="table mt-4">
@@ -13,7 +13,7 @@
           <th width="150">編輯</th>
         </tr>
       </thead>
-      <tbody class="">
+      <tbody>
         <tr v-for="coupon in coupons" :key="coupon.id" class="border-bottom">
           <td>{{ coupon.title }}</td>
           <td>{{ coupon.percent }}</td>
@@ -25,12 +25,14 @@
           <td>
             <div class="d-sm-flex">
               <button
+                type="button"
                 class="d-block btn btn-outline-primary btn-sm mb-2 mb-sm-0 me-sm-2"
                 @click="openModal(false, coupon)"
               >
                 編輯
               </button>
               <button
+                type="button"
                 class="d-block btn btn-outline-danger btn-sm"
                 @click="openDeleteModal(coupon)"
               >
@@ -44,20 +46,20 @@
   </div>
 
   <div class="mt-4 mb-5">
-    <PaginationComponent :pages="pagination" @change-page="fetchCoupons"></PaginationComponent>
+    <PaginationComponent :pages="pagination" @change-page="fetchCoupons" />
   </div>
 
-  <CouponModal ref="couponModal" :coupon="tempCoupon" @confirm-edit="updateCoupon"></CouponModal>
-  <DelModal ref="deleteModal" :item="tempCoupon" @confirm-deletion="confirmDeletion"></DelModal>
-  <LoadingComponent v-show="isLoading"></LoadingComponent>
+  <CouponModal ref="couponModal" :coupon="tempCoupon" @confirm-edit="updateCoupon" />
+  <DelModal ref="deleteModal" :item="tempCoupon" @confirm-deletion="confirmDeletion" />
+  <LoadingComponent v-show="isLoading" />
 </template>
 
 <script>
 const { VITE_API, VITE_PATH } = import.meta.env
-import PaginationComponent from '../../components/admin/PaginationComponent.vue'
-import CouponModal from '../../components/admin/modal/CouponModal.vue'
-import DelModal from '../../components/admin/modal/DelModal.vue'
-import toastMixin from '../../mixins/toastMixin'
+import PaginationComponent from '@/components/admin/PaginationComponent.vue'
+import CouponModal from '@/components/admin/modal/CouponModal.vue'
+import DelModal from '@/components/admin/modal/DelModal.vue'
+import toastMixin from '@/mixins/toastMixin'
 
 export default {
   components: {
@@ -137,7 +139,7 @@ export default {
     openDeleteModal(item) {
       this.tempCoupon = { ...item }
       this.$refs.deleteModal.showModal()
-    },
+    }
   },
   created() {
     this.fetchCoupons()

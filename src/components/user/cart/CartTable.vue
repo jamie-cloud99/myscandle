@@ -5,7 +5,11 @@
         <div class="d-flex align-items-center">
           <img class="cart-img" :src="cart.product.imageUrl" :alt="cart.product.title" />
           <div class="align-self-start ms-sm-4">
-            <RouterLink :to="`/product/${cart.product.id}`" class="flex-grow-1 product-link fs-6 px-2 mb-2">{{ cart.product.title }}</RouterLink>
+            <RouterLink
+              :to="`/product/${cart.product.id}`"
+              class="flex-grow-1 product-link fs-6 px-2 mb-2"
+              >{{ cart.product.title }}</RouterLink
+            >
             <p class="fs-sm px-2">NT$ {{ $format.currency(cart.product.price) }}</p>
           </div>
         </div>
@@ -14,34 +18,27 @@
         </button>
       </div>
       <div class="d-flex justify-content-between align-items-center mt-2">
-        <QuantityBtn :cart="cart"></QuantityBtn>
+        <QuantityBtn :cart="cart" />
         <p class="px-2 pe-0">NT$ {{ $format.currency(cart.total) }}</p>
       </div>
     </li>
   </ul>
 
-  <DelCartModal
-    ref="delCartModal"
-    :item="tempCart"
-    @confirm-deletion="deleteCartItem"
-  ></DelCartModal>
-  
+  <DelCartModal ref="delCartModal" :item="tempCart" @confirm-deletion="deleteCartItem" />
 </template>
 
 <script>
-import QuantityBtn from '../cart/QuantityBtn.vue'
+import QuantityBtn from './QuantityBtn.vue'
 import { mapState, mapActions } from 'pinia'
-import statusStore from '../../../stores/statusStore'
-import cartStore from '../../../stores/cartStore'
+import statusStore from '@/stores/statusStore'
+import cartStore from '@/stores/cartStore'
 import DelCartModal from './DelCartModal.vue'
-
 
 export default {
   emits: ['open-del-modal'],
   components: {
     QuantityBtn,
-    DelCartModal,
-    
+    DelCartModal
   },
   data() {
     return {
@@ -58,12 +55,11 @@ export default {
       this.deleteCart(cartId)
       this.$refs.delCartModal.hideModal()
     },
-    
+
     openDelModal(cart) {
       this.tempCart = { ...cart }
       this.$refs.delCartModal.showModal()
-    },
-    
+    }
   },
   created() {
     this.fetchCart()
@@ -82,4 +78,3 @@ export default {
   }
 }
 </style>
-

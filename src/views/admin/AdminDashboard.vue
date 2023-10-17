@@ -1,16 +1,15 @@
 <template>
-  <NavbarComponent></NavbarComponent>
+  <NavbarComponent />
   <div class="container">
-    <ToastMessages></ToastMessages>
-    <router-view></router-view>
+    <ToastMessages />
+    <RouterView />
   </div>
-  
 </template>
 
 <script>
-import NavbarComponent from '../../components/admin/NavbarComponent.vue'
-import emitter from '../../methods/emitter'
-import ToastMessages from '../../components/admin/ToastMessages.vue'
+import NavbarComponent from '@/components/admin/NavbarComponent.vue'
+import emitter from '@/methods/emitter'
+import ToastMessages from '@/components/admin/ToastMessages.vue'
 
 export default {
   components: {
@@ -22,9 +21,9 @@ export default {
       const api = `${import.meta.env.VITE_API}api/user/check`
       try {
         const res = await this.axios.post(api)
-        if(!res.data.success){
+        if (!res.data.success) {
           console.log('已登出，請重新登入')
-          setTimeout(()=>this.$router.push('/login'), 2000)
+          setTimeout(() => this.$router.push('/login'), 2000)
         }
       } catch (error) {
         console.log(error)

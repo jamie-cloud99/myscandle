@@ -25,12 +25,10 @@
           請注意： 【 <strong>{{ item.title }}</strong> 】 的資料將永久刪除
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">取消</button>
-          <button
-            type="button"
-            class="btn btn-primary"
-            @click="$emit('confirm-deletion', item)"
-          >
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+            取消
+          </button>
+          <button type="button" class="btn btn-primary" @click="$emit('confirm-deletion', item)">
             確認刪除
           </button>
         </div>
@@ -40,7 +38,7 @@
 </template>
 
 <script>
-import modalMixin from '../../../mixins/modalMixin'
+import modalMixin from '@/mixins/modalMixin'
 
 export default {
   props: ['item'],

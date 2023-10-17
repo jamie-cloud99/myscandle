@@ -1,12 +1,12 @@
 <template>
   <div class="container py-5">
     <div class="mb-3 pt-5">
-      <BreadcrumpComponent :nav-list="breadList"></BreadcrumpComponent>
+      <BreadcrumpComponent :nav-list="breadList" />
     </div>
     <div class="overflow-hidden my-3 my-sm-5">
       <div class="row justify-content-between">
         <div class="col-md-2 col-xl-1 order-2 order-md-0">
-          <ThumbnailImages></ThumbnailImages>
+          <ThumbnailImages />
         </div>
         <div class="col-md-5 text-center mb-3 mb-md-5 order-1">
           <img class="object-fit-cover" :src="tempImage" :alt="product.title" />
@@ -22,14 +22,14 @@
           </p>
           <div class="row gy-3 gy-sm-0 gy-md-3 gy-lg-0 mb-2">
             <div class="col-sm-7 col-md-12 col-lg-6 col-xl-4 mt-1 mb-md-0">
-              <QuantityBtn :quantity="quantity" @update="getQuantity"></QuantityBtn>
+              <QuantityBtn :quantity="quantity" @update="getQuantity" />
             </div>
             <div class="col-sm-5 col-md-12 col-lg-6 col-xl-8">
               <div class="d-flex justify-content-center justify-content-sm-start">
                 <button
                   type="button"
                   class="cart-btn btn btn-primary w-100 rounded-sm px-3"
-                  @click.prevent="addToCart(product.id, quantity)"
+                  @click="addToCart(product.id, quantity)"
                   :disabled="cartLoadingItem === product.id"
                 >
                   加入購物車
@@ -61,20 +61,20 @@
     </div>
 
     <hr class="my-5" />
-    <RelatedProducts :related-products="relatedProducts"></RelatedProducts>
+    <RelatedProducts :related-products="relatedProducts" />
   </div>
 </template>
 
 <script>
-import QuantityBtn from '../../components/user/shop/QuantityBtn.vue'
-import RelatedProducts from '../../components/user/shop/RelatedProducts.vue'
-import ThumbnailImages from '../../components/user/shop/ThumbnailImages.vue'
-import BreadcrumpComponent from '../../components/user/layout/BreadcrumpComponent.vue'
+import QuantityBtn from '@/components/user/shop/QuantityBtn.vue'
+import RelatedProducts from '@/components/user/shop/RelatedProducts.vue'
+import ThumbnailImages from '@/components/user/shop/ThumbnailImages.vue'
+import BreadcrumpComponent from '@/components/user/layout/BreadcrumpComponent.vue'
 
 import { mapState, mapActions } from 'pinia'
-import cartStore from '../../stores/cartStore'
-import statusStore from '../../stores/statusStore'
-import productsStore from '../../stores/productsStore'
+import cartStore from '@/stores/cartStore'
+import statusStore from '@/stores/statusStore'
+import productsStore from '@/stores/productsStore'
 
 export default {
   components: {

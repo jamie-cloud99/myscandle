@@ -15,7 +15,9 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item" v-for="page in pages" :key="page.title">
-            <RouterLink class="nav-link" aria-current="page" :to="page.route">{{ page.title }}</RouterLink>
+            <RouterLink class="nav-link" aria-current="page" :to="page.route">{{
+              page.title
+            }}</RouterLink>
           </li>
           <li class="nav-item">
             <a class="nav-link" @click.prevent="openLogoutModal">登出</a>
@@ -42,18 +44,16 @@ export default {
         {
           title: '優惠券',
           route: '/admin/coupon'
-        },
-        
+        }
       ]
     }
   },
-  methods: {   
-    openLogoutModal(){
-
+  methods: {
+    openLogoutModal() {
       this.comfirmLogout()
     },
 
-    async comfirmLogout(){
+    async comfirmLogout() {
       const api = `${import.meta.env.VITE_API}logout`
       try {
         const res = await this.axios.post(api)

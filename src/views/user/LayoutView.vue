@@ -1,22 +1,22 @@
 <template>
   <div class="bg-fix"></div>
-  <NavbarComponent :scroll-y="scrollY"></NavbarComponent>
-  <OffCanvaCart></OffCanvaCart>
-  <ToastMessages></ToastMessages>
-  <LoadingComponent v-show="isLoading"></LoadingComponent>
-  <router-view></router-view>
-  <FooterComponent></FooterComponent>
-  <ScrollToTop></ScrollToTop>
+  <NavbarComponent :scroll-y="scrollY" />
+  <OffCanvaCart />
+  <ToastMessages />
+  <LoadingComponent v-show="isLoading" />
+  <RouterView />
+  <FooterComponent />
+  <ScrollToTop />
 </template>
 
 <script>
 import { mapState } from 'pinia'
-import statusStore from '../../stores/statusStore'
-import NavbarComponent from '../../components/user/layout/NavbarComponent.vue'
-import OffCanvaCart from '../../components/user/layout/OffCanvaCart.vue'
-import FooterComponent from '../../components/user/layout/FooterComponent.vue'
-import ToastMessages from '../../components/user/layout/ToastMessages.vue'
-import ScrollToTop from '../../components/user/layout/ScrollToTop.vue'
+import statusStore from '@/stores/statusStore'
+import NavbarComponent from '@/components/user/layout/NavbarComponent.vue'
+import OffCanvaCart from '@/components/user/layout/OffCanvaCart.vue'
+import FooterComponent from '@/components/user/layout/FooterComponent.vue'
+import ToastMessages from '@/components/user/layout/ToastMessages.vue'
+import ScrollToTop from '@/components/user/layout/ScrollToTop.vue'
 
 export default {
   components: {

@@ -41,9 +41,8 @@
         </div>
         <div class="col-md-4 my-4 mt-md-0 mb-md-4">
           <div class="d-flex align-items-center mb-3">
-            <h4 class="font-galada fs-2 display-lg-3 ">MyS</h4>
-            <RouterLink to="/admin" class="btn btn-light ms-3"
-            >登入後台</RouterLink>
+            <h4 class="font-galada fs-2 display-lg-3">MyS</h4>
+            <RouterLink to="/admin" class="btn btn-light ms-3">登入後台</RouterLink>
           </div>
           <ul>
             <li class="mb-2">營業時間：Mon-Fri 9:00 - 18:00</li>
@@ -62,7 +61,7 @@
 
 <script>
 import { mapState, mapActions } from 'pinia'
-import productsStore from '../../../stores/productsStore'
+import productsStore from '@/stores/productsStore'
 
 export default {
   computed: {

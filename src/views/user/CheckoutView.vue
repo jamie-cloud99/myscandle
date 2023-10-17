@@ -9,11 +9,16 @@
           </p>
           <button type="button" class="detail-btn" @click="toggleOrder">
             <span v-if="showDetail">收合</span>
-            <span v-else>展開</span>明細</button>
+            <span v-else>展開</span>明細
+          </button>
         </div>
         <div class="order-detail mt-4" :class="{ show: showDetail }">
           <ul class="list-group rounded-md overflow-hidden">
-            <li class="list-group-item border-primary p-3" v-for="cart in orderSubmitted.products" :key="cart.id">
+            <li
+              class="list-group-item border-primary p-3"
+              v-for="cart in orderSubmitted.products"
+              :key="cart.id"
+            >
               <div class="d-flex">
                 <img
                   class="d-block cart-img"
@@ -60,13 +65,10 @@
 
 <script>
 import { mapState, mapActions } from 'pinia'
-import statusStore from '../../stores/statusStore'
-import cartStore from '../../stores/cartStore'
+import statusStore from '@/stores/statusStore'
+import cartStore from '@/stores/cartStore'
 
 export default {
-  components: {
-    
-  },
   data() {
     return {
       showDetail: true

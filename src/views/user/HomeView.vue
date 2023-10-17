@@ -12,9 +12,9 @@
 
     <ul class="d-none d-md-block menu-pc position-absolute top-50 text-light fs-4 fw-bold">
       <li v-for="item in menuCategories" :key="item">
-        <router-link to="#" class="menu-pc-item px-3 py-2" @click="goToShop(item)">{{
+        <RouterLink to="#" class="menu-pc-item px-3 py-2" @click="goToShop(item)">{{
           item
-        }}</router-link>
+        }}</RouterLink>
       </li>
     </ul>
 
@@ -30,7 +30,7 @@
         data-aos="fade-up"
         data-aos-delay="700"
         type="button"
-        @click.prevent="$router.push('/shop')"
+        @click="$router.push('/shop')"
         class="slogan-btn btn btn-primary rounded-md px-4 ms-5 mb-3"
       >
         探索香氛
@@ -44,13 +44,13 @@
   </div>
   <div class="container overflow-hidden">
     <div data-aos="fade-up" data-aos-delay="50" class="pt-xl position-relative" id="us">
-      <AboutUs></AboutUs>
+      <AboutUs />
     </div>
     <div class="pt-5">
-      <HotProducts></HotProducts>
+      <HotProducts />
     </div>
     <div class="pt-5 mt-lg-5">
-      <OurFeatures></OurFeatures>
+      <OurFeatures />
     </div>
   </div>
 </template>
@@ -59,11 +59,11 @@
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import { mapState, mapActions } from 'pinia'
-import productsStore from '../../stores/productsStore'
-import statusStore from '../../stores/statusStore'
-import HotProducts from '../../components/user/home/HotProducts.vue'
-import AboutUs from '../../components/user/home/AboutUs.vue'
-import OurFeatures from '../../components/user/home/OurFeatures.vue'
+import productsStore from '@/stores/productsStore'
+import statusStore from '@/stores/statusStore'
+import HotProducts from '@/components/user/home/HotProducts.vue'
+import AboutUs from '@/components/user/home/AboutUs.vue'
+import OurFeatures from '@/components/user/home/OurFeatures.vue'
 
 export default {
   components: {
@@ -179,7 +179,8 @@ export default {
 
   &:hover {
     border: 1px solid;
-    box-shadow: inset 0 0 20px rgba(144, 130, 130, 0.5), 0 0 20px rgba(255, 255, 255, 0.2), 5px 5px 0 1px rgb(255, 245, 237);
+    box-shadow: inset 0 0 20px rgba(144, 130, 130, 0.5), 0 0 20px rgba(255, 255, 255, 0.2),
+      5px 5px 0 1px rgb(255, 245, 237);
   }
 }
 

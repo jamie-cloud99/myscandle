@@ -15,8 +15,7 @@
           class="form-check-input"
           :value="range"
           @change="togglePriceRange"
-          
-          :disabled="index===1 && selectedPriceRanges.length===3"
+          :disabled="index === 1 && selectedPriceRanges.length === 3"
         />
         <label :for="`filter${index}`" class="form-check-label fw-medium">{{
           formatPriceRange(range, index)
@@ -28,7 +27,7 @@
 
 <script>
 import { mapActions } from 'pinia'
-import productsStore from '../../../stores/productsStore'
+import productsStore from '@/stores/productsStore'
 
 export default {
   data() {

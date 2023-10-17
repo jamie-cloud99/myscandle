@@ -12,21 +12,21 @@
             訂單金額：NT${{ $format.currency(cartsTotal.final_total) }}
           </h2>
         </div>
-        <OrderProducts></OrderProducts>
+        <OrderProducts />
       </div>
       <div class="col-lg-4 pt-3 mb-5 mb-lg-0">
-        <OrderForm></OrderForm>
+        <OrderForm />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import OrderProducts from '../../components/user/cart/OrderProducts.vue'
-import OrderForm from '../../components/user/cart/OrderForm.vue'
+import OrderProducts from '@/components/user/cart/OrderProducts.vue'
+import OrderForm from '@/components/user/cart/OrderForm.vue'
 import { mapState, mapActions } from 'pinia'
-import statusStore from '../../stores/statusStore'
-import cartStore from '../../stores/cartStore'
+import statusStore from '@/stores/statusStore'
+import cartStore from '@/stores/cartStore'
 
 export default {
   components: {

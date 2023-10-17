@@ -10,9 +10,7 @@
     <div class="modal-dialog">
       <div class="modal-content bg-light">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">
-            確定要清空購物車嗎？
-          </h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">確定要清空購物車嗎？</h1>
           <button
             type="button"
             class="btn-close"
@@ -20,16 +18,12 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body">
-          購物車清空後將無法復原，確定要永久刪除？
-        </div>
+        <div class="modal-body">購物車清空後將無法復原，確定要永久刪除？</div>
         <div class="modal-footer border-0">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">取消</button>
-          <button
-            type="button"
-            class="btn btn-primary"
-            @click="$emit('confirm-clear')"
-          >
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+            取消
+          </button>
+          <button type="button" class="btn btn-primary" @click="$emit('confirm-clear')">
             清空購物車
           </button>
         </div>
@@ -39,13 +33,11 @@
 </template>
 
 <script>
-import modalMixin from '../../../mixins/modalMixin'
-
+import modalMixin from '@/mixins/modalMixin'
 
 export default {
   emits: ['confirm-clear'],
 
-  mixins: [modalMixin],
-
+  mixins: [modalMixin]
 }
 </script>

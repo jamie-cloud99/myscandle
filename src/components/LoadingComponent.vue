@@ -10,8 +10,7 @@
   </div>
 </template>
 
-<style lang="scss">
-
+<style lang="scss" scoped>
 .loading-overlay {
   position: fixed;
   top: 0;
@@ -22,7 +21,7 @@
   z-index: 9999;
 }
 
-.loading-icon{
+.loading-icon {
   position: absolute;
   top: 50%;
   left: 50%;

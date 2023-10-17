@@ -9,9 +9,9 @@
             <p class="flex-grow-1 text-primary-emphasis fs-sm text-end ps-2">x {{ cart.qty }}</p>
           </div>
           <p class="fs-sm ps-2 mt-2 flex-grow-1">NT$ {{ $format.currency(cart.product.price) }}</p>
-            <div class="d-flex justify-content-end align-items-center mt-2">
-              <s v-if="cart.total !== cart.final_total" class="">NT$ {{ $format.currency(cart.total) }}</s>
-              <p class="text-primary fw-bold ps-2 flex-grow-1">NT$ {{ $format.currency(cart.final_total) }}</p>
+            <div class="d-flex justify-content-end align-items-center mt-2 ps-2">
+              <s v-if="cart.total !== cart.final_total" >NT$ {{ $format.currency(cart.total) }}</s>
+              <p class="text-primary fw-bold flex-grow-1" :class="{'ps-2': cart.total !== cart.final_total}">NT$ {{ $format.currency(cart.final_total) }}</p>
             </div>
         </div>
       </div>
@@ -21,8 +21,8 @@
 
 <script>
 import { mapState, mapActions } from 'pinia'
-import statusStore from '../../../stores/statusStore'
-import cartStore from '../../../stores/cartStore'
+import statusStore from '@/stores/statusStore'
+import cartStore from '@/stores/cartStore'
 
 export default {
   emits: ['open-del-modal'],

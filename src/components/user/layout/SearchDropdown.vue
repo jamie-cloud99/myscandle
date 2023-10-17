@@ -2,9 +2,13 @@
   <div class="search-block">
     <div class="search-input position-relative">
       <input type="text" class="form-control" v-model="keyword" placeholder="請輸入商品關鍵字" />
-      <router-link to="#" class="search-btn" @click="$emit('search', keyword)"
-        ><i class="bi bi-search"></i
-      ></router-link>
+      <button
+        type="button"
+        class="search-btn py-0 border-start border-primary"
+        @click="$emit('search', keyword)"
+      >
+        <i class="bi bi-search"></i>
+      </button>
     </div>
     <ul class="d-flex pt-3 pb-2 flex-wrap">
       <li v-for="item in keywordList" :key="item" class="mx-1 mb-2">
@@ -16,7 +20,7 @@
 
 <script>
 import { mapState } from 'pinia'
-import productsStore from '../../../stores/productsStore'
+import productsStore from '@/stores/productsStore'
 
 export default {
   emits: ['search'],
@@ -33,7 +37,7 @@ export default {
 
 <style lang="scss" scoped>
 @import 'bootstrap/scss/functions';
-@import '../../../assets/helpers/variables';
+@import '@/assets/helpers/variables';
 .search-block {
   position: relative;
   width: 300px;
@@ -57,6 +61,7 @@ export default {
   top: 0;
   right: 0;
   padding-left: 10px;
+  padding-right: 15px;
   width: 40px;
   height: 36px;
   line-height: 36px;

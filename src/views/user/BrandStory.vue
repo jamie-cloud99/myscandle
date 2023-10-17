@@ -1,6 +1,5 @@
 <template>
-  <CustomBanner :content="banner"></CustomBanner>
-
+  <CustomBanner :content="banner" />
   <div class="container pb-lg-5 px-4">
     <article class="mt-5">
       <h3 class="text-md-center h5 fw-bold mb-3 mb-lg-5 text-opacity-75">
@@ -11,8 +10,7 @@
           <div class="col-md-6 col-lg-5">
             <p class="mb-2 mb-lg-4">
               在瑞典語中，"Mys" 意味舒適、溫馨的氛圍，是瑞典人生活中極其重要的哲學。每當你點燃 Mys
-              的蠟燭，一切煩憂都將隨著香氛消散，只剩下愜意與歡樂，正是最美好的
-              mys 時刻。
+              的蠟燭，一切煩憂都將隨著香氛消散，只剩下愜意與歡樂，正是最美好的 mys 時刻。
             </p>
             <p>
               每個 Mys
@@ -27,7 +25,9 @@
             />
           </div>
         </div>
-        <div class="row mb-3 mb-lg-5 flex-row-reverse justify-content-center row-gap-3 align-items-start">
+        <div
+          class="row mb-3 mb-lg-5 flex-row-reverse justify-content-center row-gap-3 align-items-start"
+        >
           <div class="col-md-6 col-lg-5">
             <p class="mb-2 mb-lg-4">
               除了香氛的溫暖魔力，Mys
@@ -57,9 +57,9 @@
               在這個瞬息萬變的世界裡，Mys
               希望能陪伴你，帶給你一份來自瑞典的舒適溫馨哲學，讓每個瞬間都成為最美好的 mys 時光。
             </p>
-            <router-link class="btn btn-outline-primary fw-semibold" to="/shop"
+            <RouterLink class="btn btn-outline-primary fw-semibold" to="/shop"
               >尋找你的命定香氛<i class="bi bi-arrow-up-right ms-2 align-middle"></i
-            ></router-link>
+            ></RouterLink>
           </div>
           <div class="col-md-6 col-lg-5">
             <img
@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import CustomBanner from '../../components/user/others/CustomBanner.vue';
+import CustomBanner from '@/components/user/others/CustomBanner.vue'
 
 export default {
   components: {
@@ -96,7 +96,7 @@ export default {
 
 <style lang="scss">
 .brand-img {
-   width: 100%;
+  width: 100%;
   height: 400px;
   @include pad {
     height: 300px;
@@ -106,7 +106,4 @@ export default {
 .text-opacity-75 {
   opacity: 0.75;
 }
-
-
-
 </style>
