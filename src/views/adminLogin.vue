@@ -31,10 +31,18 @@
       </form>
     </div>
   </div>
+  <ToastMessages />
 </template>
 
 <script>
+import { mapActions } from 'pinia'
+import ToastMessages from '@/components/user/layout/ToastMessages.vue'
+import toastStore from '@/stores/toastStore'
+
 export default {
+  components: {
+    ToastMessages
+  },
   data() {
     return {
       email: '',
@@ -42,19 +50,21 @@ export default {
     }
   },
   methods: {
+    ...mapActions(toastStore, ['showFailToast']),
     async login() {
       const api = `${import.meta.env.VITE_API}admin/signin`
       const user = { username: this.email, password: this.password }
       try {
         const res = await this.axios.post(api, user)
-
         if (res.data.success) {
           const { token, expired } = res.data
           document.cookie = `mysToken=${token};expires=${new Date(expired)};`
           this.$router.push('/admin/product')
+        } else {
+          this.showFailToast('帳號或密碼錯誤，請重新輸入')
         }
       } catch (error) {
-        console.log(error)
+        this.showFailToast('網頁載入異常，請稍後再試')
       }
     }
   }

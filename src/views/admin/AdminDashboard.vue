@@ -22,11 +22,17 @@ export default {
       try {
         const res = await this.axios.post(api)
         if (!res.data.success) {
-          console.log('已登出，請重新登入')
+          emitter.emit('push-message', {
+            style: 'error',
+            content: '已登出，請重新登入'
+          })
           setTimeout(() => this.$router.push('/login'), 2000)
         }
       } catch (error) {
-        console.log(error)
+        emitter.emit('push-message', {
+          style: 'error',
+          content: '登出失敗，請稍後再試'
+        })
       }
     }
   },

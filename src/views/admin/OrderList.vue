@@ -81,7 +81,6 @@ export default {
       const api = `${VITE_API}api/${VITE_PATH}/admin/orders?page=${page}`
       try {
         const res = await this.axios.get(api)
-        console.log('fetchOrder', res)
         if (res.data.success) {
           this.orders = res.data.orders
           this.pagination = res.data.pagination

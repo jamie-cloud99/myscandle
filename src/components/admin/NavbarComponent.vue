@@ -20,7 +20,7 @@
             }}</RouterLink>
           </li>
           <li class="nav-item">
-            <a class="nav-link" @click.prevent="openLogoutModal">登出</a>
+            <button type="button" class="nav-link" @click="openLogoutModal">登出</button>
           </li>
         </ul>
       </div>
@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import toastMixin from '@/mixins/toastMixin'
+
 export default {
   data() {
     return {
@@ -48,6 +50,7 @@ export default {
       ]
     }
   },
+  mixins: [toastMixin],
   methods: {
     openLogoutModal() {
       this.comfirmLogout()
@@ -62,7 +65,7 @@ export default {
           this.$router.push('/login')
         }
       } catch (error) {
-        console.log(error)
+        this.handleError()
       }
     }
   }

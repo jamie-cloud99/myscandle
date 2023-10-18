@@ -132,6 +132,7 @@
 
 <script>
 import { mapState, mapActions } from 'pinia'
+import toastStore from '@/stores/toastStore'
 import cartStore from '@/stores/cartStore'
 import statusStore from '@/stores/statusStore'
 
@@ -150,6 +151,8 @@ export default {
     ...mapState(cartStore, ['orderSubmitted'])
   },
   methods: {
+    ...mapActions(cartStore, ['submitOrder']),
+    ...mapActions(toastStore, ['handleError']),
     isPhone(num) {
       const phone = /^09[0-9]{8}$/
       return !phone.test(num) ? '格式有誤，請輸入正確的手機號碼' : true
@@ -164,13 +167,13 @@ export default {
           this.cityAreas = res.data
         }
       } catch (error) {
-        console.log(error)
+        this.handleError()
       }
     },
     filterAreas(city) {
       this.selectedCityAreas = this.cityAreas.find((item) => item.CityName === city)?.AreaList || []
     },
-    ...mapActions(cartStore, ['submitOrder']),
+
     async submit(order) {
       this.tempOrder.name = order.name
       this.tempOrder.tel = order.tel

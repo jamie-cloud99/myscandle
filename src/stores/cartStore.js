@@ -38,7 +38,7 @@ export default defineStore('cartStore', {
         }
       } catch (error) {
         status.isLoading = false
-        console.log(error)
+        toast.handleError()
         status.cartLoadingItem = ''
       }
     },
@@ -116,10 +116,10 @@ export default defineStore('cartStore', {
           this.fetchCart()
           status.couponLoading = false
         } else {
-          console.log(res.data)
+          toast.showFailToast(res.data.message)
         }
       } catch (error) {
-        console.log(error)
+        toast.handleError()
       }
     },
     async submitOrder(user, message = '') {
