@@ -1,14 +1,26 @@
 # Mys 香薰蠟燭擴香電商：
 > [Demo 連結] (https://myscandle.vercel.app/#/)
 
+## 頁面預覽
+> ![首頁](https://github.com/jamie-cloud99/myscandle/assets/126141081/8ea936a5-1895-498e-84cb-028d2f8306ce)
+
+> ![商品清單](https://github.com/jamie-cloud99/myscandle/assets/126141081/f50d8d76-7020-4488-9a1d-a5f3065f1ad7)
+
+> ![SEO文章](https://github.com/jamie-cloud99/myscandle/assets/126141081/f081808e-55db-41a2-82b5-c42c1b1fd7b8)
+
+
+> ![後台訂單](https://github.com/jamie-cloud99/myscandle/assets/126141081/31b37192-aff0-44dc-9148-94d7656e24da)
+
+
+
 ## 網站功能
 
 ### 前台
 
-1. 首頁：品牌形象 Banner、精選商品輪播推薦
+1. 首頁：品牌形象 Banner、精選商品輪播推薦、訂閱電子報
 2. 商品：商品一覽、詳細資訊、搜尋檢索、條件篩選、相關商品推薦
 3. 購物：加入購物車、歷史瀏覽商品推薦、優惠券使用、訂單、結帳
-4. 其他：品牌介紹、聯絡我們、404 頁面自動跳轉
+5. 其他：品牌介紹、聯絡我們、SEO文章、404 頁面自動跳轉
 
 ### 後台
 
