@@ -58,6 +58,14 @@ const router = createRouter({
         {
           path: 'payment-success',
           component: () => import('@/views/user/PaymentSuccess.vue')
+        },
+        {
+          path: 'articles',
+          component: () => import('@/views/user/ArticleList.vue')
+        },
+        {
+          path: 'articles/:articleId',
+          component: () => import('@/views/user/ArticleContent.vue')
         }
       ]
     },

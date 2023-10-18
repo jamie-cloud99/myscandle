@@ -9,37 +9,43 @@
       >
         <span class="navicon"></span>
       </button>
-      <ul class="menu pt-3 fw-semibold">
+      <ul class="menu pt-3 fw-medium text-nowrap">
         <li class="menu-item mb-2 text-light py-3">
           <h3 class="fs-1 fw-bold">
             <RouterLink to="/shop" class="d-block" @click.prevent="goToShop(null)">
+              <i class="bi bi-diamond-fill ms-1"></i>
               商品一覽
             </RouterLink>
           </h3>
         </li>
-        <li v-for="item in menuCategories" :key="item" class="mb-2">
-          <div class="position-relative">
-            <RouterLink
-              to="#"
-              class="menu-item link-light fs-5 p-3 d-block"
-              @click.prevent="goToShop(item)"
-              >{{ item }}</RouterLink
-            >
-            <span class="menu-item-active position-absolute text-light"
-              ><i class="bi bi-egg-fill"></i
-            ></span>
-          </div>
+        <li v-for="item in menuCategories" :key="item" class="mb-1">
+          <RouterLink
+            to="#"
+            class="menu-item link-light fs-5 px-4 py-2 d-block"
+            @click.prevent="goToShop(item)"
+            >- {{ item }}</RouterLink
+          >
         </li>
         <li class="menu-item mb-2 text-light py-3">
           <h3 class="fs-1 fw-bold">
             <RouterLink to="/brand" class="d-block" @click.prevent="toggleMenu">
+              <i class="bi bi-diamond-fill ms-1"></i>
               品牌故事
             </RouterLink>
           </h3>
         </li>
         <li class="menu-item mb-2 text-light py-3">
           <h3 class="fs-1 fw-bold">
+            <RouterLink to="/articles" class="d-block" @click.prevent="toggleMenu">
+              <i class="bi bi-diamond-fill ms-1"></i>
+              香氛研究室
+            </RouterLink>
+          </h3>
+        </li>
+        <li class="menu-item mb-2 text-light py-3">
+          <h3 class="fs-1 fw-bold">
             <RouterLink to="/contactus" class="d-block" @click.prevent="toggleMenu">
+              <i class="bi bi-diamond-fill ms-1"></i>
               聯絡我們
             </RouterLink>
           </h3>
@@ -57,6 +63,9 @@
           <RouterLink to="/brand" class="shop-link px-3 py-1 rounded-md fw-semibold"
             >品牌故事</RouterLink
           >
+          <RouterLink to="/articles" class="shop-link px-3 py-1 rounded-md fw-semibold"
+            >香氛研究室</RouterLink
+          >
         </div>
       </div>
       <ul class="d-flex me-2">
@@ -71,7 +80,7 @@
               <i class="bi bi-search"></i>
             </button>
             <div class="search-pos position-absolute" :class="{ expand: showSearchBox }">
-              <SearchDropdown @search="goSearch"/>
+              <SearchDropdown @search="goSearch" />
             </div>
           </div>
         </li>
@@ -82,7 +91,10 @@
             @click="toggleCartPreview"
           >
             <i class="bi bi-handbag-fill"></i
-            ><span v-if="countCart" class="position-absolute cart-number badge rounded-pill bg-danger">
+            ><span
+              v-if="countCart"
+              class="position-absolute cart-number badge rounded-pill bg-danger"
+            >
               {{ countCart }}
               <span class="visually-hidden">cart number</span>
             </span>
@@ -259,22 +271,17 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: start;
-  padding: 0 6rem;
+  padding: 0 4rem;
 }
 
 .menu-item {
   letter-spacing: 0.5rem;
-
-  &:active ~ .menu-item-active {
-    display: block;
+  border-radius: 0.5rem;
+  &:hover,
+  &:active {
+    background: $light;
+    color: $primary !important;
   }
-}
-
-.menu-item-active {
-  display: none;
-  top: 50%;
-  right: -1rem;
-  transform: translateY(-50%);
 }
 
 .search-pos {
