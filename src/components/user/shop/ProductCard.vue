@@ -1,7 +1,7 @@
 <template>
   <RouterLink
     :to="`/product/${product.id}`"
-    class="card border-0 bg-transparent h-100 overflow-hidden"
+    class="product-card card border-0 bg-transparent h-100 overflow-hidden"
   >
     <div class="ratio ratio-1x1 overflow-hidden rounded-md">
       <img
@@ -59,12 +59,21 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+@import 'bootstrap/scss/functions';
+@import '@/assets/helpers/variables';
 .product-img {
   object-fit: cover;
   transition: all 300ms ease-in-out;
   &:hover {
     scale: 110%;
+  }
+}
+
+.product-card {
+  border-radius: 2rem;
+  &:hover {
+    box-shadow: 0 10px 10px 0 rgba($color: #000000, $alpha: 0.05);
   }
 }
 </style>

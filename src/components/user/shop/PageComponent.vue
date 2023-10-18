@@ -2,14 +2,14 @@
   <nav aria-label="Page navigation">
     <ul class="pagination">
       <li class="page-item mx-2" :class="{ disabled: !pages.has_pre }">
-        <RouterLink
+        <button
           class="page-link rounded-sm"
-          to="#"
+          type="button"
           aria-label="Previous"
-          @click.prevent="$emit('change-page', items, pages.current_page - 1)"
+          @click="$emit('change-page', items, pages.current_page - 1)"
         >
           <span aria-hidden="true">&laquo;</span>
-        </RouterLink>
+        </button>
       </li>
       <li
         class="page-item mx-2"
@@ -17,23 +17,23 @@
         :key="page"
         :class="{ active: page === pages.current_page }"
       >
-        <RouterLink
+        <button
           class="page-link rounded-sm"
-          to="#"
-          @click.prevent="$emit('change-page', items, page)"
-          >{{ page }}</RouterLink
+          type="button"
+          @click="$emit('change-page', items, page)"
+          >{{ page }}</button
         >
       </li>
 
       <li class="page-item mx-2" :class="{ disabled: !pages.has_next }">
-        <RouterLink
+        <button
           class="page-link rounded-sm"
-          to="#"
+          type="button"
           aria-label="Next"
-          @click.prevent="$emit('change-page', items, pages.current_page + 1)"
+          @click="$emit('change-page', items, pages.current_page + 1)"
         >
-          <span aria-hidden="true">&raquo;</span>
-        </RouterLink>
+          <span aria-hidden="true" class="d-block">&raquo;</span>
+        </button>
       </li>
     </ul>
   </nav>

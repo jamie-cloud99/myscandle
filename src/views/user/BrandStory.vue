@@ -8,14 +8,17 @@
       <div class="content lh-lg">
         <div class="row mb-3 mb-lg-5 justify-content-center row-gap-3 align-items-start">
           <div class="col-md-6 col-lg-5">
-            <p class="mb-2 mb-lg-4">
+            <p class="mb-2 mb-lg-3">
               在瑞典語中，"Mys" 意味舒適、溫馨的氛圍，是瑞典人生活中極其重要的哲學。每當你點燃 Mys
               的蠟燭，一切煩憂都將隨著香氛消散，只剩下愜意與歡樂，正是最美好的 mys 時刻。
             </p>
-            <p>
+            <p class="mb-2 mb-lg-3">
               每個 Mys
               香氛都是歐陸頂級調香師親自調配的心血。我們融入瑞典的自然美景和生活哲學，使香氣包裹你的記憶，帶你走近瑞典森林，感受四季交替中的美好時光。
             </p>
+            <RouterLink class="btn btn-outline-primary fw-semibold" to="/product/-NZagl5TgcEP4QWPjAl1"
+              >絲柏森林香薰蠟燭 — 獨特木香清爽馥郁<i class="bi bi-arrow-up-right ms-2 align-middle"></i
+            ></RouterLink>
           </div>
           <div class="col-md-6 col-lg-5">
             <img
@@ -29,14 +32,17 @@
           class="row mb-3 mb-lg-5 flex-row-reverse justify-content-center row-gap-3 align-items-start"
         >
           <div class="col-md-6 col-lg-5">
-            <p class="mb-2 mb-lg-4">
+            <p class="mb-2 mb-lg-3">
               除了香氛的溫暖魔力，Mys
               也將質感美學融入每一個產品設計。我們的蠟燭不僅是香氛產品，更是居家擺設的藝術品，讓美麗成為你的日常。
             </p>
-            <p>
+            <p class="mb-2 mb-lg-3">
               不止於此，Mys
               香氛堅持純素成分，用天然植物蠟和植萃精油取代人工香精，讓香味保持清新自然。我們深知，環保永續是我們的責任，因此特別設計了可重複使用的環保罐裝，為未來世代保留一片美好的家園。
             </p>
+            <RouterLink class="btn btn-outline-primary fw-semibold" to="/product/-NSykrvOKcheww_ZgLxf"
+              >香氣風景禮盒 — 清新脫俗的送禮新選擇<i class="bi bi-arrow-up-right ms-2 align-middle"></i
+            ></RouterLink>
           </div>
           <div class="col-md-6 col-lg-5">
             <img
@@ -49,11 +55,11 @@
 
         <div class="row mb-3 mb-lg-5 justify-content-center row-gap-3 align-items-start">
           <div class="col-md-6 col-lg-5">
-            <p class="mb-2 mb-lg-4">
+            <p class="mb-2 mb-lg-3">
               Mys
               香氛，不僅僅是一個品牌，更是一種生活態度。我們希望透過這份香氣，讓人們重拾對細緻生活的熱愛，找回內心的平和自在。
             </p>
-            <p class="mb-2 mb-lg-4">
+            <p class="mb-2 mb-lg-3">
               在這個瞬息萬變的世界裡，Mys
               希望能陪伴你，帶給你一份來自瑞典的舒適溫馨哲學，讓每個瞬間都成為最美好的 mys 時光。
             </p>

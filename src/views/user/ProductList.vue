@@ -150,7 +150,7 @@ export default {
 
 <style lang="scss" scoped>
 @import 'bootstrap/scss/functions';
-@import '../../assets/helpers/variables';
+@import '@/assets/helpers/variables';
 
 .shop-bn-img {
   height: 100px;

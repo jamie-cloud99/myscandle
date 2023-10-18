@@ -25,16 +25,16 @@
           </div>
 
           <div class="mb-3">
-            <label for="message" class="form-label">意見回饋 / 問題描述</label>
+            <label for="message" class="form-label">意見回饋 / 問題描述<span class="text-danger">*</span></label>
             <VField
               as="textarea"
               class="form-control bg-transparent border-bottom border-primary rounded-0"
               id="message"
-              placeholder="請輸入您的問題或意見"
-              name="問題"
-              :class="{ 'is-invalid': errors['問題'] }"
+              name="意見內容"
+              rules="required"
+              :class="{ 'is-invalid': errors['意見內容'] }"
             />
-            <ErrorMessage name="問題" class="invalid-feedback" />
+            <ErrorMessage name="意見內容" class="invalid-feedback" />
           </div>
           <div class="mb-3">
             <label for="name" class="form-label">姓名<span class="text-danger">*</span></label>

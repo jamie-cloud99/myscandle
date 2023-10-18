@@ -3,7 +3,7 @@
     <h3 class="value-title text-light align-middle">Our Value</h3>
   </div>
 
-  <ul class="row border-top border-bottom border-primary border-opacity-50 my-md-3">
+  <ul class="row border-top border-bottom border-primary border-opacity-50 my-md-3 gx-0">
     <li
       data-aos="fade-up"
       data-aos-delay="250"
@@ -11,7 +11,7 @@
       v-for="item in features"
       :key="item.title"
     >
-      <div class="value-content px-3 py-4">
+      <div class="value-content px-3 pt-4 pb-5">
         <p class="fs-4 mb-4"><i class="bi" :class="item.icon"></i></p>
         <h4 class="fs-md fw-bold mb-3">{{ item.title }}</h4>
         <p>{{ item.description }}</p>
@@ -80,16 +80,16 @@ export default {
 
 .value-item {
   cursor: pointer;
-  &:nth-child(odd) {
-    background: $light;
-    // &:hover {
-    //   background: $light;
-    // }
+  .value-content {
+    height: 100%;
   }
-  &:nth-child(even) {
+  &:nth-child(odd) .value-content {
+    background: $light;
+  }
+  &:nth-child(even) .value-content {
     background: $red-brown-30;
   }
-  &:hover {
+  &:hover .value-content {
     background: $red-brown;
     color: $light;
   }
