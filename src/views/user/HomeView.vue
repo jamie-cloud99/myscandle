@@ -52,6 +52,9 @@
     <div class="pt-5 mt-lg-5">
       <OurFeatures />
     </div>
+    <div class="pt-5 mt-lg-3">
+      <SubscribeUs />
+    </div>
   </div>
 </template>
 
@@ -64,12 +67,14 @@ import statusStore from '@/stores/statusStore'
 import HotProducts from '@/components/user/home/HotProducts.vue'
 import AboutUs from '@/components/user/home/AboutUs.vue'
 import OurFeatures from '@/components/user/home/OurFeatures.vue'
+import SubscribeUs from '@/components/user/home/SubscribeUs.vue'
 
 export default {
   components: {
     HotProducts,
     AboutUs,
-    OurFeatures
+    OurFeatures,
+    SubscribeUs
   },
   data() {
     return {
@@ -128,6 +133,7 @@ export default {
 }
 
 .menu-pc-item {
+  width: fit-content;
   filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
   &:hover {
     color: $primary;
