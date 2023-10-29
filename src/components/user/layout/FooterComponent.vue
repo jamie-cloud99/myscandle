@@ -22,6 +22,14 @@
                 ></span>
               </div>
             </li>
+            <li>
+              <div class="position-relative">
+                <RouterLink to="/articles" class="menu-item d-block mb-2"> 香氛研究室 </RouterLink>
+                <span class="menu-item-active position-absolute text-primary z-1"
+                  ><i class="bi bi-egg-fill"></i
+                ></span>
+              </div>
+            </li>
           </ul>
         </div>
         <div class="col-6 col-md-4 mb-4">
@@ -42,7 +50,7 @@
         <div class="col-md-4 my-4 mt-md-0 mb-md-4">
           <div class="d-flex align-items-center mb-3">
             <h4 class="font-galada fs-2 display-lg-3">MyS</h4>
-            <RouterLink to="/admin" class="btn btn-light ms-3">登入後台</RouterLink>
+            <RouterLink to="/login" class="btn btn-light ms-3">登入後台</RouterLink>
           </div>
           <ul>
             <li class="mb-2">營業時間：Mon-Fri 9:00 - 18:00</li>
